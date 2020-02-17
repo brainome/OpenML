@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-16-2020 15:23:40
-# Invocation: btc -v -v fri-c0-1000-50-1.csv -o fri-c0-1000-50-1.py
+# Compile time: Feb-12-2020 21:20:53
+# Invocation: btc -v fri-c0-1000-50-2.csv -o fri-c0-1000-50-2.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                51.00%
-Model accuracy:                     84.60% (846/1000 correct)
-Improvement over best guess:        33.60% (of possible 49.0%)
-Model capacity (MEC):               209 bits
-Generalization ratio:               4.04 bits/bit
-Model efficiency:                   0.16%/parameter
+Model accuracy:                     87.60% (876/1000 correct)
+Improvement over best guess:        36.60% (of possible 49.0%)
+Model capacity (MEC):               261 bits
+Generalization ratio:               3.35 bits/bit
+Model efficiency:                   0.14%/parameter
 System behavior
-True Negatives:                     44.30% (443/1000)
-True Positives:                     40.30% (403/1000)
-False Negatives:                    8.70% (87/1000)
-False Positives:                    6.70% (67/1000)
-True Pos. Rate/Sensitivity/Recall:  0.82
-True Neg. Rate/Specificity:         0.87
-Precision:                          0.86
-F-1 Measure:                        0.84
-False Negative Rate/Miss Rate:      0.18
-Critical Success Index:             0.72
-Model bias:                         11.32% higher chance to pick class 0
+True Negatives:                     44.80% (448/1000)
+True Positives:                     42.80% (428/1000)
+False Negatives:                    8.20% (82/1000)
+False Positives:                    4.20% (42/1000)
+True Pos. Rate/Sensitivity/Recall:  0.84
+True Neg. Rate/Specificity:         0.91
+Precision:                          0.91
+F-1 Measure:                        0.87
+False Negative Rate/Miss Rate:      0.16
+Critical Success Index:             0.78
+Model bias:                         0.08% higher chance to pick class 0
 """
 
 # Imports -- Python3 standard library
@@ -45,7 +45,7 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="fri-c0-1000-50-1.csv"
+TRAINFILE="fri-c0-1000-50-2.csv"
 
 
 #Number of output logits
@@ -83,8 +83,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("All cells in the target column need to contain a class label.")
         try:
             result=int(value)
-            if (not (result==0 or result==1)):
-                raise ValueError("Integer class labels need to be 0 or 1.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -93,8 +91,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=float(value)
                 if (rounding!=-1):
                     result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
-                if (not (result==0 or result==1)):
-                    raise ValueError("Numeric class labels need to be 0 or 1.")
                 if (not str(result) in clean.classlist):
                     clean.classlist=clean.classlist+[str(result)]
                 return result
@@ -114,8 +110,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             next(reader,None)
         outbuf=[]
         for row in reader:
-            if (row==[]):  # Skip empty rows
-                continue
             rowcount=rowcount+1
             rowlen=num_attr
             if (not testfile):
@@ -151,11 +145,12 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((18.796587 * float(x[0]))+ (17.261898 * float(x[1]))+ (-1.3339926 * float(x[2]))+ (16.83456 * float(x[3]))+ (6.6176953 * float(x[4]))+ (-0.93750614 * float(x[5]))+ (-0.46690494 * float(x[6]))+ (4.1725826 * float(x[7]))+ (2.275122 * float(x[8]))+ (2.1071832 * float(x[9]))+ (0.1437398 * float(x[10]))+ (1.1448265 * float(x[11]))+ (4.2984667 * float(x[12]))+ (0.26867124 * float(x[13]))+ (2.982767 * float(x[14]))+ (-0.57854736 * float(x[15]))+ (-1.1373829 * float(x[16]))+ (2.187686 * float(x[17]))+ (-2.3739092 * float(x[18]))+ (4.2862387 * float(x[19]))+ (-1.6022234 * float(x[20]))+ (-6.052945 * float(x[21]))+ (1.5427463 * float(x[22]))+ (0.61123985 * float(x[23]))+ (1.7460976 * float(x[24]))+ (-2.9839177 * float(x[25]))+ (1.9854554 * float(x[26]))+ (-2.5694408 * float(x[27]))+ (-2.1454964 * float(x[28]))+ (5.269807 * float(x[29]))+ (2.0245955 * float(x[30]))+ (0.10699375 * float(x[31]))+ (-3.0255363 * float(x[32]))+ (5.294641 * float(x[33]))+ (0.81269765 * float(x[34]))+ (0.41463244 * float(x[35]))+ (0.5186705 * float(x[36]))+ (1.1866897 * float(x[37]))+ (6.996833 * float(x[38]))+ (2.3196228 * float(x[39]))+ (-3.5354397 * float(x[40]))+ (-0.8836489 * float(x[41]))+ (3.1219935 * float(x[42]))+ (-2.4118252 * float(x[43]))+ (-3.5010262 * float(x[44]))+ (3.2788348 * float(x[45]))+ (-1.6531657 * float(x[46]))+ (1.8642884 * float(x[47]))+ (0.64265376 * float(x[48]))+ (-0.13626145 * float(x[49]))) + 2.4941003), 0)
-    h_1 = max((((5.2281227 * float(x[0]))+ (0.50934744 * float(x[1]))+ (0.75285125 * float(x[2]))+ (7.929284 * float(x[3]))+ (3.4709895 * float(x[4]))+ (0.8087675 * float(x[5]))+ (-1.9158969 * float(x[6]))+ (2.7013855 * float(x[7]))+ (-0.33596012 * float(x[8]))+ (0.42915395 * float(x[9]))+ (-1.363117 * float(x[10]))+ (-4.412455 * float(x[11]))+ (-0.88675886 * float(x[12]))+ (2.2239554 * float(x[13]))+ (-1.0419259 * float(x[14]))+ (-0.17526881 * float(x[15]))+ (-0.25530535 * float(x[16]))+ (-0.118724585 * float(x[17]))+ (-1.3529041 * float(x[18]))+ (-4.2472215 * float(x[19]))+ (0.78230244 * float(x[20]))+ (0.985408 * float(x[21]))+ (-1.7970729 * float(x[22]))+ (-1.3454142 * float(x[23]))+ (1.2101732 * float(x[24]))+ (-0.61012894 * float(x[25]))+ (2.5012887 * float(x[26]))+ (3.9247553 * float(x[27]))+ (-1.3569546 * float(x[28]))+ (-0.30058149 * float(x[29]))+ (-2.3519914 * float(x[30]))+ (1.2126461 * float(x[31]))+ (2.2449317 * float(x[32]))+ (1.4930135 * float(x[33]))+ (-3.1748765 * float(x[34]))+ (3.2549357 * float(x[35]))+ (1.6104674 * float(x[36]))+ (-1.996334 * float(x[37]))+ (-0.17658257 * float(x[38]))+ (2.5697074 * float(x[39]))+ (-0.3617937 * float(x[40]))+ (3.135822 * float(x[41]))+ (-4.744754 * float(x[42]))+ (-4.9769807 * float(x[43]))+ (-0.46674976 * float(x[44]))+ (-5.7031507 * float(x[45]))+ (0.23881632 * float(x[46]))+ (2.89391 * float(x[47]))+ (1.8317981 * float(x[48]))+ (3.5244796 * float(x[49]))) + -4.284873), 0)
-    h_2 = max((((-0.52791095 * float(x[0]))+ (-4.5949507 * float(x[1]))+ (-0.22543041 * float(x[2]))+ (-1.9370604 * float(x[3]))+ (-1.1690967 * float(x[4]))+ (1.7095208 * float(x[5]))+ (-2.6715138 * float(x[6]))+ (0.55688804 * float(x[7]))+ (0.33295572 * float(x[8]))+ (1.1310593 * float(x[9]))+ (-1.7677352 * float(x[10]))+ (1.9429792 * float(x[11]))+ (-1.0691004 * float(x[12]))+ (0.09725836 * float(x[13]))+ (0.2861919 * float(x[14]))+ (-0.10267864 * float(x[15]))+ (-2.5842054 * float(x[16]))+ (-2.3434515 * float(x[17]))+ (-0.2679299 * float(x[18]))+ (1.7331523 * float(x[19]))+ (-0.044255324 * float(x[20]))+ (2.3699734 * float(x[21]))+ (-0.7959868 * float(x[22]))+ (1.1989473 * float(x[23]))+ (-0.78297895 * float(x[24]))+ (1.6244382 * float(x[25]))+ (0.9358575 * float(x[26]))+ (2.3226695 * float(x[27]))+ (-0.33497286 * float(x[28]))+ (0.45681977 * float(x[29]))+ (-0.36849073 * float(x[30]))+ (-0.55575097 * float(x[31]))+ (-2.3110168 * float(x[32]))+ (0.23711628 * float(x[33]))+ (-3.3287077 * float(x[34]))+ (1.5057355 * float(x[35]))+ (1.2710408 * float(x[36]))+ (-2.393611 * float(x[37]))+ (0.35472977 * float(x[38]))+ (1.5286204 * float(x[39]))+ (0.7607732 * float(x[40]))+ (0.13673754 * float(x[41]))+ (-1.035984 * float(x[42]))+ (0.20223492 * float(x[43]))+ (-0.7628264 * float(x[44]))+ (1.828229 * float(x[45]))+ (0.23781754 * float(x[46]))+ (1.7719308 * float(x[47]))+ (2.1240475 * float(x[48]))+ (0.6287167 * float(x[49]))) + -5.5692163), 0)
-    h_3 = max((((5.1860814 * float(x[0]))+ (3.8365138 * float(x[1]))+ (-0.34242398 * float(x[2]))+ (2.5289896 * float(x[3]))+ (1.6998585 * float(x[4]))+ (-0.43077973 * float(x[5]))+ (-0.12741101 * float(x[6]))+ (1.8368548 * float(x[7]))+ (-1.0233476 * float(x[8]))+ (0.7138444 * float(x[9]))+ (0.7809671 * float(x[10]))+ (-0.70289594 * float(x[11]))+ (1.1008594 * float(x[12]))+ (1.168666 * float(x[13]))+ (0.22740163 * float(x[14]))+ (-0.19498414 * float(x[15]))+ (0.8399628 * float(x[16]))+ (0.1516216 * float(x[17]))+ (0.016214779 * float(x[18]))+ (-0.13316113 * float(x[19]))+ (0.38403618 * float(x[20]))+ (-0.76525223 * float(x[21]))+ (2.6341448 * float(x[22]))+ (-0.8468362 * float(x[23]))+ (0.920462 * float(x[24]))+ (-1.575028 * float(x[25]))+ (0.095312536 * float(x[26]))+ (-0.20649014 * float(x[27]))+ (-1.11107 * float(x[28]))+ (1.2716846 * float(x[29]))+ (0.17889893 * float(x[30]))+ (1.0039049 * float(x[31]))+ (-0.1950419 * float(x[32]))+ (0.7335629 * float(x[33]))+ (1.207277 * float(x[34]))+ (0.6499841 * float(x[35]))+ (-0.77487826 * float(x[36]))+ (-0.8854319 * float(x[37]))+ (2.0363193 * float(x[38]))+ (0.4892061 * float(x[39]))+ (-1.0810527 * float(x[40]))+ (0.18529308 * float(x[41]))+ (0.09376861 * float(x[42]))+ (-1.5037227 * float(x[43]))+ (0.30067158 * float(x[44]))+ (0.054403044 * float(x[45]))+ (0.3252678 * float(x[46]))+ (1.6689562 * float(x[47]))+ (-1.4002987 * float(x[48]))+ (-0.15253112 * float(x[49]))) + -2.9753318), 0)
-    o_0 = (0.6918435 * h_0)+ (1.0289356 * h_1)+ (-2.4384048 * h_2)+ (-2.7221317 * h_3) + -3.1956418
+    h_0 = max((((-14.704047 * float(x[0]))+ (-17.063549 * float(x[1]))+ (0.5811973 * float(x[2]))+ (-14.861977 * float(x[3]))+ (-6.7004213 * float(x[4]))+ (4.9528623 * float(x[5]))+ (1.2858659 * float(x[6]))+ (-4.127553 * float(x[7]))+ (3.0583901 * float(x[8]))+ (-2.7580929 * float(x[9]))+ (-0.75155705 * float(x[10]))+ (2.9507923 * float(x[11]))+ (0.2516685 * float(x[12]))+ (4.1519465 * float(x[13]))+ (-1.5724759 * float(x[14]))+ (2.5478442 * float(x[15]))+ (-2.1817486 * float(x[16]))+ (-5.4657927 * float(x[17]))+ (2.783593 * float(x[18]))+ (0.8290835 * float(x[19]))+ (0.97508955 * float(x[20]))+ (-0.7485593 * float(x[21]))+ (-1.593737 * float(x[22]))+ (1.5891067 * float(x[23]))+ (1.4736632 * float(x[24]))+ (0.768788 * float(x[25]))+ (-0.809025 * float(x[26]))+ (0.63095695 * float(x[27]))+ (-0.2635968 * float(x[28]))+ (-3.7235718 * float(x[29]))+ (-2.175235 * float(x[30]))+ (-2.8952074 * float(x[31]))+ (1.3851048 * float(x[32]))+ (-0.4858132 * float(x[33]))+ (-0.46309552 * float(x[34]))+ (-3.5379071 * float(x[35]))+ (-0.94757265 * float(x[36]))+ (-3.97417 * float(x[37]))+ (2.7601924 * float(x[38]))+ (-3.3238099 * float(x[39]))+ (-0.43894312 * float(x[40]))+ (-1.3281348 * float(x[41]))+ (-1.670275 * float(x[42]))+ (2.148776 * float(x[43]))+ (-1.7335427 * float(x[44]))+ (1.8041401 * float(x[45]))+ (-1.8036143 * float(x[46]))+ (-4.075812 * float(x[47]))+ (0.1134478 * float(x[48]))+ (-4.9806857 * float(x[49]))) + 4.1976514), 0)
+    h_1 = max((((1.1350342 * float(x[0]))+ (-5.211216 * float(x[1]))+ (1.3961707 * float(x[2]))+ (-4.7919226 * float(x[3]))+ (-1.1774564 * float(x[4]))+ (-0.105869725 * float(x[5]))+ (-1.210886 * float(x[6]))+ (4.616806 * float(x[7]))+ (-3.330838 * float(x[8]))+ (2.6352055 * float(x[9]))+ (0.3204872 * float(x[10]))+ (-0.48122215 * float(x[11]))+ (2.3046706 * float(x[12]))+ (-8.616646 * float(x[13]))+ (0.784064 * float(x[14]))+ (-3.7921011 * float(x[15]))+ (-1.5944285 * float(x[16]))+ (5.826689 * float(x[17]))+ (2.3151736 * float(x[18]))+ (-4.346155 * float(x[19]))+ (0.14188762 * float(x[20]))+ (1.7911717 * float(x[21]))+ (-3.0611367 * float(x[22]))+ (0.5952679 * float(x[23]))+ (-0.19891138 * float(x[24]))+ (2.5550275 * float(x[25]))+ (-1.2921922 * float(x[26]))+ (0.41631272 * float(x[27]))+ (-2.9510396 * float(x[28]))+ (3.2862976 * float(x[29]))+ (-4.386745 * float(x[30]))+ (0.41534036 * float(x[31]))+ (-1.6335505 * float(x[32]))+ (4.502106 * float(x[33]))+ (-3.0483816 * float(x[34]))+ (3.0559735 * float(x[35]))+ (-3.0257695 * float(x[36]))+ (3.2401705 * float(x[37]))+ (-2.887686 * float(x[38]))+ (-1.3204864 * float(x[39]))+ (-2.602059 * float(x[40]))+ (1.0887815 * float(x[41]))+ (2.5099883 * float(x[42]))+ (1.6133875 * float(x[43]))+ (0.57417935 * float(x[44]))+ (1.7660882 * float(x[45]))+ (2.5344849 * float(x[46]))+ (-3.3511724 * float(x[47]))+ (0.3091479 * float(x[48]))+ (-1.2069336 * float(x[49]))) + -4.0006013), 0)
+    h_2 = max((((-1.6560206 * float(x[0]))+ (-0.7678217 * float(x[1]))+ (-1.057445 * float(x[2]))+ (-1.809737 * float(x[3]))+ (0.9367521 * float(x[4]))+ (1.2336909 * float(x[5]))+ (2.7820926 * float(x[6]))+ (-0.6850854 * float(x[7]))+ (0.039669424 * float(x[8]))+ (-0.54995817 * float(x[9]))+ (-1.9318771 * float(x[10]))+ (1.3606148 * float(x[11]))+ (1.000823 * float(x[12]))+ (-0.39237192 * float(x[13]))+ (1.0014415 * float(x[14]))+ (1.8591113 * float(x[15]))+ (-2.3546462 * float(x[16]))+ (-1.872162 * float(x[17]))+ (2.1221776 * float(x[18]))+ (1.506628 * float(x[19]))+ (1.5593716 * float(x[20]))+ (0.8917619 * float(x[21]))+ (-1.8399763 * float(x[22]))+ (2.5091746 * float(x[23]))+ (0.46330878 * float(x[24]))+ (-1.0507827 * float(x[25]))+ (-0.5905841 * float(x[26]))+ (-0.12714091 * float(x[27]))+ (0.17459263 * float(x[28]))+ (-2.6541111 * float(x[29]))+ (0.0015172617 * float(x[30]))+ (1.2990408 * float(x[31]))+ (1.3141377 * float(x[32]))+ (1.4335431 * float(x[33]))+ (-0.43736 * float(x[34]))+ (0.06486444 * float(x[35]))+ (2.185131 * float(x[36]))+ (2.2805288 * float(x[37]))+ (-0.12723196 * float(x[38]))+ (-0.7132703 * float(x[39]))+ (0.479248 * float(x[40]))+ (0.6621785 * float(x[41]))+ (-0.61655796 * float(x[42]))+ (2.8788855 * float(x[43]))+ (0.9448494 * float(x[44]))+ (1.2266204 * float(x[45]))+ (1.1105914 * float(x[46]))+ (-3.641982 * float(x[47]))+ (-1.4533399 * float(x[48]))+ (-0.4037788 * float(x[49]))) + 0.12819245), 0)
+    h_3 = max((((-0.48632875 * float(x[0]))+ (0.0024197167 * float(x[1]))+ (0.2444517 * float(x[2]))+ (0.46689504 * float(x[3]))+ (0.27123758 * float(x[4]))+ (0.8134332 * float(x[5]))+ (-2.9794357 * float(x[6]))+ (0.45022005 * float(x[7]))+ (1.2338965 * float(x[8]))+ (-0.6762505 * float(x[9]))+ (-0.8614166 * float(x[10]))+ (1.1631459 * float(x[11]))+ (0.8329679 * float(x[12]))+ (-0.39767137 * float(x[13]))+ (0.681964 * float(x[14]))+ (-0.004398255 * float(x[15]))+ (0.20513864 * float(x[16]))+ (-0.4120825 * float(x[17]))+ (0.84609085 * float(x[18]))+ (-1.1040666 * float(x[19]))+ (-2.376104 * float(x[20]))+ (1.1925739 * float(x[21]))+ (0.33629215 * float(x[22]))+ (2.9473517 * float(x[23]))+ (-1.4771843 * float(x[24]))+ (-0.93662214 * float(x[25]))+ (-0.35626575 * float(x[26]))+ (0.5633833 * float(x[27]))+ (-2.7561023 * float(x[28]))+ (2.5682755 * float(x[29]))+ (-2.3051188 * float(x[30]))+ (1.9992524 * float(x[31]))+ (1.7531029 * float(x[32]))+ (0.3272919 * float(x[33]))+ (-0.7235859 * float(x[34]))+ (-1.2438247 * float(x[35]))+ (0.2527063 * float(x[36]))+ (0.2667378 * float(x[37]))+ (-0.68247014 * float(x[38]))+ (-0.26653403 * float(x[39]))+ (-0.032700084 * float(x[40]))+ (0.3095816 * float(x[41]))+ (0.65541977 * float(x[42]))+ (-0.4749504 * float(x[43]))+ (-0.63447374 * float(x[44]))+ (-1.2967526 * float(x[45]))+ (0.8600763 * float(x[46]))+ (-1.5897979 * float(x[47]))+ (-0.15594779 * float(x[48]))+ (-1.0900111 * float(x[49]))) + -1.878835), 0)
+    h_4 = max((((1.6959705 * float(x[0]))+ (-2.466809 * float(x[1]))+ (1.5687249 * float(x[2]))+ (0.8015758 * float(x[3]))+ (-0.39997414 * float(x[4]))+ (2.5985627 * float(x[5]))+ (0.7431882 * float(x[6]))+ (-1.2712735 * float(x[7]))+ (-0.3133365 * float(x[8]))+ (-2.3102698 * float(x[9]))+ (0.6996774 * float(x[10]))+ (1.9238803 * float(x[11]))+ (1.6160692 * float(x[12]))+ (-0.6285925 * float(x[13]))+ (-0.8236074 * float(x[14]))+ (-1.0985917 * float(x[15]))+ (0.018410051 * float(x[16]))+ (0.9976614 * float(x[17]))+ (-1.0292166 * float(x[18]))+ (-0.9706752 * float(x[19]))+ (0.92666155 * float(x[20]))+ (-3.6064944 * float(x[21]))+ (-1.1933918 * float(x[22]))+ (-3.2218573 * float(x[23]))+ (0.87766004 * float(x[24]))+ (2.0896895 * float(x[25]))+ (-0.9468936 * float(x[26]))+ (0.42043844 * float(x[27]))+ (0.6423225 * float(x[28]))+ (-0.46113062 * float(x[29]))+ (0.91924435 * float(x[30]))+ (-1.0522742 * float(x[31]))+ (-2.557537 * float(x[32]))+ (0.68757015 * float(x[33]))+ (0.45994338 * float(x[34]))+ (0.29380065 * float(x[35]))+ (-0.98709184 * float(x[36]))+ (-2.4832735 * float(x[37]))+ (1.2188058 * float(x[38]))+ (-3.1151922 * float(x[39]))+ (-2.5977468 * float(x[40]))+ (-1.3476076 * float(x[41]))+ (-0.07139706 * float(x[42]))+ (0.04796263 * float(x[43]))+ (0.50936323 * float(x[44]))+ (-0.99597543 * float(x[45]))+ (-2.7248747 * float(x[46]))+ (0.7937724 * float(x[47]))+ (3.6400096 * float(x[48]))+ (-3.1286156 * float(x[49]))) + -0.35800177), 0)
+    o_0 = (2.0271394 * h_0)+ (1.5404849 * h_1)+ (-2.6478696 * h_2)+ (-4.0111523 * h_3)+ (-3.2130592 * h_4) + -0.16790348
              
     if num_output_logits==1:
         return o_0>=0
@@ -222,7 +217,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=209
+        model_cap=261
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)

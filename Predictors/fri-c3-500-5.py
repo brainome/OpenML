@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-16-2020 14:37:09
-# Invocation: btc -v -v fri-c3-500-5-1.csv -o fri-c3-500-5-1.py
+# Compile time: Feb-12-2020 11:12:14
+# Invocation: btc -v fri-c3-500-5-5.csv -o fri-c3-500-5-5.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                52.60%
-Model accuracy:                     86.20% (431/500 correct)
-Improvement over best guess:        33.60% (of possible 47.4%)
-Model capacity (MEC):               22 bits
-Generalization ratio:               19.59 bits/bit
-Model efficiency:                   1.52%/parameter
+Model accuracy:                     97.60% (488/500 correct)
+Improvement over best guess:        45.00% (of possible 47.4%)
+Model capacity (MEC):               43 bits
+Generalization ratio:               11.34 bits/bit
+Model efficiency:                   1.04%/parameter
 System behavior
-True Negatives:                     41.00% (205/500)
-True Positives:                     45.20% (226/500)
-False Negatives:                    2.20% (11/500)
-False Positives:                    11.60% (58/500)
-True Pos. Rate/Sensitivity/Recall:  0.95
-True Neg. Rate/Specificity:         0.78
-Precision:                          0.80
-F-1 Measure:                        0.87
-False Negative Rate/Miss Rate:      0.05
-Critical Success Index:             0.77
-Model bias:                         15.84% higher chance to pick class 1
+True Negatives:                     51.20% (256/500)
+True Positives:                     46.40% (232/500)
+False Negatives:                    1.00% (5/500)
+False Positives:                    1.40% (7/500)
+True Pos. Rate/Sensitivity/Recall:  0.98
+True Neg. Rate/Specificity:         0.97
+Precision:                          0.97
+F-1 Measure:                        0.97
+False Negative Rate/Miss Rate:      0.02
+Critical Success Index:             0.95
+Model bias:                         0.18% higher chance to pick class 0
 """
 
 # Imports -- Python3 standard library
@@ -45,7 +45,7 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="fri-c3-500-5-1.csv"
+TRAINFILE="fri-c3-500-5-5.csv"
 
 
 #Number of output logits
@@ -83,8 +83,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("All cells in the target column need to contain a class label.")
         try:
             result=int(value)
-            if (not (result==0 or result==1)):
-                raise ValueError("Integer class labels need to be 0 or 1.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -93,8 +91,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=float(value)
                 if (rounding!=-1):
                     result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
-                if (not (result==0 or result==1)):
-                    raise ValueError("Numeric class labels need to be 0 or 1.")
                 if (not str(result) in clean.classlist):
                     clean.classlist=clean.classlist+[str(result)]
                 return result
@@ -114,8 +110,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             next(reader,None)
         outbuf=[]
         for row in reader:
-            if (row==[]):  # Skip empty rows
-                continue
             rowcount=rowcount+1
             rowlen=num_attr
             if (not testfile):
@@ -151,10 +145,13 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((-1.3113279 * float(x[0]))+ (3.4919498 * float(x[1]))+ (1.3931519 * float(x[2]))+ (-0.8431984 * float(x[3]))+ (-0.84084815 * float(x[4]))) + -4.370761), 0)
-    h_1 = max((((-2.9523802 * float(x[0]))+ (-4.247306 * float(x[1]))+ (1.3380803 * float(x[2]))+ (-0.6649092 * float(x[3]))+ (-1.0368155 * float(x[4]))) + -2.5750163), 0)
-    h_2 = max((((-2.7609346 * float(x[0]))+ (-3.4616504 * float(x[1]))+ (-1.3895842 * float(x[2]))+ (0.99419785 * float(x[3]))+ (1.0626097 * float(x[4]))) + 2.3527315), 0)
-    o_0 = (2.2061398 * h_0)+ (4.0224977 * h_1)+ (-2.4770281 * h_2) + 1.3101867
+    h_0 = max((((-0.90422887 * float(x[0]))+ (5.4499016 * float(x[1]))+ (0.8761723 * float(x[2]))+ (-2.970498 * float(x[3]))+ (-1.4219861 * float(x[4]))) + -2.035354), 0)
+    h_1 = max((((2.3181171 * float(x[0]))+ (-0.95207274 * float(x[1]))+ (-4.8855968 * float(x[2]))+ (4.202505 * float(x[3]))+ (3.0568483 * float(x[4]))) + -0.42294702), 0)
+    h_2 = max((((3.2602596 * float(x[0]))+ (5.171161 * float(x[1]))+ (0.24042602 * float(x[2]))+ (-0.6266703 * float(x[3]))+ (0.09272073 * float(x[4]))) + -8.037386), 0)
+    h_3 = max((((2.7449083 * float(x[0]))+ (-1.5817496 * float(x[1]))+ (-0.79924244 * float(x[2]))+ (0.2424644 * float(x[3]))+ (-1.6896124 * float(x[4]))) + -1.6852311), 0)
+    h_4 = max((((0.57810396 * float(x[0]))+ (1.9272181 * float(x[1]))+ (-1.3166457 * float(x[2]))+ (0.6723127 * float(x[3]))+ (1.4783522 * float(x[4]))) + 3.8149354), 0)
+    h_5 = max((((5.735157 * float(x[0]))+ (4.803096 * float(x[1]))+ (-1.3503766 * float(x[2]))+ (1.0657318 * float(x[3]))+ (1.2128111 * float(x[4]))) + 2.4133122), 0)
+    o_0 = (3.3092136 * h_0)+ (-3.1896846 * h_1)+ (-14.984399 * h_2)+ (-4.955387 * h_3)+ (-8.711563 * h_4)+ (6.349963 * h_5) + 8.081598
              
     if num_output_logits==1:
         return o_0>=0
@@ -221,7 +218,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=22
+        model_cap=43
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)
