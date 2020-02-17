@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-16-2020 15:25:30
-# Invocation: btc -v -v climate-model-simulation-crashes-1.csv -o climate-model-simulation-crashes-1.py
+# Compile time: Feb-12-2020 21:37:09
+# Invocation: btc -v climate-model-simulation-crashes-3.csv -o climate-model-simulation-crashes-3.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                91.48%
-Model accuracy:                     96.29% (520/540 correct)
-Improvement over best guess:        4.81% (of possible 8.52%)
+Model accuracy:                     96.85% (523/540 correct)
+Improvement over best guess:        5.37% (of possible 8.52%)
 Model capacity (MEC):               45 bits
-Generalization ratio:               11.55 bits/bit
-Model efficiency:                   0.10%/parameter
+Generalization ratio:               11.62 bits/bit
+Model efficiency:                   0.11%/parameter
 System behavior
-True Negatives:                     5.37% (29/540)
-True Positives:                     90.93% (491/540)
-False Negatives:                    0.56% (3/540)
-False Positives:                    3.15% (17/540)
-True Pos. Rate/Sensitivity/Recall:  0.99
-True Neg. Rate/Specificity:         0.63
-Precision:                          0.97
+True Negatives:                     6.85% (37/540)
+True Positives:                     90.00% (486/540)
+False Negatives:                    1.48% (8/540)
+False Positives:                    1.67% (9/540)
+True Pos. Rate/Sensitivity/Recall:  0.98
+True Neg. Rate/Specificity:         0.80
+Precision:                          0.98
 F-1 Measure:                        0.98
-False Negative Rate/Miss Rate:      0.01
-Critical Success Index:             0.96
-Model bias:                         89.26% higher chance to pick class 1
+False Negative Rate/Miss Rate:      0.02
+Critical Success Index:             0.97
+Model bias:                         0.83% higher chance to pick class 1
 """
 
 # Imports -- Python3 standard library
@@ -45,7 +45,7 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="climate-model-simulation-crashes-1.csv"
+TRAINFILE="climate-model-simulation-crashes-3.csv"
 
 
 #Number of output logits
@@ -83,8 +83,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("All cells in the target column need to contain a class label.")
         try:
             result=int(value)
-            if (not (result==0 or result==1)):
-                raise ValueError("Integer class labels need to be 0 or 1.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -93,8 +91,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=float(value)
                 if (rounding!=-1):
                     result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
-                if (not (result==0 or result==1)):
-                    raise ValueError("Numeric class labels need to be 0 or 1.")
                 if (not str(result) in clean.classlist):
                     clean.classlist=clean.classlist+[str(result)]
                 return result
@@ -114,8 +110,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             next(reader,None)
         outbuf=[]
         for row in reader:
-            if (row==[]):  # Skip empty rows
-                continue
             rowcount=rowcount+1
             rowlen=num_attr
             if (not testfile):
@@ -151,9 +145,9 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((0.32274207 * float(x[0]))+ (42.686794 * float(x[1]))+ (0.6455078 * float(x[2]))+ (0.50623465 * float(x[3]))+ (0.40798688 * float(x[4]))+ (-0.29371914 * float(x[5]))+ (0.6808326 * float(x[6]))+ (0.7543333 * float(x[7]))+ (-0.01342728 * float(x[8]))+ (0.31858167 * float(x[9]))+ (-0.202382 * float(x[10]))+ (0.3420975 * float(x[11]))+ (0.91413933 * float(x[12]))+ (-0.5567294 * float(x[13]))+ (-0.36282498 * float(x[14]))+ (-1.0395021 * float(x[15]))+ (0.32420686 * float(x[16]))+ (-0.19886182 * float(x[17]))+ (0.6837556 * float(x[18]))+ (1.0878848 * float(x[19]))) + -1.0320243), 0)
-    h_1 = max((((0.1388146 * float(x[0]))+ (0.07116564 * float(x[1]))+ (-2.8229885 * float(x[2]))+ (-2.6265056 * float(x[3]))+ (0.10258085 * float(x[4]))+ (0.6158809 * float(x[5]))+ (1.0319514 * float(x[6]))+ (0.6914657 * float(x[7]))+ (0.47473717 * float(x[8]))+ (-0.038356163 * float(x[9]))+ (1.0126959 * float(x[10]))+ (-0.16991688 * float(x[11]))+ (-0.039392594 * float(x[12]))+ (-0.074544534 * float(x[13]))+ (-2.2016494 * float(x[14]))+ (0.9844576 * float(x[15]))+ (0.31155714 * float(x[16]))+ (1.4561597 * float(x[17]))+ (0.8812148 * float(x[18]))+ (-0.043118387 * float(x[19]))) + 1.9942461), 0)
-    o_0 = (-0.0070809876 * h_0)+ (4.3140845 * h_1) + 1.0016627
+    h_0 = max((((0.02301652 * float(x[0]))+ (0.0021897187 * float(x[1]))+ (-5.5306516 * float(x[2]))+ (-3.743127 * float(x[3]))+ (0.33491176 * float(x[4]))+ (0.6056641 * float(x[5]))+ (1.1966687 * float(x[6]))+ (0.7666667 * float(x[7]))+ (0.7010087 * float(x[8]))+ (0.7066617 * float(x[9]))+ (0.83696723 * float(x[10]))+ (-0.15069783 * float(x[11]))+ (-1.0886451 * float(x[12]))+ (-0.79799443 * float(x[13]))+ (-1.3710406 * float(x[14]))+ (2.65775 * float(x[15]))+ (-0.7961398 * float(x[16]))+ (0.99451953 * float(x[17]))+ (1.3977295 * float(x[18]))+ (0.5785258 * float(x[19]))) + 4.741626), 0)
+    h_1 = max((((-1.0541518 * float(x[0]))+ (-1.5358069 * float(x[1]))+ (0.77198154 * float(x[2]))+ (-0.19775604 * float(x[3]))+ (-0.8859999 * float(x[4]))+ (0.8610395 * float(x[5]))+ (-0.17322567 * float(x[6]))+ (0.58743256 * float(x[7]))+ (0.25963637 * float(x[8]))+ (-0.2002261 * float(x[9]))+ (0.93615574 * float(x[10]))+ (0.19575834 * float(x[11]))+ (0.44329587 * float(x[12]))+ (-1.0539198 * float(x[13]))+ (0.15250273 * float(x[14]))+ (0.868636 * float(x[15]))+ (-0.5835574 * float(x[16]))+ (-0.50950754 * float(x[17]))+ (0.60940087 * float(x[18]))+ (0.82468075 * float(x[19]))) + 0.7780741), 0)
+    o_0 = (8.057975 * h_0)+ (0.69937974 * h_1) + -3.7309713
              
     if num_output_logits==1:
         return o_0>=0

@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-12-2020 01:22:42
-# Invocation: btc -v analcatdata_creditscore-3.csv -o analcatdata_creditscore-3.py
+# Compile time: Feb-13-2020 07:29:43
+# Invocation: btc -v witmer-census-1980-8.csv -o witmer-census-1980-8.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
-Best-guess accuracy:                73.00%
-Model accuracy:                     100.00% (100/100 correct)
-Improvement over best guess:        27.00% (of possible 27.0%)
-Model capacity (MEC):               17 bits
-Generalization ratio:               5.88 bits/bit
-Model efficiency:                   1.58%/parameter
+Best-guess accuracy:                52.00%
+Model accuracy:                     78.00% (39/50 correct)
+Improvement over best guess:        26.00% (of possible 48.0%)
+Model capacity (MEC):               15 bits
+Generalization ratio:               2.60 bits/bit
+Model efficiency:                   1.73%/parameter
 System behavior
-True Negatives:                     27.00% (27/100)
-True Positives:                     73.00% (73/100)
-False Negatives:                    0.00% (0/100)
-False Positives:                    0.00% (0/100)
-True Pos. Rate/Sensitivity/Recall:  1.00
-True Neg. Rate/Specificity:         1.00
-Precision:                          1.00
-F-1 Measure:                        1.00
-False Negative Rate/Miss Rate:      0.00
-Critical Success Index:             1.00
+True Negatives:                     32.00% (16/50)
+True Positives:                     46.00% (23/50)
+False Negatives:                    6.00% (3/50)
+False Positives:                    16.00% (8/50)
+True Pos. Rate/Sensitivity/Recall:  0.88
+True Neg. Rate/Specificity:         0.67
+Precision:                          0.74
+F-1 Measure:                        0.81
+False Negative Rate/Miss Rate:      0.12
+Critical Success Index:             0.68
 Model bias:                         1.00% higher chance to pick class 1
 """
 
@@ -36,6 +36,9 @@ import tempfile
 import csv
 import binascii
 
+# Imports -- external
+import numpy as np # For numpy see: http://numpy.org
+from numpy import array
 
 # Magic constants follow
 # I/O buffer for clean. Reduce this constant for low memory devices. 
@@ -45,14 +48,56 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="analcatdata_creditscore-3.csv"
+TRAINFILE="witmer-census-1980-8.csv"
 
 
 #Number of output logits
 num_output_logits = 1
 
 #Number of attributes
-num_attr = 6
+num_attr = 5
+
+mappings = [{507012614.0: 0, 1606853386.0: 1, 3695402506.0: 2, 256963594.0: 3, 871117710.0: 4, 4113728658.0: 5, 3633790997.0: 6, 1331106966.0: 7, 3140305182.0: 8, 119723167.0: 9, 86462757.0: 10, 519955622.0: 11, 2401571516.0: 12, 2427818302.0: 13, 544269893.0: 14, 723174215.0: 15, 2486976328.0: 16, 3452281288.0: 17, 788845767.0: 18, 1130683730.0: 19, 1685838034.0: 20, 911041490.0: 21, 1677186901.0: 22, 3831963351.0: 23, 194199135.0: 24, 3816216810.0: 25, 1083525099.0: 26, 3712178158.0: 27, 1572855406.0: 28, 3937655153.0: 29, 1429427825.0: 30, 3796396917.0: 31, 102376183.0: 32, 546537082.0: 33, 3375843199.0: 34, 1987171740.0: 35, 3896629935.0: 36, 3239537588.0: 37, 3726178889.0: 38, 515477760.0: 39, 2491930727.0: 40, 2843472064.0: 41, 2655078311.0: 42, 3996007268.0: 43, 3318827798.0: 44, 1219176872.0: 45, 2354052662.0: 46, 2527652564.0: 47, 2984268684.0: 48, 840304170.0: 49}]
+list_of_cols_to_normalize = [0]
+
+transform_true = False
+
+def column_norm(column,mappings):
+    listy = []
+    for i,val in enumerate(column.reshape(-1)):
+        if not (val in mappings):
+            mappings[val] = int(max(mappings.values()))+1
+        listy.append(mappings[val])
+    return np.array(listy)
+
+def Normalize(data_arr):
+    if list_of_cols_to_normalize:
+        for i,mapping in zip(list_of_cols_to_normalize,mappings):
+            if i>=data_arr.shape[1]:
+                break
+            col = data_arr[:,i]
+            normcol = column_norm(col,mapping)
+            data_arr[:,i] = normcol
+        return data_arr
+    else:
+        return data_arr
+
+def transform(X):
+    mean = None
+    components = None
+    whiten = None
+    explained_variance = None
+    if (transform_true):
+        mean = np.array([])
+        components = np.array([])
+        whiten = None
+        explained_variance = np.array([])
+        X = X - mean
+
+    X_transformed = np.dot(X, components.T)
+    if whiten:
+        X_transformed /= np.sqrt(explained_variance)
+    return X_transformed
 
 # Preprocessor for CSV files
 def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
@@ -145,10 +190,10 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((-26.6555 * float(x[0]))+ (-6.0688224 * float(x[1]))+ (0.08976637 * float(x[2]))+ (-0.16359708 * float(x[3]))+ (0.2902307 * float(x[4]))+ (-1.6194859 * float(x[5]))) + -0.6605761), 0)
-    h_1 = max((((-0.067701645 * float(x[0]))+ (-1.9691399 * float(x[1]))+ (15.54178 * float(x[2]))+ (-15.83967 * float(x[3]))+ (-11.136758 * float(x[4]))+ (-13.183533 * float(x[5]))) + 7.387303), 0)
-    o_0 = (0.18387032 * h_0)+ (1.843229 * h_1) + -4.256614
-             
+    h_0 = max((((0.43037874 * float(x[0]))+ (0.20552675 * float(x[1]))+ (0.08976637 * float(x[2]))+ (-0.1526904 * float(x[3]))+ (0.29178822 * float(x[4]))) + 0.09762701), 0)
+    h_1 = max((((0.3495627 * float(x[0]))+ (0.16907077 * float(x[1]))+ (-1.874472 * float(x[2]))+ (0.0014055491 * float(x[3]))+ (3.3749576 * float(x[4]))) + -0.47590676), 0)
+    o_0 = (0.36011115 * h_0)+ (0.19627762 * h_1) + -3.5378377
+
     if num_output_logits==1:
         return o_0>=0
     else:
@@ -164,57 +209,62 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if not args.validate: # Then predict
-        if args.cleanfile:
-            with open(args.csvfile,'r') as cleancsvfile:
-                cleancsvreader = csv.reader(cleancsvfile)
-                for cleanrow in cleancsvreader:
-                    if len(cleanrow)==0:
-                        continue
-                print(str(','.join(str(j) for j in ([i for i in cleanrow])))+','+str(int(classify(cleanrow))))
-        else:
+        if not args.cleanfile: # File is not preprocessed
             tempdir=tempfile.gettempdir()
             cleanfile=tempdir+os.sep+"clean.csv"
             clean(args.csvfile,cleanfile, -1, args.headerless, True)
-            with open(cleanfile,'r') as cleancsvfile, open(args.csvfile,'r') as dirtycsvfile:
-                cleancsvreader = csv.reader(cleancsvfile)
-                dirtycsvreader = csv.reader(dirtycsvfile)
-                if (not args.headerless):
-                        print(','.join(next(dirtycsvreader, None)+['Prediction']))
-                for cleanrow,dirtyrow in zip(cleancsvreader,dirtycsvreader):
-                    if len(cleanrow)==0:
-                        continue
-                    print(str(','.join(str(j) for j in ([i for i in dirtyrow])))+','+str(int(classify(cleanrow))))
+            test_tensor = np.loadtxt(cleanfile,delimiter=',',dtype='float64')
             os.remove(cleanfile)
-            
-    else: # Then validate this predictor
+        else: # File is already preprocessed
+            test_tensor = np.loadtxt(args.File,delimiter = ',',dtype = 'float64')               
+        test_tensor = Normalize(test_tensor)
+        if transform_true:
+            test_tensor = transform(test_tensor)
+        with open(args.csvfile,'r') as csvinput:
+            writer = csv.writer(sys.stdout, lineterminator='\n')
+            reader = csv.reader(csvinput)
+            if (not args.headerless):
+                writer.writerow((next(reader, None)+['Prediction']))
+            i=0
+            for row in reader:
+                if (classify(test_tensor[i])):
+                    pred="1"
+                else:
+                    pred="0"
+                row.append(pred)
+                writer.writerow(row)
+                i=i+1
+    elif args.validate: # Then validate this predictor, always clean first.
         tempdir=tempfile.gettempdir()
         temp_name = next(tempfile._get_candidate_names())
-        cleanvalfile=tempdir+os.sep+temp_name
-        clean(args.csvfile,cleanvalfile, -1, args.headerless)
-        with open(cleanvalfile,'r') as valcsvfile:
-            count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0=0,0,0,0,0,0,0,0
-            valcsvreader = csv.reader(valcsvfile)
-            for valrow in valcsvreader:
-                if len(valrow)==0:
-                    continue
-                if int(classify(valrow[:-1]))==int(float(valrow[-1])):
-                    correct_count+=1
-                    if int(float(valrow[-1]))==1:
-                        num_class_1+=1
-                        num_TP+=1
-                    else:
-                        num_class_0+=1
-                        num_TN+=1
+        cleanfile=tempdir+os.sep+temp_name
+        clean(args.csvfile,cleanfile, -1, args.headerless)
+        val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
+        os.remove(cleanfile)
+        val_tensor = Normalize(val_tensor)
+        if transform_true:
+            trans = transform(val_tensor[:,:-1])
+            val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
+        count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0 = 0,0,0,0,0,0,0,0
+        for i,row in enumerate(val_tensor):
+            if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
+                correct_count+=1
+                if int(float(row[-1]))==1:
+                    num_class_1+=1
+                    num_TP+=1
                 else:
-                    if int(float(valrow[-1]))==1:
-                        num_class_1+=1
-                        num_FN+=1
-                    else:
-                        num_class_0+=1
-                        num_FP+=1
-                count+=1
+                    num_class_0+=1
+                    num_TN+=1
+            else:
+                if int(float(row[-1]))==1:
+                    num_class_1+=1
+                    num_FN+=1
+                else:
+                    num_class_0+=1
+                    num_FP+=1
+            count+=1
 
-        model_cap=17
+        model_cap=15
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)
@@ -263,6 +313,4 @@ if __name__ == "__main__":
         if int(num_TP+num_FN+num_FP)!=0:    
             print("Critical Success Index:             {:.2f}".format(TS))
 
-
-        os.remove(cleanvalfile)
 

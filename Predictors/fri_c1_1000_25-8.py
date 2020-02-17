@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-12-2020 01:22:42
-# Invocation: btc -v analcatdata_creditscore-3.csv -o analcatdata_creditscore-3.py
+# Compile time: Feb-12-2020 03:08:39
+# Invocation: btc -v fri_c1_1000_25-8.csv -o fri_c1_1000_25-8.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
-Best-guess accuracy:                73.00%
-Model accuracy:                     100.00% (100/100 correct)
-Improvement over best guess:        27.00% (of possible 27.0%)
-Model capacity (MEC):               17 bits
-Generalization ratio:               5.88 bits/bit
-Model efficiency:                   1.58%/parameter
+Best-guess accuracy:                54.60%
+Model accuracy:                     94.00% (940/1000 correct)
+Improvement over best guess:        39.40% (of possible 45.4%)
+Model capacity (MEC):               82 bits
+Generalization ratio:               11.46 bits/bit
+Model efficiency:                   0.48%/parameter
 System behavior
-True Negatives:                     27.00% (27/100)
-True Positives:                     73.00% (73/100)
-False Negatives:                    0.00% (0/100)
-False Positives:                    0.00% (0/100)
-True Pos. Rate/Sensitivity/Recall:  1.00
-True Neg. Rate/Specificity:         1.00
-Precision:                          1.00
-F-1 Measure:                        1.00
-False Negative Rate/Miss Rate:      0.00
-Critical Success Index:             1.00
-Model bias:                         1.00% higher chance to pick class 1
+True Negatives:                     51.10% (511/1000)
+True Positives:                     42.90% (429/1000)
+False Negatives:                    2.50% (25/1000)
+False Positives:                    3.50% (35/1000)
+True Pos. Rate/Sensitivity/Recall:  0.94
+True Neg. Rate/Specificity:         0.94
+Precision:                          0.92
+F-1 Measure:                        0.93
+False Negative Rate/Miss Rate:      0.06
+Critical Success Index:             0.88
+Model bias:                         0.16% higher chance to pick class 0
 """
 
 # Imports -- Python3 standard library
@@ -45,14 +45,14 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="analcatdata_creditscore-3.csv"
+TRAINFILE="fri_c1_1000_25-8.csv"
 
 
 #Number of output logits
 num_output_logits = 1
 
 #Number of attributes
-num_attr = 6
+num_attr = 25
 
 # Preprocessor for CSV files
 def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
@@ -145,9 +145,10 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((-26.6555 * float(x[0]))+ (-6.0688224 * float(x[1]))+ (0.08976637 * float(x[2]))+ (-0.16359708 * float(x[3]))+ (0.2902307 * float(x[4]))+ (-1.6194859 * float(x[5]))) + -0.6605761), 0)
-    h_1 = max((((-0.067701645 * float(x[0]))+ (-1.9691399 * float(x[1]))+ (15.54178 * float(x[2]))+ (-15.83967 * float(x[3]))+ (-11.136758 * float(x[4]))+ (-13.183533 * float(x[5]))) + 7.387303), 0)
-    o_0 = (0.18387032 * h_0)+ (1.843229 * h_1) + -4.256614
+    h_0 = max((((17.839548 * float(x[0]))+ (21.99961 * float(x[1]))+ (0.7264185 * float(x[2]))+ (-4.498801 * float(x[3]))+ (-3.4623263 * float(x[4]))+ (-0.31579512 * float(x[5]))+ (-0.64714164 * float(x[6]))+ (-0.3731275 * float(x[7]))+ (0.24735975 * float(x[8]))+ (0.275342 * float(x[9]))+ (1.806938 * float(x[10]))+ (1.1434736 * float(x[11]))+ (-0.5994948 * float(x[12]))+ (-1.0591596 * float(x[13]))+ (0.20462829 * float(x[14]))+ (-0.6416454 * float(x[15]))+ (-1.6716403 * float(x[16]))+ (0.011552736 * float(x[17]))+ (2.10306 * float(x[18]))+ (1.0011504 * float(x[19]))+ (0.40158013 * float(x[20]))+ (1.0406699 * float(x[21]))+ (-0.7683612 * float(x[22]))+ (0.5997306 * float(x[23]))+ (0.24586883 * float(x[24]))) + -2.0917509), 0)
+    h_1 = max((((-8.411417 * float(x[0]))+ (-8.091652 * float(x[1]))+ (2.407469 * float(x[2]))+ (-5.346675 * float(x[3]))+ (-2.8280125 * float(x[4]))+ (-0.08645275 * float(x[5]))+ (-0.30017275 * float(x[6]))+ (0.10493745 * float(x[7]))+ (-0.2831013 * float(x[8]))+ (0.3740243 * float(x[9]))+ (0.4282568 * float(x[10]))+ (-0.5847707 * float(x[11]))+ (-0.5002589 * float(x[12]))+ (0.45457736 * float(x[13]))+ (-0.89812404 * float(x[14]))+ (0.56143564 * float(x[15]))+ (-0.76054305 * float(x[16]))+ (-0.8790645 * float(x[17]))+ (-0.985379 * float(x[18]))+ (-0.8174708 * float(x[19]))+ (-0.35695904 * float(x[20]))+ (-0.08826662 * float(x[21]))+ (-0.47321367 * float(x[22]))+ (-0.75852734 * float(x[23]))+ (1.4403079 * float(x[24]))) + -4.408735), 0)
+    h_2 = max((((5.865413 * float(x[0]))+ (4.899499 * float(x[1]))+ (-0.13998874 * float(x[2]))+ (-0.21062124 * float(x[3]))+ (-0.10251727 * float(x[4]))+ (0.038290318 * float(x[5]))+ (-0.029360633 * float(x[6]))+ (0.004228974 * float(x[7]))+ (0.007191318 * float(x[8]))+ (0.05953521 * float(x[9]))+ (0.32386583 * float(x[10]))+ (0.122133926 * float(x[11]))+ (-0.018112399 * float(x[12]))+ (-0.05169494 * float(x[13]))+ (-0.16965877 * float(x[14]))+ (-0.017507264 * float(x[15]))+ (-0.35876983 * float(x[16]))+ (0.17948602 * float(x[17]))+ (0.29369032 * float(x[18]))+ (0.190336 * float(x[19]))+ (-0.0042212782 * float(x[20]))+ (0.22136585 * float(x[21]))+ (-0.12120176 * float(x[22]))+ (0.23792504 * float(x[23]))+ (-0.029428704 * float(x[24]))) + -7.762666), 0)
+    o_0 = (1.2906728 * h_0)+ (0.4708851 * h_1)+ (-8.935065 * h_2) + -7.7809205
              
     if num_output_logits==1:
         return o_0>=0
@@ -214,7 +215,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=17
+        model_cap=82
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)

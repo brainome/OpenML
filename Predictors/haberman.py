@@ -1,29 +1,29 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-12-2020 01:22:42
-# Invocation: btc -v analcatdata_creditscore-3.csv -o analcatdata_creditscore-3.py
+# Compile time: Feb-12-2020 17:37:29
+# Invocation: btc -v haberman-1.csv -o haberman-1.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
-Best-guess accuracy:                73.00%
-Model accuracy:                     100.00% (100/100 correct)
-Improvement over best guess:        27.00% (of possible 27.0%)
-Model capacity (MEC):               17 bits
-Generalization ratio:               5.88 bits/bit
-Model efficiency:                   1.58%/parameter
+Best-guess accuracy:                73.52%
+Model accuracy:                     73.52% (225/306 correct)
+Improvement over best guess:        0.00% (of possible 26.48%)
+Model capacity (MEC):               4 bits
+Generalization ratio:               56.25 bits/bit
+Model efficiency:                   0.00%/parameter
 System behavior
-True Negatives:                     27.00% (27/100)
-True Positives:                     73.00% (73/100)
-False Negatives:                    0.00% (0/100)
-False Positives:                    0.00% (0/100)
+True Negatives:                     0.00% (0/306)
+True Positives:                     73.53% (225/306)
+False Negatives:                    0.00% (0/306)
+False Positives:                    26.47% (81/306)
 True Pos. Rate/Sensitivity/Recall:  1.00
-True Neg. Rate/Specificity:         1.00
-Precision:                          1.00
-F-1 Measure:                        1.00
+True Neg. Rate/Specificity:         0.00
+Precision:                          0.74
+F-1 Measure:                        0.85
 False Negative Rate/Miss Rate:      0.00
-Critical Success Index:             1.00
+Critical Success Index:             0.74
 Model bias:                         1.00% higher chance to pick class 1
 """
 
@@ -45,14 +45,14 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="analcatdata_creditscore-3.csv"
+TRAINFILE="haberman-1.csv"
 
 
 #Number of output logits
 num_output_logits = 1
 
 #Number of attributes
-num_attr = 6
+num_attr = 3
 
 # Preprocessor for CSV files
 def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
@@ -145,9 +145,8 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((-26.6555 * float(x[0]))+ (-6.0688224 * float(x[1]))+ (0.08976637 * float(x[2]))+ (-0.16359708 * float(x[3]))+ (0.2902307 * float(x[4]))+ (-1.6194859 * float(x[5]))) + -0.6605761), 0)
-    h_1 = max((((-0.067701645 * float(x[0]))+ (-1.9691399 * float(x[1]))+ (15.54178 * float(x[2]))+ (-15.83967 * float(x[3]))+ (-11.136758 * float(x[4]))+ (-13.183533 * float(x[5]))) + 7.387303), 0)
-    o_0 = (0.18387032 * h_0)+ (1.843229 * h_1) + -4.256614
+    h_0 = ((((0.43037874 * float(x[0]))+ (0.20552675 * float(x[1]))+ (0.08976637 * float(x[2]))) + 0.09762701))
+    o_0=h_0
              
     if num_output_logits==1:
         return o_0>=0
@@ -214,7 +213,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=17
+        model_cap=4
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)

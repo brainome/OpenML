@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-16-2020 14:38:51
-# Invocation: btc -v -v rabe-131-1.csv -o rabe-131-1.py
+# Compile time: Feb-12-2020 16:55:52
+# Invocation: btc -v rabe-131-1.csv -o rabe-131-1.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                58.00%
-Model accuracy:                     92.00% (46/50 correct)
-Improvement over best guess:        34.00% (of possible 42.0%)
-Model capacity (MEC):               15 bits
-Generalization ratio:               3.06 bits/bit
-Model efficiency:                   2.26%/parameter
+Model accuracy:                     98.00% (49/50 correct)
+Improvement over best guess:        40.00% (of possible 42.0%)
+Model capacity (MEC):               22 bits
+Generalization ratio:               2.22 bits/bit
+Model efficiency:                   1.81%/parameter
 System behavior
 True Negatives:                     42.00% (21/50)
-True Positives:                     50.00% (25/50)
-False Negatives:                    8.00% (4/50)
+True Positives:                     56.00% (28/50)
+False Negatives:                    2.00% (1/50)
 False Positives:                    0.00% (0/50)
-True Pos. Rate/Sensitivity/Recall:  0.86
+True Pos. Rate/Sensitivity/Recall:  0.97
 True Neg. Rate/Specificity:         1.00
 Precision:                          1.00
-F-1 Measure:                        0.93
-False Negative Rate/Miss Rate:      0.14
-Critical Success Index:             0.86
-Model bias:                         14.10% higher chance to pick class 0
+F-1 Measure:                        0.98
+False Negative Rate/Miss Rate:      0.03
+Critical Success Index:             0.97
+Model bias:                         0.32% higher chance to pick class 1
 """
 
 # Imports -- Python3 standard library
@@ -83,8 +83,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("All cells in the target column need to contain a class label.")
         try:
             result=int(value)
-            if (not (result==0 or result==1)):
-                raise ValueError("Integer class labels need to be 0 or 1.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -93,8 +91,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=float(value)
                 if (rounding!=-1):
                     result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
-                if (not (result==0 or result==1)):
-                    raise ValueError("Numeric class labels need to be 0 or 1.")
                 if (not str(result) in clean.classlist):
                     clean.classlist=clean.classlist+[str(result)]
                 return result
@@ -114,8 +110,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             next(reader,None)
         outbuf=[]
         for row in reader:
-            if (row==[]):  # Skip empty rows
-                continue
             rowcount=rowcount+1
             rowlen=num_attr
             if (not testfile):
@@ -152,8 +146,9 @@ def argmax(l):
 def classify(row):
     x=row
     h_0 = max((((0.43037874 * float(x[0]))+ (0.20552675 * float(x[1]))+ (0.08976637 * float(x[2]))+ (-0.1526904 * float(x[3]))+ (0.29178822 * float(x[4]))) + 0.09762701), 0)
-    h_1 = max((((2.8624985 * float(x[0]))+ (0.22047155 * float(x[1]))+ (-0.2669623 * float(x[2]))+ (-0.08864667 * float(x[3]))+ (0.8637978 * float(x[4]))) + 0.14522702), 0)
-    o_0 = (-0.7071165 * h_0)+ (0.76638746 * h_1) + -1.8035046
+    h_1 = max((((-2.9526782 * float(x[0]))+ (2.187973 * float(x[1]))+ (1.6645454 * float(x[2]))+ (23.301226 * float(x[3]))+ (1.5281878 * float(x[4]))) + 0.7158866), 0)
+    h_2 = max((((3.8933153 * float(x[0]))+ (0.2667828 * float(x[1]))+ (0.16240183 * float(x[2]))+ (1.0358231 * float(x[3]))+ (0.28865942 * float(x[4]))) + -0.06337971), 0)
+    o_0 = (-0.60000694 * h_0)+ (-0.06916613 * h_1)+ (1.4726452 * h_2) + -0.53230757
              
     if num_output_logits==1:
         return o_0>=0
@@ -220,7 +215,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=15
+        model_cap=22
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)
