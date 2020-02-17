@@ -35,6 +35,8 @@ foreach line ( `cat testfiles.csv` )
     echo "############################################"
     echo "########## " $Name
     echo "############################################"
-        python3 Predictors/$fname.py Data/$fname.csv -validate
+        python3 Predictors/$fname.py Data/$Fname -validate
+    echo "############################################"
+    echo
     endif
 end
