@@ -7,7 +7,7 @@ Daimensions: [32m98.50(B[m / Published: 98.05 ( kNN / 86:14 / 1558x3279) (202
 Daimensions: [31m69.58(B[m / Published: 72.57 ( NN / 57:43 / 9x1473) (105 / 13 seconds ) === cmc
 Daimensions: [32m49.06(B[m / Published: 0 ( NN / 50:50 / 20x1600) (25 / 3 seconds ) === GAMETES-Heterogeneity-20atts-1600-Het-0.4-0.2-50-EDM-2-001
 Daimensions: [32m78.20(B[m / Published: 0 ( NN / 75:25 / 48x4147) (33 / 4 seconds ) === ada
-Daimensions: [31m50.37(B[m / Published: 62.82 ( NN / 50:50 / 20x1600) (26 / 3 seconds ) === GAMETES-Epistasis-3-Way-20atts-0.2H-EDM-1-1
+Daimensions: [32m63.37(B[m / Published: 62.82 ( NN / 50:50 / 20x1600) (879 / 109 seconds ) === GAMETES-Epistasis-3-Way-20atts-0.2H-EDM-1-1
 Daimensions: [32m100.00(B[m / Published: 100 ( NN / 66:34 / 8x12960) (27 / 3 seconds ) === nursery
 Daimensions: [32m99.88(B[m / Published: 99.95 ( NN / 59:41 / 10x40768) (202 / 25 seconds ) === mv
 Daimensions: [34m97.72(B[m / Published: 99.86 ( kNN / 95:5 / 16x20000) (159 / 19 seconds ) === letter
@@ -27,6 +27,7 @@ Daimensions: [32m94.00(B[m / Published: 90.90 ( NN / 54:46 / 25x1000) (869 / 
 Daimensions: [32m91.80(B[m / Published: 91.30 ( NN / 55:45 / 50x1000) (882 / 110 seconds ) === fri-c3-1000-50
 Daimensions: [32m89.60(B[m / Published: 89.00 ( NN / 56:44 / 100x500) (610 / 76 seconds ) === fri-c4-500-100
 Daimensions: [32m99.71(B[m / Published: 100 ( NN / 84:16 / 169x6598) (1277 / 159 seconds ) === musk
+Daimensions: [31m54.68(B[m / Published: 93.75 ( NN / 54:46 / 229x64) (674 / 84 seconds ) === dbworld-subjects-stemmed
 Daimensions: [32m98.56(B[m / Published: 95.99 ( kNN / 98:2 / 400x3686) (8 / 1 seconds ) === Speech
 Daimensions: [34m97.81(B[m / Published: 99.07 ( NN / 80:20 / 10936x321) (5474 / 684 seconds ) === AP-Endometrium-Kidney
 Daimensions: [34m97.53(B[m / Published: 98.77 ( NN / 84:16 / 10936x405) (5181 / 647 seconds ) === AP-Endometrium-Breast
@@ -38,7 +39,7 @@ Daimensions: [32m87.62(B[m / Published: 0 ( NN / 81:19 / 39x194) (23 / 2 seco
 Daimensions: [31m90.11(B[m / Published: 97.84 ( kNN / 89:11 / 10x5473) (118 / 14 seconds ) === page-blocks
 Daimensions: [32m87.00(B[m / Published: 84 ( NN / 54:46 / 25x100) (2 / 0 seconds ) === fri-c4-100-25
 Daimensions: [32m91.03(B[m / Published: 78.26 ( NN / 70:30 / 19x736) (3 / 0 seconds ) === eucalyptus
-Daimensions: [31m86.20(B[m / Published: 93.4 ( NN / 52:48 / 5x500) (102 / 12 seconds ) === fri-c3-500-5
+Daimensions: [32m97.60(B[m / Published: 93.4 ( NN / 52:48 / 5x500) (905 / 113 seconds ) === fri-c3-500-5
 Daimensions: [32m90.38(B[m / Published: 88.53 ( kNN / 61:39 / 3x1000000) (3308 / 413 seconds ) === SEA(50000)
 Daimensions: [34m98.00(B[m / Published: 100 ( NN / 58:42 57:43 58:42 57:43 58:42 / 5x50) (725 / 90 seconds ) === rabe-131
 Daimensions: [31m92.23(B[m / Published: 98.77 ( kNN / 91:9 / 10936x1545) (671 / 83 seconds ) === OVA-Lung
@@ -51,17 +52,17 @@ Daimensions: [32m100.00(B[m / Published: 100 ( NN / 71:29 / 9x95) (586 / 73 s
 Daimensions: [32m78.88(B[m / Published: 71.11 ( NN / 71:29 / 8x90) (2 / 0 seconds ) === postoperative-patient-data
 Daimensions: [34m98.63(B[m / Published: 100 ( NN / 69:31 / 34x366) (35 / 4 seconds ) === dermatology
 Daimensions: [32m100.00(B[m / Published: 100 ( NN / 77:23 / 10x1324) (22 / 2 seconds ) === mofn-3-7-10
-Daimensions: [31m50.31(B[m / Published: 80.56 ( NN / 50:50 / 20x1600) (26 / 3 seconds ) === GAMETES-Epistasis-2-Way-20atts-0.4H-EDM-1-1
+Daimensions: [32m81.18(B[m / Published: 80.56 ( NN / 50:50 / 20x1600) (908 / 113 seconds ) === GAMETES-Epistasis-2-Way-20atts-0.4H-EDM-1-1
 Daimensions: [32m73.60(B[m / Published: 64.8 ( NN / 60:40 / 4x125) (2 / 0 seconds ) === fruitfly
 Daimensions: [32m78.10(B[m / Published: 77.37 ( NN / 68:32 / 7x137) (5 / 0 seconds ) === veteran
 Daimensions: [32m94.00(B[m / Published: 90 ( NN / 60:40 / 5x100) (50 / 6 seconds ) === fri-c2-100-5
 Daimensions: [32m86.80(B[m / Published: 86.4 ( NN / 54:46 / 25x250) (17 / 2 seconds ) === fri-c4-250-25
-Daimensions: [31m86.00(B[m / Published: 89 ( NN / 55:45 / 10x100) (29 / 3 seconds ) === fri-c0-100-10
-Daimensions: [31m84.60(B[m / Published: 88.6 ( NN / 51:49 / 50x1000) (110 / 13 seconds ) === fri-c0-1000-50
+Daimensions: [32m94.00(B[m / Published: 89 ( NN / 55:45 / 10x100) (487 / 60 seconds ) === fri-c0-100-10
+Daimensions: [32m87.60(B[m / Published: 88.6 ( NN / 51:49 / 50x1000) (875 / 109 seconds ) === fri-c0-1000-50
 Daimensions: [32m96.85(B[m / Published: 96.67 ( kNN / 91:9 / 20x540) (754 / 94 seconds ) === climate-model-simulation-crashes
 Daimensions: [32m89.67(B[m / Published: 87.1 ( NN / 79:21 / 19x155) (2 / 0 seconds ) === hepatitis
 Daimensions: [34m95.63(B[m / Published: 96.78 ( NN / 61:39 / 16x435) (108 / 13 seconds ) === vote
-Daimensions: [32m93.33(B[m / Published: 80.00 ( NN / 60:40 / 6x15) (3 / 0 seconds ) === shuttle-landing-control
+Daimensions: [32m93.33(B[m / Published: 80.00 ( kNN / 60:40 / 6x15) (3 / 0 seconds ) === shuttle-landing-control
 Daimensions: [32m92.80(B[m / Published: 92.42 ( kNN / 89:11 / 21x528) (2 / 0 seconds ) === meta
 Daimensions: [32m84.37(B[m / Published: 84.37 ( NN / 50:50 / 18x1945) (5 / 0 seconds ) === pbcseq
 Daimensions: [34m93.16(B[m / Published: 95.17 ( kNN / 92:8 / 230x50000) (472 / 59 seconds ) === KDDCup09-upselling
@@ -86,5 +87,6 @@ Daimensions: [32m70.31(B[m / Published: 70.94 ( NN / 66:34 / 8x320) (101 / 12
 Daimensions: [32m98.63(B[m / Published: 99.32 ( NN / 52:48 / 10936x146) (53 / 6 seconds ) === AP-Omentum-Prostate
 Daimensions: [32m78.00(B[m / Published: 78 ( NN / 52:48 / 5x50) (828 / 103 seconds ) === witmer-census-1980
 Daimensions: [32m97.12(B[m / Published: 94.74 ( NN / 64:36 / 8x209) (9 / 1 seconds ) === biomed
-Daimensions: [31m75.60(B[m / Published: 92.4 ( NN / 56:44 / 10x250) (101 / 12 seconds ) === fri-c1-250-10
+Daimensions: [32m96.80(B[m / Published: 92.4 ( NN / 56:44 / 10x250) (798 / 99 seconds ) === fri-c1-250-10
 Daimensions: [32m89.60(B[m / Published: 87.2 ( NN / 50:50 / 10x250) (102 / 12 seconds ) === fri-c0-250-10
+Daimensions errored: LATER-BNG(kr-vs-kp), banknote-authentication
