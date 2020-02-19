@@ -92,3 +92,4 @@ Daimensions: [32m89.60(B[m / Published: 87.2 ( NN / 50:50 / 10x250) (102 / 12
 Daimensions: [32m100.00(B[m / Published: 100 ( kNN / 55:45 / 4x1372) (271 / 33 seconds ) === banknote-authentication
 Daimensions predictor fails (Python segmentation fault): BNG_SPECTF, BNG_kr-vs-kp_1000_1
 Not a CSV file: vehicle-sensIT 
+Failed to compile: LATER-BNG(kr-vs-kp)
