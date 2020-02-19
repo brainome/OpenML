@@ -89,4 +89,6 @@ Daimensions: [32m78.00(B[m / Published: 78 ( NN / 52:48 / 5x50) (828 / 103 se
 Daimensions: [32m97.12(B[m / Published: 94.74 ( NN / 64:36 / 8x209) (9 / 1 seconds ) === biomed
 Daimensions: [32m96.80(B[m / Published: 92.4 ( NN / 56:44 / 10x250) (798 / 99 seconds ) === fri-c1-250-10
 Daimensions: [32m89.60(B[m / Published: 87.2 ( NN / 50:50 / 10x250) (102 / 12 seconds ) === fri-c0-250-10
-Daimensions errored: LATER-BNG(kr-vs-kp), banknote-authentication
+Daimensions: [32m100.00(B[m / Published: 100 ( kNN / 55:45 / 4x1372) (271 / 33 seconds ) === banknote-authentication
+Daimensions predictor fails (Python segmentation fault): BNG_SPECTF, BNG_kr-vs-kp_1000_1
+Not a CSV file: vehicle-sensIT 

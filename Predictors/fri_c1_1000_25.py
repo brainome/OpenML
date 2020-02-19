@@ -1,29 +1,30 @@
 #!/usr/bin/env python3
 #
 # Output of Brainome Daimensions(tm) Table Compiler v0.5.
-# Compile time: Feb-16-2020 09:48:40
-# Invocation: btc -v -v fri_c1_1000_25-10.csv -o fri_c1_1000_25-10.py -f ME
+# Compile time: Feb-12-2020 03:08:39
+# Invocation: btc -v fri_c1_1000_25-8.csv -o fri_c1_1000_25-8.py
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                54.60%
-Model accuracy:                     76.20% (762/1000 correct)
-Improvement over best guess:        21.60% (of possible 45.4%)
-Model capacity (MEC):               235 bits
-Generalization ratio:               3.24 bits/bit
-Model efficiency:                   0.09%/parameter
+Model accuracy:                     94.00% (940/1000 correct)
+Improvement over best guess:        39.40% (of possible 45.4%)
+Model capacity (MEC):               82 bits
+Generalization ratio:               11.46 bits/bit
+Model efficiency:                   0.48%/parameter
 System behavior
-True Negatives:                     42.50% (425/1000)
-True Positives:                     33.70% (337/1000)
-False Negatives:                    11.70% (117/1000)
-False Positives:                    12.10% (121/1000)
-True Pos. Rate/Sensitivity/Recall:  0.74
-True Neg. Rate/Specificity:         0.78
-Precision:                          0.74
-F-1 Measure:                        0.74
-False Negative Rate/Miss Rate:      0.26
-Critical Success Index:             0.59
+True Negatives:                     51.10% (511/1000)
+True Positives:                     42.90% (429/1000)
+False Negatives:                    2.50% (25/1000)
+False Positives:                    3.50% (35/1000)
+True Pos. Rate/Sensitivity/Recall:  0.94
+True Neg. Rate/Specificity:         0.94
+Precision:                          0.92
+F-1 Measure:                        0.93
+False Negative Rate/Miss Rate:      0.06
+Critical Success Index:             0.88
+Model bias:                         0.16% higher chance to pick class 0
 """
 
 # Imports -- Python3 standard library
@@ -44,8 +45,11 @@ IOBUF=100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="fri_c1_1000_25-10.csv"
+TRAINFILE="fri_c1_1000_25-8.csv"
 
+
+#Number of output logits
+num_output_logits = 1
 
 #Number of attributes
 num_attr = 25
@@ -79,8 +83,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("All cells in the target column need to contain a class label.")
         try:
             result=int(value)
-            if (not (result==0 or result==1)):
-                raise ValueError("Integer class labels need to be 0 or 1.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -89,8 +91,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=float(value)
                 if (rounding!=-1):
                     result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
-                if (not (result==0 or result==1)):
-                    raise ValueError("Numeric class labels need to be 0 or 1.")
                 if (not str(result) in clean.classlist):
                     clean.classlist=clean.classlist+[str(result)]
                 return result
@@ -110,8 +110,6 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             next(reader,None)
         outbuf=[]
         for row in reader:
-            if (row==[]):  # Skip empty rows
-                continue
             rowcount=rowcount+1
             rowlen=num_attr
             if (not testfile):
@@ -139,490 +137,23 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             raise ValueError("Number of classes must be 2.")
 
 
-# Calculate equilibrium energy ($_i=1)
-def eqenergy(row):
-    result=0
-    for elem in row:
-        result = result + float(elem)
-    return result
+# Helper (save an import)
+def argmax(l):
+    f = lambda i: l[i]
+    return max(range(len(l)), key=f)
 
-# Classifier 
+# Classifier
 def classify(row):
-    energy=eqenergy(row)
-    if (energy>14.577269000000001):
-        return 1.0
-    if (energy>13.4396165):
-        return 0.0
-    if (energy>12.7671545):
-        return 1.0
-    if (energy>11.8989975):
-        return 0.0
-    if (energy>11.733244500000001):
-        return 1.0
-    if (energy>11.223096000000002):
-        return 0.0
-    if (energy>11.006377):
-        return 1.0
-    if (energy>10.4249905):
-        return 0.0
-    if (energy>10.183885):
-        return 1.0
-    if (energy>9.985963000000002):
-        return 0.0
-    if (energy>9.784672):
-        return 1.0
-    if (energy>9.477671):
-        return 0.0
-    if (energy>9.285057):
-        return 1.0
-    if (energy>9.0709175):
-        return 0.0
-    if (energy>8.979600000000001):
-        return 1.0
-    if (energy>8.9474995):
-        return 0.0
-    if (energy>8.801547):
-        return 1.0
-    if (energy>8.697852000000001):
-        return 0.0
-    if (energy>8.584824000000001):
-        return 1.0
-    if (energy>8.531683000000001):
-        return 0.0
-    if (energy>8.483554000000002):
-        return 1.0
-    if (energy>7.9224085):
-        return 0.0
-    if (energy>7.8813075):
-        return 1.0
-    if (energy>7.8050455):
-        return 0.0
-    if (energy>7.698264):
-        return 1.0
-    if (energy>7.427598):
-        return 0.0
-    if (energy>7.0592665):
-        return 1.0
-    if (energy>6.716417999999999):
-        return 0.0
-    if (energy>6.582113):
-        return 1.0
-    if (energy>6.472748500000001):
-        return 0.0
-    if (energy>6.286915500000001):
-        return 1.0
-    if (energy>6.2363505):
-        return 0.0
-    if (energy>6.071764):
-        return 1.0
-    if (energy>5.922089000000001):
-        return 0.0
-    if (energy>5.781087499999999):
-        return 1.0
-    if (energy>5.762505999999999):
-        return 0.0
-    if (energy>5.724942):
-        return 1.0
-    if (energy>5.714852499999999):
-        return 0.0
-    if (energy>5.5667255):
-        return 1.0
-    if (energy>5.528305499999999):
-        return 0.0
-    if (energy>5.4463065):
-        return 1.0
-    if (energy>5.3364265):
-        return 0.0
-    if (energy>5.2798535):
-        return 1.0
-    if (energy>5.2100355):
-        return 0.0
-    if (energy>5.178990000000001):
-        return 1.0
-    if (energy>5.1587914999999995):
-        return 0.0
-    if (energy>5.108495):
-        return 1.0
-    if (energy>4.928668500000001):
-        return 0.0
-    if (energy>4.8745674999999995):
-        return 1.0
-    if (energy>4.827953):
-        return 0.0
-    if (energy>4.749518500000001):
-        return 1.0
-    if (energy>4.640137):
-        return 0.0
-    if (energy>4.533825499999999):
-        return 1.0
-    if (energy>4.498434):
-        return 0.0
-    if (energy>4.4709985):
-        return 1.0
-    if (energy>4.2634):
-        return 0.0
-    if (energy>4.217131):
-        return 1.0
-    if (energy>4.100091):
-        return 0.0
-    if (energy>3.8887055000000004):
-        return 1.0
-    if (energy>3.7574665000000014):
-        return 0.0
-    if (energy>3.5901255000000005):
-        return 1.0
-    if (energy>3.4861515):
-        return 0.0
-    if (energy>3.4309149999999997):
-        return 1.0
-    if (energy>3.3027135000000003):
-        return 0.0
-    if (energy>3.2769440000000003):
-        return 1.0
-    if (energy>3.2592215):
-        return 0.0
-    if (energy>3.2156979999999997):
-        return 1.0
-    if (energy>3.1816109999999993):
-        return 0.0
-    if (energy>3.1791814999999994):
-        return 1.0
-    if (energy>3.17028):
-        return 0.0
-    if (energy>3.123786):
-        return 1.0
-    if (energy>3.0723480000000003):
-        return 0.0
-    if (energy>3.065395000000001):
-        return 1.0
-    if (energy>2.8631414999999993):
-        return 0.0
-    if (energy>2.8598729999999994):
-        return 1.0
-    if (energy>2.831989):
-        return 0.0
-    if (energy>2.710346500000001):
-        return 1.0
-    if (energy>2.6966390000000002):
-        return 0.0
-    if (energy>2.6829345):
-        return 1.0
-    if (energy>2.654019999999999):
-        return 0.0
-    if (energy>2.6331249999999997):
-        return 1.0
-    if (energy>2.4407050000000003):
-        return 0.0
-    if (energy>2.43185):
-        return 1.0
-    if (energy>2.3594035000000004):
-        return 0.0
-    if (energy>2.240474999999999):
-        return 1.0
-    if (energy>2.1786855000000003):
-        return 0.0
-    if (energy>2.1027025000000004):
-        return 1.0
-    if (energy>2.076556):
-        return 0.0
-    if (energy>2.044792):
-        return 1.0
-    if (energy>1.9961070000000005):
-        return 0.0
-    if (energy>1.894199):
-        return 1.0
-    if (energy>1.8574659999999998):
-        return 0.0
-    if (energy>1.8526529999999997):
-        return 1.0
-    if (energy>1.7544725000000003):
-        return 0.0
-    if (energy>1.7385455):
-        return 1.0
-    if (energy>1.7201274999999998):
-        return 0.0
-    if (energy>1.7115685000000003):
-        return 1.0
-    if (energy>1.6912845):
-        return 0.0
-    if (energy>1.6714215000000001):
-        return 1.0
-    if (energy>1.6489549999999997):
-        return 0.0
-    if (energy>1.6462409999999998):
-        return 1.0
-    if (energy>1.6198919999999997):
-        return 0.0
-    if (energy>1.4404279999999998):
-        return 1.0
-    if (energy>1.3731860000000005):
-        return 0.0
-    if (energy>1.3233925000000002):
-        return 1.0
-    if (energy>1.2007769999999998):
-        return 0.0
-    if (energy>1.1416985000000006):
-        return 1.0
-    if (energy>1.1192010000000003):
-        return 0.0
-    if (energy>1.038468):
-        return 1.0
-    if (energy>0.9826329999999994):
-        return 0.0
-    if (energy>0.9403149999999999):
-        return 1.0
-    if (energy>0.906326):
-        return 0.0
-    if (energy>0.8622585):
-        return 1.0
-    if (energy>0.7263899999999992):
-        return 0.0
-    if (energy>0.7082534999999998):
-        return 1.0
-    if (energy>0.6850495000000005):
-        return 0.0
-    if (energy>0.655545):
-        return 1.0
-    if (energy>0.599321):
-        return 0.0
-    if (energy>0.5372284999999999):
-        return 1.0
-    if (energy>0.4595484999999999):
-        return 0.0
-    if (energy>0.3588715000000001):
-        return 1.0
-    if (energy>0.3351304999999998):
-        return 0.0
-    if (energy>0.2955904999999993):
-        return 1.0
-    if (energy>0.1446984999999999):
-        return 0.0
-    if (energy>0.11360600000000082):
-        return 1.0
-    if (energy>-0.07946349999999987):
-        return 0.0
-    if (energy>-0.08988000000000028):
-        return 1.0
-    if (energy>-0.11265700000000001):
-        return 0.0
-    if (energy>-0.2051424999999999):
-        return 1.0
-    if (energy>-0.41874199999999956):
-        return 0.0
-    if (energy>-0.43130499999999955):
-        return 1.0
-    if (energy>-0.43640899999999977):
-        return 0.0
-    if (energy>-0.43850850000000013):
-        return 1.0
-    if (energy>-0.5190239999999998):
-        return 0.0
-    if (energy>-0.5493279999999997):
-        return 1.0
-    if (energy>-0.5809395000000002):
-        return 0.0
-    if (energy>-0.6257084999999997):
-        return 1.0
-    if (energy>-0.6679470000000003):
-        return 0.0
-    if (energy>-0.6937760000000001):
-        return 1.0
-    if (energy>-0.7549165000000003):
-        return 0.0
-    if (energy>-0.7602455000000001):
-        return 1.0
-    if (energy>-0.7975199999999998):
-        return 0.0
-    if (energy>-0.8203485000000007):
-        return 1.0
-    if (energy>-0.86063):
-        return 0.0
-    if (energy>-0.8992385000000002):
-        return 1.0
-    if (energy>-0.9188435000000005):
-        return 0.0
-    if (energy>-0.9684205000000006):
-        return 1.0
-    if (energy>-1.0404585000000002):
-        return 0.0
-    if (energy>-1.0764559999999987):
-        return 1.0
-    if (energy>-1.1705255):
-        return 0.0
-    if (energy>-1.3620190000000005):
-        return 1.0
-    if (energy>-1.4460865):
-        return 0.0
-    if (energy>-1.6930215000000004):
-        return 1.0
-    if (energy>-1.7155765):
-        return 0.0
-    if (energy>-1.7457009999999997):
-        return 1.0
-    if (energy>-1.7840469999999995):
-        return 0.0
-    if (energy>-1.9163814999999982):
-        return 1.0
-    if (energy>-1.9227179999999984):
-        return 0.0
-    if (energy>-1.9922975000000003):
-        return 1.0
-    if (energy>-2.2035864999999992):
-        return 0.0
-    if (energy>-2.2569405000000007):
-        return 1.0
-    if (energy>-2.316671500000001):
-        return 0.0
-    if (energy>-2.4013044999999997):
-        return 1.0
-    if (energy>-2.424846):
-        return 0.0
-    if (energy>-2.4918389999999997):
-        return 1.0
-    if (energy>-2.590905499999999):
-        return 0.0
-    if (energy>-2.609285999999999):
-        return 1.0
-    if (energy>-2.7220464999999994):
-        return 0.0
-    if (energy>-2.7548895):
-        return 1.0
-    if (energy>-2.946115):
-        return 0.0
-    if (energy>-2.9625335):
-        return 1.0
-    if (energy>-2.9735385):
-        return 0.0
-    if (energy>-3.0446009999999992):
-        return 1.0
-    if (energy>-3.0674080000000004):
-        return 0.0
-    if (energy>-3.2828125000000004):
-        return 1.0
-    if (energy>-3.3133365):
-        return 0.0
-    if (energy>-3.3597355):
-        return 1.0
-    if (energy>-3.4500474999999993):
-        return 0.0
-    if (energy>-3.455934):
-        return 1.0
-    if (energy>-3.48769):
-        return 0.0
-    if (energy>-3.5238125000000005):
-        return 1.0
-    if (energy>-3.550328499999999):
-        return 0.0
-    if (energy>-3.555086499999999):
-        return 1.0
-    if (energy>-3.5729249999999997):
-        return 0.0
-    if (energy>-3.7806105000000008):
-        return 1.0
-    if (energy>-3.8755935):
-        return 0.0
-    if (energy>-3.940146500000001):
-        return 1.0
-    if (energy>-3.9619609999999996):
-        return 0.0
-    if (energy>-3.9784829999999993):
-        return 1.0
-    if (energy>-4.051337):
-        return 0.0
-    if (energy>-4.089886):
-        return 1.0
-    if (energy>-4.122131000000001):
-        return 0.0
-    if (energy>-4.127907):
-        return 1.0
-    if (energy>-4.230624000000001):
-        return 0.0
-    if (energy>-4.307169999999999):
-        return 1.0
-    if (energy>-4.357175999999999):
-        return 0.0
-    if (energy>-4.507452000000001):
-        return 1.0
-    if (energy>-4.6114175):
-        return 0.0
-    if (energy>-4.6705765):
-        return 1.0
-    if (energy>-4.711717999999999):
-        return 0.0
-    if (energy>-4.900368500000001):
-        return 1.0
-    if (energy>-5.5026285):
-        return 0.0
-    if (energy>-5.743008500000002):
-        return 1.0
-    if (energy>-5.748801):
-        return 0.0
-    if (energy>-5.921627500000001):
-        return 1.0
-    if (energy>-6.034587500000001):
-        return 0.0
-    if (energy>-6.0826705):
-        return 1.0
-    if (energy>-6.18551):
-        return 0.0
-    if (energy>-6.2253905):
-        return 1.0
-    if (energy>-6.291769500000001):
-        return 0.0
-    if (energy>-6.326157):
-        return 1.0
-    if (energy>-6.582767500000001):
-        return 0.0
-    if (energy>-6.713361500000001):
-        return 1.0
-    if (energy>-6.8990855):
-        return 0.0
-    if (energy>-7.2896095):
-        return 1.0
-    if (energy>-7.594317):
-        return 0.0
-    if (energy>-7.626077499999999):
-        return 1.0
-    if (energy>-7.784962):
-        return 0.0
-    if (energy>-7.845174999999999):
-        return 1.0
-    if (energy>-7.921361999999999):
-        return 0.0
-    if (energy>-7.979367999999999):
-        return 1.0
-    if (energy>-8.0797925):
-        return 0.0
-    if (energy>-8.271590500000002):
-        return 1.0
-    if (energy>-8.6348795):
-        return 0.0
-    if (energy>-8.768677999999998):
-        return 1.0
-    if (energy>-8.967960000000001):
-        return 0.0
-    if (energy>-9.092576000000003):
-        return 1.0
-    if (energy>-9.211457499999998):
-        return 0.0
-    if (energy>-10.2399185):
-        return 1.0
-    if (energy>-10.604245500000001):
-        return 0.0
-    if (energy>-10.659533499999998):
-        return 1.0
-    if (energy>-10.7589675):
-        return 0.0
-    if (energy>-11.1635985):
-        return 1.0
-    if (energy>-11.378958):
-        return 0.0
-    if (energy>-13.068005499999998):
-        return 1.0
-    return 0.0
-
-numthresholds=235
-
+    x=row
+    h_0 = max((((17.839548 * float(x[0]))+ (21.99961 * float(x[1]))+ (0.7264185 * float(x[2]))+ (-4.498801 * float(x[3]))+ (-3.4623263 * float(x[4]))+ (-0.31579512 * float(x[5]))+ (-0.64714164 * float(x[6]))+ (-0.3731275 * float(x[7]))+ (0.24735975 * float(x[8]))+ (0.275342 * float(x[9]))+ (1.806938 * float(x[10]))+ (1.1434736 * float(x[11]))+ (-0.5994948 * float(x[12]))+ (-1.0591596 * float(x[13]))+ (0.20462829 * float(x[14]))+ (-0.6416454 * float(x[15]))+ (-1.6716403 * float(x[16]))+ (0.011552736 * float(x[17]))+ (2.10306 * float(x[18]))+ (1.0011504 * float(x[19]))+ (0.40158013 * float(x[20]))+ (1.0406699 * float(x[21]))+ (-0.7683612 * float(x[22]))+ (0.5997306 * float(x[23]))+ (0.24586883 * float(x[24]))) + -2.0917509), 0)
+    h_1 = max((((-8.411417 * float(x[0]))+ (-8.091652 * float(x[1]))+ (2.407469 * float(x[2]))+ (-5.346675 * float(x[3]))+ (-2.8280125 * float(x[4]))+ (-0.08645275 * float(x[5]))+ (-0.30017275 * float(x[6]))+ (0.10493745 * float(x[7]))+ (-0.2831013 * float(x[8]))+ (0.3740243 * float(x[9]))+ (0.4282568 * float(x[10]))+ (-0.5847707 * float(x[11]))+ (-0.5002589 * float(x[12]))+ (0.45457736 * float(x[13]))+ (-0.89812404 * float(x[14]))+ (0.56143564 * float(x[15]))+ (-0.76054305 * float(x[16]))+ (-0.8790645 * float(x[17]))+ (-0.985379 * float(x[18]))+ (-0.8174708 * float(x[19]))+ (-0.35695904 * float(x[20]))+ (-0.08826662 * float(x[21]))+ (-0.47321367 * float(x[22]))+ (-0.75852734 * float(x[23]))+ (1.4403079 * float(x[24]))) + -4.408735), 0)
+    h_2 = max((((5.865413 * float(x[0]))+ (4.899499 * float(x[1]))+ (-0.13998874 * float(x[2]))+ (-0.21062124 * float(x[3]))+ (-0.10251727 * float(x[4]))+ (0.038290318 * float(x[5]))+ (-0.029360633 * float(x[6]))+ (0.004228974 * float(x[7]))+ (0.007191318 * float(x[8]))+ (0.05953521 * float(x[9]))+ (0.32386583 * float(x[10]))+ (0.122133926 * float(x[11]))+ (-0.018112399 * float(x[12]))+ (-0.05169494 * float(x[13]))+ (-0.16965877 * float(x[14]))+ (-0.017507264 * float(x[15]))+ (-0.35876983 * float(x[16]))+ (0.17948602 * float(x[17]))+ (0.29369032 * float(x[18]))+ (0.190336 * float(x[19]))+ (-0.0042212782 * float(x[20]))+ (0.22136585 * float(x[21]))+ (-0.12120176 * float(x[22]))+ (0.23792504 * float(x[23]))+ (-0.029428704 * float(x[24]))) + -7.762666), 0)
+    o_0 = (1.2906728 * h_0)+ (0.4708851 * h_1)+ (-8.935065 * h_2) + -7.7809205
+             
+    if num_output_logits==1:
+        return o_0>=0
+    else:
+        return argmax([eval('o'+str(i)) for i in range(num_output_logits)])
 
 # Main method
 if __name__ == "__main__":
@@ -684,7 +215,7 @@ if __name__ == "__main__":
                         num_FP+=1
                 count+=1
 
-        model_cap=numthresholds
+        model_cap=82
 
         FN=float(num_FN)*100.0/float(count)
         FP=float(num_FP)*100.0/float(count)
