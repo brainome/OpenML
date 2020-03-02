@@ -32,10 +32,15 @@ foreach line ( `cat testfiles.csv` )
     endif
     set fname  = `echo $Fname | sed 's/\..*//g' `
     set suffix = `echo $Fname | sed 's/.*\./\./g'`
+    if ( $Target != "0" ) then
+        echo "### Moving target column..."
+        python3 target.py Data/$Fname $Target >Data/temp.csv
+        mv Data/temp.csv Data/$Fname
+    endif
     echo "############################################"
     echo "########## " $Name
     echo "############################################"
-        python3 Predictors/$fname.py Data/$Fname -validate
+    python3 Predictors/$fname.py Data/$Fname -validate
     echo "############################################"
     echo
     endif
