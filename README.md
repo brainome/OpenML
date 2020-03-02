@@ -11,3 +11,6 @@ python3 dataset.py dataset.csv -validate
 where dataset is the name of a dataset.
 
 We also invite you to take a look at the source code.
+
+report.txt shows our results compared to what was reported on OpenML.org (as of March 2, 2020).
+hardware.txt shows CPU and GPU configuration used to obtain the result. We used a single desktop machine. 
