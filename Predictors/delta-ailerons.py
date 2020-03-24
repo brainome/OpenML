@@ -3,9 +3,9 @@
 # This code is licensed under GNU GPL v2.0 or higher. Please see LICENSE for details.
 #
 #
-# Output of Brainome Daimensions(tm) Table Compiler v0.8.
-# Compile time: Feb-28-2020 18:21:27
-# Invocation: btc Data/delta-ailerons.csv -o Models/delta-ailerons.py -v -v -v -stopat 94.54 -port 8090 -e 9
+# Output of Brainome Daimensions(tm) Table Compiler v0.91.
+# Compile time: Mar-19-2020 23:11:01
+# Invocation: btc -server brain.brainome.ai Data/delta-ailerons.csv -o Models/delta-ailerons.py -v -v -v -stopat 94.54 -port 8100 -f NN -e 10
 # This source code requires Python 3.
 #
 """
@@ -27,6 +27,7 @@ Precision:                          0.95
 F-1 Measure:                        0.94
 False Negative Rate/Miss Rate:      0.07
 Critical Success Index:             0.88
+
 """
 
 # Imports -- Python3 standard library
@@ -56,6 +57,8 @@ num_output_logits = 1
 
 #Number of attributes
 num_attr = 5
+n_classes = 2
+
 
 # Preprocessor for CSV files
 def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
@@ -93,8 +96,8 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=clean.mapping[cell]
             except:
                 raise ValueError("Class label '"+value+"' encountered in input not defined in user-provided mapping.")
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mapped to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mapped to integer.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -103,7 +106,7 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             if (rounding!=-1):
                 result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
             else:
-                result=int(result)
+                result=int(int(result*100)/100)  # round classes to two digits
 
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
@@ -114,11 +117,12 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             else:
                 clean.classlist=clean.classlist+[result]
                 result=clean.classlist.index(result)
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mappable to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mappable to integer.")
         finally:
-            if (result<0 or result>1):
-                raise ValueError("Alpha version restriction: Integer class labels can only be 0 or 1.")
+            if (result<0):
+                raise ValueError("Integer class labels must be positive and contiguous.")
+
         return result
 
     rowcount=0
@@ -147,15 +151,16 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                     outbuf.append(classid)
                 i=i+1
             if (len(outbuf)<IOBUF):
-                outbuf.append("\n")
+                outbuf.append(os.linesep)
             else:
                 print(''.join(outbuf), file=f)
                 outbuf=[]
         print(''.join(outbuf),end="", file=f)
         f.close()
 
-        if (testfile==False and not len(clean.classlist)==2):
-            raise ValueError("Number of classes must be 2.")
+        if (testfile==False and not len(clean.classlist)>=2):
+            raise ValueError("Number of classes must be at least 2.")
+
 
 
 # Helper (save an import)
@@ -166,6 +171,7 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
+    o=[0]*num_output_logits
     h_0 = max((((-20.00128 * float(x[0]))+ (-1.5029258 * float(x[1]))+ (-4.766201 * float(x[2]))+ (-14.511092 * float(x[3]))+ (-44.4326 * float(x[4]))) + 0.12826708), 0)
     h_1 = max((((-13.716565 * float(x[0]))+ (1.8003263 * float(x[1]))+ (3.7682083 * float(x[2]))+ (0.96580297 * float(x[3]))+ (-58.532383 * float(x[4]))) + 0.36655882), 0)
     h_2 = max((((0.14960697 * float(x[0]))+ (-1.0765419 * float(x[1]))+ (-1.0850483 * float(x[2]))+ (-0.534004 * float(x[3]))+ (57.55556 * float(x[4]))) + 0.67852676), 0)
@@ -181,12 +187,12 @@ def classify(row):
     h_12 = max((((-8.170787 * float(x[0]))+ (-4.00453 * float(x[1]))+ (-2.5573173 * float(x[2]))+ (-13.114713 * float(x[3]))+ (30.059679 * float(x[4]))) + -0.11011992), 0)
     h_13 = max((((0.40235886 * float(x[0]))+ (0.9117747 * float(x[1]))+ (0.06467843 * float(x[2]))+ (-0.1084549 * float(x[3]))+ (-0.32338578 * float(x[4]))) + -0.059243273), 0)
     h_14 = max((((4.5934668 * float(x[0]))+ (-1.2968311 * float(x[1]))+ (-2.4233649 * float(x[2]))+ (-0.5925729 * float(x[3]))+ (58.717194 * float(x[4]))) + 0.4680739), 0)
-    o_0 = (15.204011 * h_0)+ (15.721026 * h_1)+ (-2.1729155 * h_2)+ (-2.2141218 * h_3)+ (-2.7159398 * h_4)+ (-5.801537 * h_5)+ (-0.22122584 * h_6)+ (-12.558394 * h_7)+ (-0.16689488 * h_8)+ (-4.2007203 * h_9)+ (16.058386 * h_10)+ (-2.506171 * h_11)+ (-18.286753 * h_12)+ (0.9853318 * h_13)+ (-3.0077446 * h_14) + -2.5201223
-             
+    o[0] = (15.204011 * h_0)+ (15.721026 * h_1)+ (-2.1729155 * h_2)+ (-2.2141218 * h_3)+ (-2.7159398 * h_4)+ (-5.801537 * h_5)+ (-0.22122584 * h_6)+ (-12.558394 * h_7)+ (-0.16689488 * h_8)+ (-4.2007203 * h_9)+ (16.058386 * h_10)+ (-2.506171 * h_11)+ (-18.286753 * h_12)+ (0.9853318 * h_13)+ (-3.0077446 * h_14) + -2.5201223
+
     if num_output_logits==1:
-        return o_0>=0
+        return o[0]>=0
     else:
-        return argmax([eval('o'+str(i)) for i in range(num_output_logits)])
+        return argmax(o)
 
 # Main method
 if __name__ == "__main__":
@@ -222,81 +228,117 @@ if __name__ == "__main__":
             os.remove(cleanfile)
             
     else: # Then validate this predictor
-        tempdir=tempfile.gettempdir()
-        temp_name = next(tempfile._get_candidate_names())
-        cleanvalfile=tempdir+os.sep+temp_name
-        clean(args.csvfile,cleanvalfile, -1, args.headerless)
-        with open(cleanvalfile,'r') as valcsvfile:
-            count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0=0,0,0,0,0,0,0,0
-            valcsvreader = csv.reader(valcsvfile)
-            for valrow in valcsvreader:
-                if len(valrow)==0:
-                    continue
-                if int(classify(valrow[:-1]))==int(float(valrow[-1])):
-                    correct_count+=1
-                    if int(float(valrow[-1]))==1:
-                        num_class_1+=1
-                        num_TP+=1
+        if n_classes==2:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanvalfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanvalfile, -1, args.headerless)
+            with open(cleanvalfile,'r') as valcsvfile:
+                count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0=0,0,0,0,0,0,0,0
+                valcsvreader = csv.reader(valcsvfile)
+                for valrow in valcsvreader:
+                    if len(valrow)==0:
+                        continue
+                    if int(classify(valrow[:-1]))==int(float(valrow[-1])):
+                        correct_count+=1
+                        if int(float(valrow[-1]))==1:
+                            num_class_1+=1
+                            num_TP+=1
+                        else:
+                            num_class_0+=1
+                            num_TN+=1
                     else:
-                        num_class_0+=1
-                        num_TN+=1
-                else:
-                    if int(float(valrow[-1]))==1:
-                        num_class_1+=1
-                        num_FN+=1
+                        if int(float(valrow[-1]))==1:
+                            num_class_1+=1
+                            num_FN+=1
+                        else:
+                            num_class_0+=1
+                            num_FP+=1
+                    count+=1
+        else:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanvalfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanvalfile, -1, args.headerless)
+            with open(cleanvalfile,'r') as valcsvfile:
+                count,correct_count=0,0
+                valcsvreader = csv.reader(valcsvfile)
+                numeachclass={}
+                for i,valrow in enumerate(valcsvreader):
+                    if len(valrow)==0:
+                        continue
+                    if int(classify(valrow[:-1]))==int(float(valrow[-1])):
+                        correct_count+=1
+                    if int(float(valrow[-1])) in numeachclass.keys():
+                        numeachclass[int(float(valrow[-1]))]+=1
                     else:
-                        num_class_0+=1
-                        num_FP+=1
-                count+=1
+                        numeachclass[int(float(valrow[-1]))]=0
+                    count+=1
 
         model_cap=106
 
-        FN=float(num_FN)*100.0/float(count)
-        FP=float(num_FP)*100.0/float(count)
-        TN=float(num_TN)*100.0/float(count)
-        TP=float(num_TP)*100.0/float(count)
-        num_correct=correct_count
+        if n_classes==2:
 
-        if int(num_TP+num_FN)!=0:
-            TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
-        if int(num_TN+num_FP)!=0:
-            TNR=num_TN/(num_TN+num_FP) # Specificity, 
-        if int(num_TP+num_FP)!=0:
-            PPV=num_TP/(num_TP+num_FP) # Recall
-        if int(num_FN+num_TP)!=0:
-            FNR=num_FN/(num_FN+num_TP) # Miss rate
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
-        if int(num_TP+num_FN+num_FP)!=0:
-            TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
+            FN=float(num_FN)*100.0/float(count)
+            FP=float(num_FP)*100.0/float(count)
+            TN=float(num_TN)*100.0/float(count)
+            TP=float(num_TP)*100.0/float(count)
+            num_correct=correct_count
 
-        randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
-        modelacc=int(float(num_correct*10000)/count)/100.0
+            if int(num_TP+num_FN)!=0:
+                TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
+            if int(num_TN+num_FP)!=0:
+                TNR=num_TN/(num_TN+num_FP) # Specificity, 
+            if int(num_TP+num_FP)!=0:
+                PPV=num_TP/(num_TP+num_FP) # Recall
+            if int(num_FN+num_TP)!=0:
+                FNR=num_FN/(num_FN+num_TP) # Miss rate
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
+            if int(num_TP+num_FN+num_FP)!=0:
+                TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
 
-        print("System Type:                        Binary classifier")
-        print("Best-guess accuracy:                {:.2f}%".format(randguess))
-        print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
-        print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
-        print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
-        print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
-        print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
-        print("System behavior")
-        print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
-        print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
-        print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
-        print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
-        if int(num_TP+num_FN)!=0:
-            print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
-        if int(num_TN+num_FP)!=0:
-            print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
-        if int(num_TP+num_FP)!=0:
-            print("Precision:                          {:.2f}".format(PPV))
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            print("F-1 Measure:                        {:.2f}".format(FONE))
-        if int(num_TP+num_FN)!=0:
-            print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
-        if int(num_TP+num_FN+num_FP)!=0:    
-            print("Critical Success Index:             {:.2f}".format(TS))
+            randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
+            modelacc=int(float(num_correct*10000)/count)/100.0
+
+            print("System Type:                        Binary classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+            print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
+            print("System behavior")
+            print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
+            print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
+            print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
+            print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
+            if int(num_TP+num_FN)!=0:
+                print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
+            if int(num_TN+num_FP)!=0:
+                print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
+            if int(num_TP+num_FP)!=0:
+                print("Precision:                          {:.2f}".format(PPV))
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                print("F-1 Measure:                        {:.2f}".format(FONE))
+            if int(num_TP+num_FN)!=0:
+                print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
+            if int(num_TP+num_FN+num_FP)!=0:    
+                print("Critical Success Index:             {:.2f}".format(TS))
+        else:
+            num_correct=correct_count
+            modelacc=int(float(num_correct*10000)/count)/100.0
+            randguess=round(max(numeachclass.values())/sum(numeachclass.values())*100,2)
+            print("System Type:                        "+str(n_classes)+"-way classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+
+
+
+
 
 
         os.remove(cleanvalfile)

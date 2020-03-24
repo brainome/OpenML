@@ -3,9 +3,9 @@
 # This code is licensed under GNU GPL v2.0 or higher. Please see LICENSE for details.
 #
 #
-# Output of Brainome Daimensions(tm) Table Compiler v0.8.
-# Compile time: Feb-28-2020 19:35:39
-# Invocation: btc Data/spectrometer.csv -o Models/spectrometer.py -v -v -v -stopat 97.93 -port 8090
+# Output of Brainome Daimensions(tm) Table Compiler v0.91.
+# Compile time: Mar-20-2020 00:29:07
+# Invocation: btc -server brain.brainome.ai Data/spectrometer.csv -o Models/spectrometer.py -v -v -v -stopat 97.93 -port 8100 -f NN -e 10
 # This source code requires Python 3.
 #
 """
@@ -27,6 +27,7 @@ Precision:                          0.88
 F-1 Measure:                        0.92
 False Negative Rate/Miss Rate:      0.04
 Critical Success Index:             0.85
+
 """
 
 # Imports -- Python3 standard library
@@ -59,6 +60,7 @@ num_output_logits = 1
 
 #Number of attributes
 num_attr = 102
+n_classes = 2
 
 mappings = [{23348331.0: 0, 25559033.0: 1, 38061252.0: 2, 38602410.0: 3, 86774930.0: 4, 91012968.0: 5, 109300583.0: 6, 119792225.0: 7, 125509343.0: 8, 161349050.0: 9, 168132081.0: 10, 174415665.0: 11, 184456274.0: 12, 188006130.0: 13, 199859779.0: 14, 218378534.0: 15, 233250084.0: 16, 262013015.0: 17, 273067914.0: 18, 296913859.0: 19, 298045331.0: 20, 299341624.0: 21, 334022802.0: 22, 343713860.0: 23, 345464906.0: 24, 354641221.0: 25, 383836606.0: 26, 384396485.0: 27, 384681946.0: 28, 384751539.0: 29, 414801568.0: 30, 423762791.0: 31, 425571129.0: 32, 430526275.0: 33, 535239784.0: 34, 546982200.0: 35, 571659272.0: 36, 583397464.0: 37, 614842720.0: 38, 620562669.0: 39, 630853198.0: 40, 633491979.0: 41, 636665188.0: 42, 649794698.0: 43, 654412227.0: 44, 662336163.0: 45, 709066325.0: 46, 711951533.0: 47, 724481309.0: 48, 731596317.0: 49, 751524220.0: 50, 753464870.0: 51, 780198305.0: 52, 786791059.0: 53, 800857581.0: 54, 804373186.0: 55, 825063393.0: 56, 831022265.0: 57, 831946241.0: 58, 842151872.0: 59, 848931938.0: 60, 854421628.0: 61, 862180365.0: 62, 875610277.0: 63, 879679011.0: 64, 910723369.0: 65, 915608694.0: 66, 922764325.0: 67, 936496254.0: 68, 962711257.0: 69, 977888143.0: 70, 1010739497.0: 71, 1040496559.0: 72, 1101459911.0: 73, 1105624585.0: 74, 1131417354.0: 75, 1141691946.0: 76, 1149631284.0: 77, 1156580910.0: 78, 1199699668.0: 79, 1213678071.0: 80, 1224969054.0: 81, 1244904046.0: 82, 1258999759.0: 83, 1260595919.0: 84, 1264614336.0: 85, 1265048915.0: 86, 1269561068.0: 87, 1274939019.0: 88, 1290498000.0: 89, 1297804077.0: 90, 1315346733.0: 91, 1336234720.0: 92, 1359037266.0: 93, 1391571512.0: 94, 1393147811.0: 95, 1393421002.0: 96, 1405550051.0: 97, 1408204714.0: 98, 1408720125.0: 99, 1424922869.0: 100, 1427595713.0: 101, 1449238608.0: 102, 1452183213.0: 103, 1460941593.0: 104, 1471951232.0: 105, 1478417691.0: 106, 1480841914.0: 107, 1485031896.0: 108, 1508396632.0: 109, 1510126952.0: 110, 1552744342.0: 111, 1561602912.0: 112, 1562243179.0: 113, 1595558148.0: 114, 1603057064.0: 115, 1609905507.0: 116, 1615741628.0: 117, 1615788900.0: 118, 1629745460.0: 119, 1680930698.0: 120, 1684816005.0: 121, 1698629485.0: 122, 1719291999.0: 123, 1721079684.0: 124, 1728978383.0: 125, 1732350810.0: 126, 1739640145.0: 127, 1755482099.0: 128, 1762808275.0: 129, 1781428909.0: 130, 1791979456.0: 131, 1818802479.0: 132, 1819090709.0: 133, 1856086907.0: 134, 1856400329.0: 135, 1863470125.0: 136, 1881635922.0: 137, 1882352747.0: 138, 1886195044.0: 139, 1894440665.0: 140, 1895863148.0: 141, 1899934940.0: 142, 1903336100.0: 143, 1927380194.0: 144, 1937706868.0: 145, 1949148063.0: 146, 1950260940.0: 147, 1984268439.0: 148, 1993089788.0: 149, 2037419976.0: 150, 2041355748.0: 151, 2042547590.0: 152, 2069122429.0: 153, 2076523148.0: 154, 2092076078.0: 155, 2094614699.0: 156, 2098253417.0: 157, 2175103328.0: 158, 2176499031.0: 159, 2190445080.0: 160, 2194846467.0: 161, 2219240384.0: 162, 2223856877.0: 163, 2228873448.0: 164, 2270076545.0: 165, 2278958379.0: 166, 2281594658.0: 167, 2282247827.0: 168, 2291138732.0: 169, 2329159818.0: 170, 2344207782.0: 171, 2361664330.0: 172, 2361688722.0: 173, 2362040188.0: 174, 2367013849.0: 175, 2367641050.0: 176, 2396958102.0: 177, 2397504735.0: 178, 2416361653.0: 179, 2418657568.0: 180, 2424380733.0: 181, 2424533487.0: 182, 2436199156.0: 183, 2438648499.0: 184, 2470243115.0: 185, 2480749744.0: 186, 2502085655.0: 187, 2502736717.0: 188, 2515765850.0: 189, 2536171673.0: 190, 2583614056.0: 191, 2585309694.0: 192, 2600393076.0: 193, 2619642019.0: 194, 2638892969.0: 195, 2653350074.0: 196, 2654935236.0: 197, 2680256784.0: 198, 2698538993.0: 199, 2708039104.0: 200, 2719997088.0: 201, 2728369254.0: 202, 2733154694.0: 203, 2752984677.0: 204, 2769241875.0: 205, 2773419789.0: 206, 2786617479.0: 207, 2789649932.0: 208, 2820857143.0: 209, 2821907415.0: 210, 2824560688.0: 211, 2831932330.0: 212, 2855606440.0: 213, 2856833130.0: 214, 2857146073.0: 215, 2895931572.0: 216, 2905552483.0: 217, 2923524600.0: 218, 2936962036.0: 219, 2951175841.0: 220, 2953483848.0: 221, 2964625084.0: 222, 2969996456.0: 223, 2971263201.0: 224, 2979361307.0: 225, 2984729252.0: 226, 2987866105.0: 227, 3006068448.0: 228, 3006915604.0: 229, 3011145050.0: 230, 3030283117.0: 231, 3034530140.0: 232, 3045336044.0: 233, 3084341057.0: 234, 3088637367.0: 235, 3113233047.0: 236, 3124675403.0: 237, 3131553774.0: 238, 3136145483.0: 239, 3153408193.0: 240, 3230561416.0: 241, 3231424525.0: 242, 3266496511.0: 243, 3269980854.0: 244, 3281381822.0: 245, 3299207448.0: 246, 3316397423.0: 247, 3318383810.0: 248, 3319384568.0: 249, 3340344274.0: 250, 3351278157.0: 251, 3367012336.0: 252, 3368260257.0: 253, 3381918623.0: 254, 3388509122.0: 255, 3389010798.0: 256, 3411681748.0: 257, 3434765236.0: 258, 3461658625.0: 259, 3465069838.0: 260, 3567083521.0: 261, 3573867197.0: 262, 3605624243.0: 263, 3607546831.0: 264, 3626635319.0: 265, 3635906240.0: 266, 3651309323.0: 267, 3651495614.0: 268, 3659864761.0: 269, 3673344594.0: 270, 3673652709.0: 271, 3682419490.0: 272, 3684409129.0: 273, 3703763090.0: 274, 3712367430.0: 275, 3714043866.0: 276, 3725504054.0: 277, 3728028160.0: 278, 3732007525.0: 279, 3745353841.0: 280, 3755886702.0: 281, 3794140985.0: 282, 3827057765.0: 283, 3832257131.0: 284, 3848971698.0: 285, 3850278977.0: 286, 3861968832.0: 287, 3884485244.0: 288, 3922925967.0: 289, 3935874256.0: 290, 3944441814.0: 291, 3979114470.0: 292, 3980022793.0: 293, 3982323801.0: 294, 3987170506.0: 295, 4000454467.0: 296, 4018219678.0: 297, 4022765042.0: 298, 4072337212.0: 299, 4092606073.0: 300, 4109785748.0: 301, 4114051570.0: 302, 4135130014.0: 303, 4136539668.0: 304, 4145942959.0: 305, 4147344872.0: 306, 4167606728.0: 307, 4175946824.0: 308, 4186584856.0: 309, 4199748617.0: 310, 4211735132.0: 311, 4230439124.0: 312, 4252952229.0: 313, 4264802653.0: 314, 4277166646.0: 315, 4288806133.0: 316, 4292300670.0: 317, 1788175167.0: 318, 3262722028.0: 319, 3743009523.0: 320, 3852017345.0: 321, 1716134778.0: 322, 3697331230.0: 323, 418076049.0: 324, 545932207.0: 325, 1457526258.0: 326, 3944322266.0: 327, 2135261105.0: 328, 2443967942.0: 329, 362813769.0: 330, 3720994225.0: 331, 1887859267.0: 332, 2174355332.0: 333, 1834061884.0: 334, 2550096478.0: 335, 3744073227.0: 336, 1243125259.0: 337, 3477357573.0: 338, 2263632572.0: 339, 4014819284.0: 340, 690353904.0: 341, 2147525791.0: 342, 1471572028.0: 343, 2983769086.0: 344, 3417670682.0: 345, 3376738937.0: 346, 106552395.0: 347, 1268105659.0: 348, 4058056337.0: 349, 3325152634.0: 350, 1081618286.0: 351, 3029812027.0: 352, 3017169328.0: 353, 2540679764.0: 354, 2507810812.0: 355, 1515413251.0: 356, 1408191589.0: 357, 208944628.0: 358, 2026356848.0: 359, 3529401203.0: 360, 3933136696.0: 361, 558963494.0: 362, 181454204.0: 363, 3391781255.0: 364, 2273387291.0: 365, 541035355.0: 366, 3934068655.0: 367, 487995803.0: 368, 3476609215.0: 369, 3426259749.0: 370, 1996580163.0: 371, 3091056213.0: 372, 160734547.0: 373, 3202314838.0: 374, 1511306530.0: 375, 588640262.0: 376, 1244067738.0: 377, 2687615507.0: 378, 541017236.0: 379, 2324601323.0: 380, 1419865583.0: 381, 2030680114.0: 382, 2345832027.0: 383, 1359805545.0: 384, 2251851080.0: 385, 109768202.0: 386, 2302091470.0: 387, 510886413.0: 388, 3361705054.0: 389, 1143463705.0: 390, 3851346818.0: 391, 3764136716.0: 392, 2635085564.0: 393, 546854341.0: 394, 2510976615.0: 395, 153011272.0: 396, 2042088898.0: 397, 558431427.0: 398, 3687922345.0: 399, 1233709753.0: 400, 4037755128.0: 401, 1814597409.0: 402, 2692450117.0: 403, 3674169666.0: 404, 2969458129.0: 405, 2920429991.0: 406, 378598744.0: 407, 2608602717.0: 408, 2716998122.0: 409, 1413277611.0: 410, 1603258338.0: 411, 4087318976.0: 412, 2050503892.0: 413, 3335961797.0: 414, 3444870002.0: 415, 4118175972.0: 416, 1300873656.0: 417, 3380194261.0: 418, 1330520959.0: 419, 1831645480.0: 420, 1679215821.0: 421, 4163010534.0: 422, 1982069323.0: 423, 2140923543.0: 424, 221170312.0: 425, 1295885240.0: 426, 2828820373.0: 427, 4004856071.0: 428, 2786005050.0: 429, 1431292245.0: 430, 1674949354.0: 431, 2009607175.0: 432, 3965548273.0: 433, 3435832325.0: 434, 1040819615.0: 435, 1235652190.0: 436, 1464700339.0: 437, 1834866438.0: 438, 1929408257.0: 439, 2587214501.0: 440, 4097233706.0: 441, 1925988044.0: 442, 2416279450.0: 443, 1813264444.0: 444, 1542443272.0: 445, 775346484.0: 446, 2090307474.0: 447, 133828950.0: 448, 1209866743.0: 449, 1679892458.0: 450, 1001744452.0: 451, 2585578819.0: 452, 2468405095.0: 453, 1318518149.0: 454, 184695789.0: 455, 463700242.0: 456, 1824345750.0: 457, 2025116234.0: 458, 547010295.0: 459, 491629898.0: 460, 3726682671.0: 461, 3750496083.0: 462, 3852185910.0: 463, 3519722214.0: 464, 359038278.0: 465, 448390488.0: 466, 841137832.0: 467, 759173473.0: 468, 2441440671.0: 469, 3087066200.0: 470, 2769554661.0: 471, 3316738094.0: 472, 3417868334.0: 473, 363773262.0: 474, 1954166276.0: 475, 3232540693.0: 476, 3414256357.0: 477, 1085196.0: 478, 4010025716.0: 479, 3404292542.0: 480, 779766362.0: 481, 802166244.0: 482, 3700004288.0: 483, 4108641434.0: 484, 3039310747.0: 485, 1009782162.0: 486, 1687658496.0: 487, 3750703687.0: 488, 1098960550.0: 489, 3527347559.0: 490, 366727047.0: 491, 3783278189.0: 492, 1015874009.0: 493, 2626371972.0: 494, 118621575.0: 495, 2022666289.0: 496, 3492484198.0: 497, 2798130732.0: 498, 1147670791.0: 499, 2082277058.0: 500, 171574187.0: 501, 1782605130.0: 502, 1502048324.0: 503, 364349170.0: 504, 196898627.0: 505, 913866012.0: 506, 4170640359.0: 507, 3754660787.0: 508, 3920616253.0: 509, 2003270807.0: 510, 2007554972.0: 511, 2151719954.0: 512, 4282390830.0: 513, 3541378818.0: 514, 84852501.0: 515, 4039526604.0: 516, 2863695910.0: 517, 3332840706.0: 518, 1834434176.0: 519, 1905811453.0: 520, 2507175545.0: 521, 3541570877.0: 522, 547587037.0: 523, 611786515.0: 524, 4205653237.0: 525, 1132867658.0: 526, 4242160080.0: 527, 644286260.0: 528, 1395902443.0: 529, 2908668711.0: 530}]
 list_of_cols_to_normalize = [0]
@@ -288,8 +290,8 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=clean.mapping[cell]
             except:
                 raise ValueError("Class label '"+value+"' encountered in input not defined in user-provided mapping.")
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mapped to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mapped to integer.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -298,7 +300,7 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             if (rounding!=-1):
                 result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
             else:
-                result=int(result)
+                result=int(int(result*100)/100)  # round classes to two digits
 
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
@@ -309,11 +311,12 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             else:
                 clean.classlist=clean.classlist+[result]
                 result=clean.classlist.index(result)
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mappable to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mappable to integer.")
         finally:
-            if (result<0 or result>1):
-                raise ValueError("Alpha version restriction: Integer class labels can only be 0 or 1.")
+            if (result<0):
+                raise ValueError("Integer class labels must be positive and contiguous.")
+
         return result
 
     rowcount=0
@@ -342,15 +345,16 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                     outbuf.append(classid)
                 i=i+1
             if (len(outbuf)<IOBUF):
-                outbuf.append("\n")
+                outbuf.append(os.linesep)
             else:
                 print(''.join(outbuf), file=f)
                 outbuf=[]
         print(''.join(outbuf),end="", file=f)
         f.close()
 
-        if (testfile==False and not len(clean.classlist)==2):
-            raise ValueError("Number of classes must be 2.")
+        if (testfile==False and not len(clean.classlist)>=2):
+            raise ValueError("Number of classes must be at least 2.")
+
 
 
 # Helper (save an import)
@@ -361,16 +365,17 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
+    o=[0]*num_output_logits
     h_0 = max((((-0.46308863 * float(x[0]))+ (0.35356742 * float(x[1]))+ (0.2412946 * float(x[2]))+ (-0.9819495 * float(x[3]))+ (0.25020337 * float(x[4]))+ (-0.15525934 * float(x[5]))) + 4.484553), 0)
     h_1 = max((((0.6430569 * float(x[0]))+ (1.1686436 * float(x[1]))+ (0.32232773 * float(x[2]))+ (-0.06011982 * float(x[3]))+ (0.8299489 * float(x[4]))+ (0.67895573 * float(x[5]))) + -0.06646083), 0)
     h_2 = max((((-5.942523 * float(x[0]))+ (-0.029895559 * float(x[1]))+ (4.2076077 * float(x[2]))+ (-7.1426873 * float(x[3]))+ (2.0736613 * float(x[4]))+ (-2.5314245 * float(x[5]))) + -3.954196), 0)
     h_3 = max((((-0.1359809 * float(x[0]))+ (-0.5040405 * float(x[1]))+ (0.21925412 * float(x[2]))+ (0.43821618 * float(x[3]))+ (-0.0767498 * float(x[4]))+ (-0.11804261 * float(x[5]))) + 4.954756), 0)
-    o_0 = (-2.5500925 * h_0)+ (-1.9656472 * h_1)+ (0.24017653 * h_2)+ (-1.8005823 * h_3) + -4.7803817
+    o[0] = (-2.5500925 * h_0)+ (-1.9656472 * h_1)+ (0.24017653 * h_2)+ (-1.8005823 * h_3) + -4.7803817
 
     if num_output_logits==1:
-        return o_0>=0
+        return o[0]>=0
     else:
-        return argmax([eval('o'+str(i)) for i in range(num_output_logits)])
+        return argmax(o)
 
 # Main method
 if __name__ == "__main__":
@@ -409,82 +414,120 @@ if __name__ == "__main__":
                 writer.writerow(row)
                 i=i+1
     elif args.validate: # Then validate this predictor, always clean first.
-        tempdir=tempfile.gettempdir()
-        temp_name = next(tempfile._get_candidate_names())
-        cleanfile=tempdir+os.sep+temp_name
-        clean(args.csvfile,cleanfile, -1, args.headerless)
-        val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
-        os.remove(cleanfile)
-        val_tensor = Normalize(val_tensor)
-        if transform_true:
-            trans = transform(val_tensor[:,:-1])
-            val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
-        count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0 = 0,0,0,0,0,0,0,0
-        for i,row in enumerate(val_tensor):
-            if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
-                correct_count+=1
-                if int(float(row[-1]))==1:
-                    num_class_1+=1
-                    num_TP+=1
+        if n_classes==2:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanfile, -1, args.headerless)
+            val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
+            os.remove(cleanfile)
+            val_tensor = Normalize(val_tensor)
+            if transform_true:
+                trans = transform(val_tensor[:,:-1])
+                val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
+            count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0 = 0,0,0,0,0,0,0,0
+            for i,row in enumerate(val_tensor):
+                if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
+                    correct_count+=1
+                    if int(float(row[-1]))==1:
+                        num_class_1+=1
+                        num_TP+=1
+                    else:
+                        num_class_0+=1
+                        num_TN+=1
                 else:
-                    num_class_0+=1
-                    num_TN+=1
-            else:
-                if int(float(row[-1]))==1:
-                    num_class_1+=1
-                    num_FN+=1
-                else:
-                    num_class_0+=1
-                    num_FP+=1
-            count+=1
+                    if int(float(row[-1]))==1:
+                        num_class_1+=1
+                        num_FN+=1
+                    else:
+                        num_class_0+=1
+                        num_FP+=1
+                count+=1
+        else:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanvalfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanvalfile, -1, args.headerless)
+            val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
+            os.remove(cleanfile)
+            val_tensor = Normalize(val_tensor)
+            if transform_true:
+                trans = transform(val_tensor[:,:-1])
+                val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
+            numeachclass={}
+            count,correct_count = 0,0
+            for i,row in enumerate(val_tensor):
+                if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
+                    correct_count+=1
+                    if int(float(val_tensor[i,-1])) in numeachclass.keys():
+                        numeachclass[int(float(val_tensor[i,-1]))]+=1
+                    else:
+                        numeachclass[int(float(val_tensor[i,-1]))]=0
+                count+=1
 
         model_cap=33
 
-        FN=float(num_FN)*100.0/float(count)
-        FP=float(num_FP)*100.0/float(count)
-        TN=float(num_TN)*100.0/float(count)
-        TP=float(num_TP)*100.0/float(count)
-        num_correct=correct_count
+        if n_classes==2:
 
-        if int(num_TP+num_FN)!=0:
-            TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
-        if int(num_TN+num_FP)!=0:
-            TNR=num_TN/(num_TN+num_FP) # Specificity, 
-        if int(num_TP+num_FP)!=0:
-            PPV=num_TP/(num_TP+num_FP) # Recall
-        if int(num_FN+num_TP)!=0:
-            FNR=num_FN/(num_FN+num_TP) # Miss rate
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
-        if int(num_TP+num_FN+num_FP)!=0:
-            TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
+            FN=float(num_FN)*100.0/float(count)
+            FP=float(num_FP)*100.0/float(count)
+            TN=float(num_TN)*100.0/float(count)
+            TP=float(num_TP)*100.0/float(count)
+            num_correct=correct_count
 
-        randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
-        modelacc=int(float(num_correct*10000)/count)/100.0
+            if int(num_TP+num_FN)!=0:
+                TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
+            if int(num_TN+num_FP)!=0:
+                TNR=num_TN/(num_TN+num_FP) # Specificity, 
+            if int(num_TP+num_FP)!=0:
+                PPV=num_TP/(num_TP+num_FP) # Recall
+            if int(num_FN+num_TP)!=0:
+                FNR=num_FN/(num_FN+num_TP) # Miss rate
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
+            if int(num_TP+num_FN+num_FP)!=0:
+                TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
 
-        print("System Type:                        Binary classifier")
-        print("Best-guess accuracy:                {:.2f}%".format(randguess))
-        print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
-        print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
-        print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
-        print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
-        print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
-        print("System behavior")
-        print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
-        print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
-        print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
-        print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
-        if int(num_TP+num_FN)!=0:
-            print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
-        if int(num_TN+num_FP)!=0:
-            print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
-        if int(num_TP+num_FP)!=0:
-            print("Precision:                          {:.2f}".format(PPV))
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            print("F-1 Measure:                        {:.2f}".format(FONE))
-        if int(num_TP+num_FN)!=0:
-            print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
-        if int(num_TP+num_FN+num_FP)!=0:    
-            print("Critical Success Index:             {:.2f}".format(TS))
+            randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
+            modelacc=int(float(num_correct*10000)/count)/100.0
+
+            print("System Type:                        Binary classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+            print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
+            print("System behavior")
+            print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
+            print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
+            print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
+            print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
+            if int(num_TP+num_FN)!=0:
+                print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
+            if int(num_TN+num_FP)!=0:
+                print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
+            if int(num_TP+num_FP)!=0:
+                print("Precision:                          {:.2f}".format(PPV))
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                print("F-1 Measure:                        {:.2f}".format(FONE))
+            if int(num_TP+num_FN)!=0:
+                print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
+            if int(num_TP+num_FN+num_FP)!=0:    
+                print("Critical Success Index:             {:.2f}".format(TS))
+        else:
+            num_correct=correct_count
+            modelacc=int(float(num_correct*10000)/count)/100.0
+            randguess=round(max(numeachclass.values())/sum(numeachclass.values())*100,2)
+            print("System Type:                        "+str(n_classes)+"-way classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+
+
+
+
 
 

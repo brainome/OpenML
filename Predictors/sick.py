@@ -3,30 +3,31 @@
 # This code is licensed under GNU GPL v2.0 or higher. Please see LICENSE for details.
 #
 #
-# Output of Brainome Daimensions(tm) Table Compiler v0.8.
-# Compile time: Mar-01-2020 13:46:04
-# Invocation: btc Data/sick.csv -o Models/sick.py -v -v -v -stopat 98.75 -port 8090 -e 3
+# Output of Brainome Daimensions(tm) Table Compiler v0.91.
+# Compile time: Mar-19-2020 23:43:46
+# Invocation: btc -server brain.brainome.ai Data/sick.csv -o Models/sick.py -v -v -v -stopat 98.75 -port 8100 -f NN -e 10
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                93.87%
-Model accuracy:                     96.34% (3634/3772 correct)
-Improvement over best guess:        2.47% (of possible 6.13%)
-Model capacity (MEC):               92 bits
-Generalization ratio:               39.50 bits/bit
-Model efficiency:                   0.02%/parameter
+Model accuracy:                     97.00% (3659/3772 correct)
+Improvement over best guess:        3.13% (of possible 6.13%)
+Model capacity (MEC):               66 bits
+Generalization ratio:               55.43 bits/bit
+Model efficiency:                   0.04%/parameter
 System behavior
-True Negatives:                     92.76% (3499/3772)
-True Positives:                     3.58% (135/3772)
-False Negatives:                    2.55% (96/3772)
-False Positives:                    1.11% (42/3772)
-True Pos. Rate/Sensitivity/Recall:  0.58
+True Negatives:                     92.87% (3503/3772)
+True Positives:                     4.14% (156/3772)
+False Negatives:                    1.99% (75/3772)
+False Positives:                    1.01% (38/3772)
+True Pos. Rate/Sensitivity/Recall:  0.68
 True Neg. Rate/Specificity:         0.99
-Precision:                          0.76
-F-1 Measure:                        0.66
-False Negative Rate/Miss Rate:      0.42
-Critical Success Index:             0.49
+Precision:                          0.80
+F-1 Measure:                        0.73
+False Negative Rate/Miss Rate:      0.32
+Critical Success Index:             0.58
+
 """
 
 # Imports -- Python3 standard library
@@ -59,6 +60,7 @@ num_output_logits = 1
 
 #Number of attributes
 num_attr = 29
+n_classes = 2
 
 mappings = [{1304234792.0: 0, 1684325040.0: 1, 3664761504.0: 2}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {1993550816.0: 0, 2238339752.0: 1}, {0.005: 0, 0.01: 1, 0.015: 2, 0.02: 3, 0.025: 4, 0.03: 5, 0.035: 6, 0.04: 7, 0.045: 8, 0.05: 9, 0.055: 10, 0.06: 11, 0.065: 12, 0.07: 13, 0.08: 14, 0.09: 15, 0.1: 16, 0.12: 17, 0.13: 18, 0.14: 19, 0.15: 20, 0.16: 21, 0.19: 22, 0.2: 23, 0.21: 24, 0.24: 25, 0.25: 26, 0.26: 27, 0.27: 28, 0.28: 29, 0.29: 30, 0.3: 31, 0.31: 32, 0.32: 33, 0.33: 34, 0.34: 35, 0.35: 36, 0.36: 37, 0.37: 38, 0.38: 39, 0.39: 40, 0.4: 41, 0.41: 42, 0.42: 43, 0.43: 44, 0.44: 45, 0.45: 46, 0.46: 47, 0.47: 48, 0.48: 49, 0.49: 50, 0.5: 51, 0.51: 52, 0.52: 53, 0.53: 54, 0.54: 55, 0.55: 56, 0.56: 57, 0.57: 58, 0.58: 59, 0.59: 60, 0.6: 61, 0.61: 62, 0.62: 63, 0.63: 64, 0.64: 65, 0.65: 66, 0.66: 67, 0.67: 68, 0.68: 69, 0.69: 70, 0.7: 71, 0.71: 72, 0.72: 73, 0.73: 74, 0.74: 75, 0.75: 76, 0.76: 77, 0.77: 78, 0.78: 79, 0.79: 80, 0.8: 81, 0.81: 82, 0.82: 83, 0.83: 84, 0.84: 85, 0.85: 86, 0.86: 87, 0.87: 88, 0.88: 89, 0.89: 90, 0.9: 91, 0.91: 92, 0.92: 93, 0.93: 94, 0.94: 95, 0.95: 96, 0.96: 97, 0.97: 98, 0.98: 99, 0.99: 100, 1.0: 101, 1.01: 102, 1.02: 103, 1.1: 104, 1.2: 105, 1.3: 106, 1.4: 107, 1.5: 108, 1.6: 109, 1.7: 110, 1.8: 111, 1.9: 112, 2.0: 113, 2.1: 114, 2.2: 115, 2.3: 116, 2.4: 117, 2.5: 118, 2.6: 119, 2.7: 120, 2.8: 121, 2.9: 122, 3.0: 123, 3.1: 124, 3.2: 125, 3.3: 126, 3.4: 127, 3.5: 128, 3.6: 129, 3.7: 130, 3.8: 131, 3.9: 132, 4.0: 133, 4.1: 134, 4.2: 135, 4.3: 136, 4.4: 137, 4.5: 138, 4.6: 139, 4.7: 140, 4.8: 141, 4.9: 142, 5.0: 143, 5.1: 144, 5.2: 145, 5.3: 146, 5.4: 147, 5.5: 148, 5.6: 149, 5.7: 150, 5.73: 151, 5.8: 152, 5.9: 153, 6.0: 154, 6.1: 155, 6.2: 156, 6.3: 157, 6.5: 158, 6.6: 159, 6.7: 160, 6.8: 161, 6.9: 162, 7.0: 163, 7.1: 164, 7.2: 165, 7.3: 166, 7.4: 167, 7.5: 168, 7.6: 169, 7.7: 170, 7.8: 171, 7.9: 172, 8.0: 173, 8.1: 174, 8.2: 175, 8.3: 176, 8.5: 177, 8.6: 178, 8.8: 179, 8.9: 180, 9.0: 181, 9.1: 182, 9.2: 183, 9.3: 184, 9.4: 185, 9.6: 186, 9.7: 187, 9.8: 188, 9.9: 189, 10.0: 190, 10.3: 191, 11.0: 192, 11.1: 193, 11.4: 194, 12.0: 195, 13.0: 196, 14.4: 197, 14.8: 198, 15.0: 199, 16.0: 200, 17.0: 201, 18.0: 202, 19.0: 203, 20.0: 204, 21.0: 205, 22.0: 206, 23.0: 207, 24.0: 208, 25.0: 209, 26.0: 210, 26.4: 211, 27.0: 212, 30.0: 213, 31.0: 214, 34.0: 215, 36.0: 216, 38.0: 217, 40.0: 218, 42.0: 219, 43.0: 220, 44.0: 221, 45.0: 222, 47.0: 223, 50.0: 224, 51.0: 225, 52.0: 226, 55.0: 227, 58.0: 228, 60.0: 229, 61.0: 230, 66.0: 231, 70.0: 232, 76.0: 233, 82.0: 234, 89.0: 235, 98.0: 236, 103.0: 237, 108.0: 238, 109.0: 239, 116.0: 240, 117.0: 241, 126.0: 242, 143.0: 243, 145.0: 244, 151.0: 245, 160.0: 246, 178.0: 247, 183.0: 248, 400.0: 249, 440.0: 250, 468.0: 251, 472.0: 252, 478.0: 253, 530.0: 254, 1684325040.0: 255, 32.0: 256, 0.17: 257, 46.0: 258, 236.0: 259, 14.0: 260, 80.0: 261, 9.5: 262, 65.0: 263, 28.0: 264, 0.22: 265, 29.0: 266, 6.4: 267, 139.0: 268, 230.0: 269, 54.0: 270, 30.5: 271, 12.1: 272, 41.0: 273, 8.4: 274, 18.4: 275, 0.18: 276, 78.0: 277, 35.0: 278, 86.0: 279, 39.0: 280, 33.0: 281, 100.0: 282, 0.23: 283, 99.0: 284, 165.0: 285, 199.0: 286, 188.0: 287}, {1993550816.0: 0, 2238339752.0: 1}, {0.1: 0, 0.2: 1, 0.3: 2, 0.4: 3, 0.5: 4, 0.6: 5, 0.7: 6, 0.8: 7, 0.9: 8, 1.0: 9, 1.1: 10, 1.2: 11, 1.3: 12, 1.4: 13, 1.5: 14, 1.6: 15, 1.7: 16, 1.8: 17, 1.9: 18, 2.0: 19, 2.1: 20, 2.2: 21, 2.3: 22, 2.4: 23, 2.5: 24, 2.6: 25, 2.7: 26, 2.8: 27, 2.9: 28, 3.0: 29, 3.1: 30, 3.2: 31, 3.3: 32, 3.4: 33, 3.5: 34, 3.6: 35, 3.7: 36, 3.8: 37, 3.9: 38, 4.0: 39, 4.1: 40, 4.2: 41, 4.3: 42, 4.4: 43, 4.5: 44, 4.6: 45, 4.7: 46, 4.8: 47, 4.9: 48, 5.0: 49, 5.1: 50, 5.2: 51, 5.3: 52, 5.4: 53, 5.5: 54, 5.7: 55, 6.1: 56, 6.2: 57, 6.6: 58, 6.7: 59, 7.0: 60, 7.1: 61, 7.3: 62, 7.6: 63, 8.5: 64, 1684325040.0: 65, 6.0: 66, 1.44: 67, 0.05: 68, 10.6: 69}, {1993550816.0: 0, 2238339752.0: 1}, {2.0: 0, 2.9: 1, 3.0: 2, 4.8: 3, 5.8: 4, 6.0: 5, 9.5: 6, 10.0: 7, 11.0: 8, 12.0: 9, 13.0: 10, 14.0: 11, 15.0: 12, 17.0: 13, 19.0: 14, 21.0: 15, 22.0: 16, 24.0: 17, 28.0: 18, 29.0: 19, 30.0: 20, 31.0: 21, 33.0: 22, 34.0: 23, 35.0: 24, 37.0: 25, 38.0: 26, 39.0: 27, 40.0: 28, 41.0: 29, 42.0: 30, 44.0: 31, 45.0: 32, 46.0: 33, 48.0: 34, 49.0: 35, 50.0: 36, 51.0: 37, 52.0: 38, 53.0: 39, 54.0: 40, 56.0: 41, 57.0: 42, 58.0: 43, 59.0: 44, 60.0: 45, 61.0: 46, 62.0: 47, 63.0: 48, 64.0: 49, 65.0: 50, 66.0: 51, 67.0: 52, 68.0: 53, 69.0: 54, 70.0: 55, 71.0: 56, 72.0: 57, 73.0: 58, 74.0: 59, 75.0: 60, 76.0: 61, 77.0: 62, 78.0: 63, 79.0: 64, 80.0: 65, 81.0: 66, 82.0: 67, 83.0: 68, 84.0: 69, 85.0: 70, 86.0: 71, 87.0: 72, 88.0: 73, 89.0: 74, 90.0: 75, 91.0: 76, 92.0: 77, 93.0: 78, 94.0: 79, 95.0: 80, 96.0: 81, 97.0: 82, 98.0: 83, 99.0: 84, 100.0: 85, 101.0: 86, 102.0: 87, 103.0: 88, 104.0: 89, 105.0: 90, 106.0: 91, 107.0: 92, 108.0: 93, 109.0: 94, 110.0: 95, 111.0: 96, 112.0: 97, 113.0: 98, 114.0: 99, 115.0: 100, 116.0: 101, 117.0: 102, 118.0: 103, 119.0: 104, 120.0: 105, 121.0: 106, 122.0: 107, 123.0: 108, 124.0: 109, 125.0: 110, 126.0: 111, 127.0: 112, 128.0: 113, 129.0: 114, 130.0: 115, 131.0: 116, 132.0: 117, 133.0: 118, 134.0: 119, 135.0: 120, 136.0: 121, 137.0: 122, 138.0: 123, 139.0: 124, 140.0: 125, 141.0: 126, 142.0: 127, 143.0: 128, 144.0: 129, 145.0: 130, 146.0: 131, 147.0: 132, 148.0: 133, 149.0: 134, 150.0: 135, 151.0: 136, 152.0: 137, 153.0: 138, 154.0: 139, 155.0: 140, 156.0: 141, 157.0: 142, 158.0: 143, 159.0: 144, 160.0: 145, 161.0: 146, 162.0: 147, 163.0: 148, 164.0: 149, 165.0: 150, 166.0: 151, 167.0: 152, 168.0: 153, 169.0: 154, 170.0: 155, 171.0: 156, 172.0: 157, 174.0: 158, 175.0: 159, 176.0: 160, 177.0: 161, 178.0: 162, 179.0: 163, 180.0: 164, 181.0: 165, 182.0: 166, 183.0: 167, 184.0: 168, 186.0: 169, 187.0: 170, 189.0: 171, 191.0: 172, 192.0: 173, 193.0: 174, 194.0: 175, 195.0: 176, 196.0: 177, 197.0: 178, 198.0: 179, 199.0: 180, 200.0: 181, 201.0: 182, 203.0: 183, 205.0: 184, 207.0: 185, 209.0: 186, 210.0: 187, 211.0: 188, 212.0: 189, 213.0: 190, 214.0: 191, 220.0: 192, 223.0: 193, 225.0: 194, 230.0: 195, 231.0: 196, 232.0: 197, 237.0: 198, 239.0: 199, 240.0: 200, 244.0: 201, 248.0: 202, 252.0: 203, 253.0: 204, 255.0: 205, 257.0: 206, 258.0: 207, 261.0: 208, 263.0: 209, 289.0: 210, 372.0: 211, 430.0: 212, 1684325040.0: 213, 32.0: 214, 204.0: 215, 16.0: 216, 250.0: 217, 273.0: 218, 18.0: 219, 217.0: 220, 216.0: 221, 4.0: 222, 47.0: 223, 36.0: 224, 222.0: 225, 188.0: 226, 206.0: 227, 23.0: 228, 272.0: 229, 233.0: 230, 27.0: 231, 173.0: 232, 226.0: 233, 301.0: 234, 256.0: 235, 246.0: 236, 25.0: 237, 235.0: 238, 43.0: 239, 55.0: 240, 219.0: 241}, {1993550816.0: 0, 2238339752.0: 1}, {0.31: 0, 0.38: 1, 0.48: 2, 0.5: 3, 0.52: 4, 0.54: 5, 0.56: 6, 0.57: 7, 0.58: 8, 0.59: 9, 0.6: 10, 0.61: 11, 0.62: 12, 0.63: 13, 0.64: 14, 0.65: 15, 0.66: 16, 0.67: 17, 0.68: 18, 0.69: 19, 0.7: 20, 0.71: 21, 0.72: 22, 0.73: 23, 0.74: 24, 0.75: 25, 0.76: 26, 0.77: 27, 0.78: 28, 0.79: 29, 0.8: 30, 0.81: 31, 0.82: 32, 0.83: 33, 0.84: 34, 0.85: 35, 0.86: 36, 0.87: 37, 0.88: 38, 0.89: 39, 0.9: 40, 0.91: 41, 0.92: 42, 0.93: 43, 0.94: 44, 0.95: 45, 0.96: 46, 0.97: 47, 0.98: 48, 0.99: 49, 1.0: 50, 1.01: 51, 1.02: 52, 1.03: 53, 1.04: 54, 1.05: 55, 1.06: 56, 1.07: 57, 1.08: 58, 1.09: 59, 1.1: 60, 1.11: 61, 1.12: 62, 1.13: 63, 1.14: 64, 1.15: 65, 1.16: 66, 1.17: 67, 1.18: 68, 1.19: 69, 1.2: 70, 1.21: 71, 1.22: 72, 1.23: 73, 1.24: 74, 1.25: 75, 1.26: 76, 1.27: 77, 1.28: 78, 1.29: 79, 1.3: 80, 1.31: 81, 1.32: 82, 1.33: 83, 1.34: 84, 1.35: 85, 1.36: 86, 1.37: 87, 1.38: 88, 1.39: 89, 1.4: 90, 1.41: 91, 1.42: 92, 1.43: 93, 1.44: 94, 1.45: 95, 1.46: 96, 1.47: 97, 1.48: 98, 1.49: 99, 1.5: 100, 1.51: 101, 1.52: 102, 1.53: 103, 1.54: 104, 1.55: 105, 1.56: 106, 1.57: 107, 1.58: 108, 1.59: 109, 1.61: 110, 1.62: 111, 1.65: 112, 1.66: 113, 1.67: 114, 1.68: 115, 1.69: 116, 1.7: 117, 1.71: 118, 1.73: 119, 1.75: 120, 1.76: 121, 1.77: 122, 1.8: 123, 1.82: 124, 1.83: 125, 1.84: 126, 1.88: 127, 1.93: 128, 1.97: 129, 2.01: 130, 2.12: 131, 2.32: 132, 1684325040.0: 133, 0.53: 134, 2.03: 135, 0.46: 136, 0.47: 137, 0.944: 138, 1.79: 139, 1.63: 140, 0.36: 141, 0.25: 142, 1.94: 143, 1.74: 144, 0.41: 145, 0.49: 146}, {1993550816.0: 0, 2238339752.0: 1}, {2.0: 0, 2.8: 1, 3.0: 2, 5.4: 3, 7.0: 4, 7.6: 5, 8.4: 6, 8.5: 7, 8.9: 8, 9.0: 9, 9.1: 10, 10.0: 11, 11.0: 12, 13.0: 13, 14.0: 14, 15.0: 15, 17.0: 16, 18.0: 17, 19.0: 18, 21.0: 19, 26.0: 20, 29.0: 21, 33.0: 22, 34.0: 23, 35.0: 24, 37.0: 25, 39.0: 26, 42.0: 27, 46.0: 28, 47.0: 29, 49.0: 30, 50.0: 31, 51.0: 32, 52.0: 33, 54.0: 34, 55.0: 35, 56.0: 36, 57.0: 37, 58.0: 38, 59.0: 39, 60.0: 40, 61.0: 41, 62.0: 42, 63.0: 43, 64.0: 44, 65.0: 45, 66.0: 46, 67.0: 47, 68.0: 48, 69.0: 49, 70.0: 50, 71.0: 51, 72.0: 52, 73.0: 53, 74.0: 54, 75.0: 55, 76.0: 56, 77.0: 57, 78.0: 58, 79.0: 59, 80.0: 60, 81.0: 61, 82.0: 62, 83.0: 63, 84.0: 64, 85.0: 65, 86.0: 66, 87.0: 67, 88.0: 68, 89.0: 69, 90.0: 70, 91.0: 71, 92.0: 72, 93.0: 73, 94.0: 74, 95.0: 75, 96.0: 76, 97.0: 77, 98.0: 78, 99.0: 79, 100.0: 80, 101.0: 81, 102.0: 82, 103.0: 83, 104.0: 84, 105.0: 85, 106.0: 86, 107.0: 87, 108.0: 88, 109.0: 89, 110.0: 90, 111.0: 91, 112.0: 92, 113.0: 93, 114.0: 94, 115.0: 95, 116.0: 96, 117.0: 97, 118.0: 98, 119.0: 99, 120.0: 100, 121.0: 101, 122.0: 102, 123.0: 103, 124.0: 104, 125.0: 105, 126.0: 106, 127.0: 107, 128.0: 108, 129.0: 109, 130.0: 110, 131.0: 111, 132.0: 112, 133.0: 113, 134.0: 114, 135.0: 115, 136.0: 116, 137.0: 117, 138.0: 118, 139.0: 119, 140.0: 120, 141.0: 121, 142.0: 122, 143.0: 123, 144.0: 124, 145.0: 125, 146.0: 126, 147.0: 127, 148.0: 128, 149.0: 129, 150.0: 130, 151.0: 131, 152.0: 132, 153.0: 133, 154.0: 134, 155.0: 135, 156.0: 136, 157.0: 137, 158.0: 138, 159.0: 139, 160.0: 140, 161.0: 141, 162.0: 142, 163.0: 143, 164.0: 144, 165.0: 145, 166.0: 146, 167.0: 147, 168.0: 148, 169.0: 149, 170.0: 150, 171.0: 151, 172.0: 152, 173.0: 153, 174.0: 154, 175.0: 155, 176.0: 156, 177.0: 157, 178.0: 158, 179.0: 159, 180.0: 160, 183.0: 161, 184.0: 162, 185.0: 163, 186.0: 164, 188.0: 165, 189.0: 166, 190.0: 167, 191.0: 168, 194.0: 169, 195.0: 170, 196.0: 171, 197.0: 172, 198.0: 173, 200.0: 174, 201.0: 175, 203.0: 176, 204.0: 177, 206.0: 178, 207.0: 179, 209.0: 180, 213.0: 181, 214.0: 182, 215.0: 183, 216.0: 184, 217.0: 185, 219.0: 186, 220.0: 187, 222.0: 188, 223.0: 189, 224.0: 190, 227.0: 191, 228.0: 192, 235.0: 193, 237.0: 194, 244.0: 195, 249.0: 196, 251.0: 197, 265.0: 198, 280.0: 199, 291.0: 200, 362.0: 201, 395.0: 202, 1684325040.0: 203, 199.0: 204, 312.0: 205, 43.0: 206, 16.0: 207, 221.0: 208, 36.0: 209, 28.0: 210, 242.0: 211, 182.0: 212, 4.0: 213, 48.0: 214, 40.0: 215, 205.0: 216, 27.0: 217, 247.0: 218, 218.0: 219, 53.0: 220, 24.0: 221, 187.0: 222, 245.0: 223, 281.0: 224, 181.0: 225, 253.0: 226, 32.0: 227, 349.0: 228, 41.0: 229, 283.0: 230, 232.0: 231, 20.0: 232, 210.0: 233, 274.0: 234}, {1993550816.0: 0}, {1684325040.0: 0}, {596708387.0: 0, 1203304565.0: 1, 1918519837.0: 2, 3646436640.0: 3, 3655101910.0: 4}]
 list_of_cols_to_normalize = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28]
@@ -215,8 +217,8 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                 result=clean.mapping[cell]
             except:
                 raise ValueError("Class label '"+value+"' encountered in input not defined in user-provided mapping.")
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mapped to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mapped to integer.")
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
             return result
@@ -225,7 +227,7 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             if (rounding!=-1):
                 result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
             else:
-                result=int(result)
+                result=int(int(result*100)/100)  # round classes to two digits
 
             if (not str(result) in clean.classlist):
                 clean.classlist=clean.classlist+[str(result)]
@@ -236,11 +238,12 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
             else:
                 clean.classlist=clean.classlist+[result]
                 result=clean.classlist.index(result)
-            if (not (result==0 or result==1)):
-                raise ValueError("Alpha version restriction: Class labels must be mappable to 0 and 1.")
+            if (not result==int(result)):
+                raise ValueError("Class labels must be mappable to integer.")
         finally:
-            if (result<0 or result>1):
-                raise ValueError("Alpha version restriction: Integer class labels can only be 0 or 1.")
+            if (result<0):
+                raise ValueError("Integer class labels must be positive and contiguous.")
+
         return result
 
     rowcount=0
@@ -269,15 +272,16 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
                     outbuf.append(classid)
                 i=i+1
             if (len(outbuf)<IOBUF):
-                outbuf.append("\n")
+                outbuf.append(os.linesep)
             else:
                 print(''.join(outbuf), file=f)
                 outbuf=[]
         print(''.join(outbuf),end="", file=f)
         f.close()
 
-        if (testfile==False and not len(clean.classlist)==2):
-            raise ValueError("Number of classes must be 2.")
+        if (testfile==False and not len(clean.classlist)>=2):
+            raise ValueError("Number of classes must be at least 2.")
+
 
 
 # Helper (save an import)
@@ -288,19 +292,18 @@ def argmax(l):
 # Classifier
 def classify(row):
     x=row
-    h_0 = max((((54.358433 * float(x[0]))+ (-46.580402 * float(x[1]))+ (30.070793 * float(x[2]))+ (-0.8437284 * float(x[3]))+ (-7.8662667 * float(x[4]))+ (23.670082 * float(x[5]))+ (-0.5637219 * float(x[6]))+ (0.46571648 * float(x[7]))+ (0.2380226 * float(x[8]))+ (1.3006003 * float(x[9]))+ (0.54208595 * float(x[10]))) + -2.1583908), 0)
-    h_1 = max((((-53.389633 * float(x[0]))+ (-24.12184 * float(x[1]))+ (-9.326343 * float(x[2]))+ (-9.22211 * float(x[3]))+ (-10.13626 * float(x[4]))+ (12.92496 * float(x[5]))+ (37.436413 * float(x[6]))+ (15.79966 * float(x[7]))+ (-11.4078455 * float(x[8]))+ (-27.915989 * float(x[9]))+ (18.405737 * float(x[10]))) + 3.1725922), 0)
-    h_2 = max((((10.383705 * float(x[0]))+ (13.496462 * float(x[1]))+ (-17.436674 * float(x[2]))+ (12.644858 * float(x[3]))+ (20.77443 * float(x[4]))+ (-4.128936 * float(x[5]))+ (40.259518 * float(x[6]))+ (-29.381409 * float(x[7]))+ (30.173023 * float(x[8]))+ (-4.090705 * float(x[9]))+ (-0.49652806 * float(x[10]))) + -10.123645), 0)
-    h_3 = max((((-0.023227794 * float(x[0]))+ (0.014051667 * float(x[1]))+ (0.27912492 * float(x[2]))+ (-0.19386494 * float(x[3]))+ (0.2775246 * float(x[4]))+ (-1.0490264 * float(x[5]))+ (1.0624043 * float(x[6]))+ (1.3406537 * float(x[7]))+ (-4.332039 * float(x[8]))+ (-1.8495901 * float(x[9]))+ (3.4354353 * float(x[10]))) + -5.766245), 0)
-    h_4 = max((((1.7556535 * float(x[0]))+ (-1.173736 * float(x[1]))+ (0.8629756 * float(x[2]))+ (0.4745369 * float(x[3]))+ (-0.032293078 * float(x[4]))+ (1.25986 * float(x[5]))+ (0.13984872 * float(x[6]))+ (1.1362888 * float(x[7]))+ (0.6655927 * float(x[8]))+ (-0.02397074 * float(x[9]))+ (1.0761247 * float(x[10]))) + 0.49598485), 0)
-    h_5 = max((((1.5865993 * float(x[0]))+ (-1.1818199 * float(x[1]))+ (0.45328343 * float(x[2]))+ (-0.0793588 * float(x[3]))+ (-0.1674174 * float(x[4]))+ (0.524266 * float(x[5]))+ (-0.18265939 * float(x[6]))+ (-1.0128288 * float(x[7]))+ (0.46829674 * float(x[8]))+ (-0.0692712 * float(x[9]))+ (0.9070652 * float(x[10]))) + -0.10646824), 0)
-    h_6 = max((((1.7322664 * float(x[0]))+ (-1.8159201 * float(x[1]))+ (1.1801169 * float(x[2]))+ (-0.4463132 * float(x[3]))+ (-0.46248826 * float(x[4]))+ (0.37421829 * float(x[5]))+ (-0.0961857 * float(x[6]))+ (-0.6333103 * float(x[7]))+ (-1.2038981 * float(x[8]))+ (-0.19265656 * float(x[9]))+ (-0.92335826 * float(x[10]))) + -0.83726305), 0)
-    o_0 = (0.3129719 * h_0)+ (0.0008900637 * h_1)+ (-0.00872966 * h_2)+ (0.610903 * h_3)+ (-3.9284368 * h_4)+ (-1.4317672 * h_5)+ (-4.536745 * h_6) + -10.367644
+    o=[0]*num_output_logits
+    h_0 = max((((17.721788 * float(x[0]))+ (66.47728 * float(x[1]))+ (10.622732 * float(x[2]))+ (-15.173367 * float(x[3]))+ (-8.999497 * float(x[4]))+ (-19.459984 * float(x[5]))+ (-3.5168393 * float(x[6]))+ (9.960969 * float(x[7]))+ (-5.3347564 * float(x[8]))+ (0.54263306 * float(x[9]))+ (0.5378378 * float(x[10]))) + -1.7530222), 0)
+    h_1 = max((((-183.11325 * float(x[0]))+ (-85.646164 * float(x[1]))+ (-25.784431 * float(x[2]))+ (21.615057 * float(x[3]))+ (-35.999786 * float(x[4]))+ (34.620125 * float(x[5]))+ (-16.844698 * float(x[6]))+ (-9.031094 * float(x[7]))+ (-3.800823 * float(x[8]))+ (11.539448 * float(x[9]))+ (-1.4857177 * float(x[10]))) + -14.398463), 0)
+    h_2 = max((((3.1773438 * float(x[0]))+ (-14.502895 * float(x[1]))+ (-2.5046947 * float(x[2]))+ (-13.897065 * float(x[3]))+ (13.611604 * float(x[4]))+ (2.4288588 * float(x[5]))+ (20.889816 * float(x[6]))+ (-8.346707 * float(x[7]))+ (-3.9890573 * float(x[8]))+ (0.36581787 * float(x[9]))+ (-7.1549435 * float(x[10]))) + 0.3764775), 0)
+    h_3 = max((((-0.028609566 * float(x[0]))+ (-0.37468028 * float(x[1]))+ (0.46671697 * float(x[2]))+ (-0.65778714 * float(x[3]))+ (0.5745514 * float(x[4]))+ (-1.17572 * float(x[5]))+ (1.6716272 * float(x[6]))+ (1.6366723 * float(x[7]))+ (-0.12534769 * float(x[8]))+ (0.09236806 * float(x[9]))+ (0.8923404 * float(x[10]))) + -7.1948905), 0)
+    h_4 = max((((0.07476912 * float(x[0]))+ (0.5920285 * float(x[1]))+ (0.19978362 * float(x[2]))+ (-0.102526 * float(x[3]))+ (-0.06755987 * float(x[4]))+ (-0.50841457 * float(x[5]))+ (-0.12266678 * float(x[6]))+ (0.6964732 * float(x[7]))+ (-10.085347 * float(x[8]))+ (-1.8563622 * float(x[9]))+ (1.7091376 * float(x[10]))) + -6.529579), 0)
+    o[0] = (-0.006232861 * h_0)+ (0.00013860757 * h_1)+ (-0.010084625 * h_2)+ (0.49404907 * h_3)+ (0.7046941 * h_4) + -9.636838
 
     if num_output_logits==1:
-        return o_0>=0
+        return o[0]>=0
     else:
-        return argmax([eval('o'+str(i)) for i in range(num_output_logits)])
+        return argmax(o)
 
 # Main method
 if __name__ == "__main__":
@@ -339,82 +342,120 @@ if __name__ == "__main__":
                 writer.writerow(row)
                 i=i+1
     elif args.validate: # Then validate this predictor, always clean first.
-        tempdir=tempfile.gettempdir()
-        temp_name = next(tempfile._get_candidate_names())
-        cleanfile=tempdir+os.sep+temp_name
-        clean(args.csvfile,cleanfile, -1, args.headerless)
-        val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
-        os.remove(cleanfile)
-        val_tensor = Normalize(val_tensor)
-        if transform_true:
-            trans = transform(val_tensor[:,:-1])
-            val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
-        count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0 = 0,0,0,0,0,0,0,0
-        for i,row in enumerate(val_tensor):
-            if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
-                correct_count+=1
-                if int(float(row[-1]))==1:
-                    num_class_1+=1
-                    num_TP+=1
+        if n_classes==2:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanfile, -1, args.headerless)
+            val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
+            os.remove(cleanfile)
+            val_tensor = Normalize(val_tensor)
+            if transform_true:
+                trans = transform(val_tensor[:,:-1])
+                val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
+            count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0 = 0,0,0,0,0,0,0,0
+            for i,row in enumerate(val_tensor):
+                if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
+                    correct_count+=1
+                    if int(float(row[-1]))==1:
+                        num_class_1+=1
+                        num_TP+=1
+                    else:
+                        num_class_0+=1
+                        num_TN+=1
                 else:
-                    num_class_0+=1
-                    num_TN+=1
-            else:
-                if int(float(row[-1]))==1:
-                    num_class_1+=1
-                    num_FN+=1
-                else:
-                    num_class_0+=1
-                    num_FP+=1
-            count+=1
+                    if int(float(row[-1]))==1:
+                        num_class_1+=1
+                        num_FN+=1
+                    else:
+                        num_class_0+=1
+                        num_FP+=1
+                count+=1
+        else:
+            tempdir=tempfile.gettempdir()
+            temp_name = next(tempfile._get_candidate_names())
+            cleanvalfile=tempdir+os.sep+temp_name
+            clean(args.csvfile,cleanvalfile, -1, args.headerless)
+            val_tensor = np.loadtxt(cleanfile,delimiter = ',',dtype = 'float64')
+            os.remove(cleanfile)
+            val_tensor = Normalize(val_tensor)
+            if transform_true:
+                trans = transform(val_tensor[:,:-1])
+                val_tensor = np.concatenate((trans,val_tensor[:,-1].reshape(-1,1)),axis = 1)
+            numeachclass={}
+            count,correct_count = 0,0
+            for i,row in enumerate(val_tensor):
+                if int(classify(val_tensor[i].tolist())) == int(float(val_tensor[i,-1])):
+                    correct_count+=1
+                    if int(float(val_tensor[i,-1])) in numeachclass.keys():
+                        numeachclass[int(float(val_tensor[i,-1]))]+=1
+                    else:
+                        numeachclass[int(float(val_tensor[i,-1]))]=0
+                count+=1
 
-        model_cap=92
+        model_cap=66
 
-        FN=float(num_FN)*100.0/float(count)
-        FP=float(num_FP)*100.0/float(count)
-        TN=float(num_TN)*100.0/float(count)
-        TP=float(num_TP)*100.0/float(count)
-        num_correct=correct_count
+        if n_classes==2:
 
-        if int(num_TP+num_FN)!=0:
-            TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
-        if int(num_TN+num_FP)!=0:
-            TNR=num_TN/(num_TN+num_FP) # Specificity, 
-        if int(num_TP+num_FP)!=0:
-            PPV=num_TP/(num_TP+num_FP) # Recall
-        if int(num_FN+num_TP)!=0:
-            FNR=num_FN/(num_FN+num_TP) # Miss rate
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
-        if int(num_TP+num_FN+num_FP)!=0:
-            TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
+            FN=float(num_FN)*100.0/float(count)
+            FP=float(num_FP)*100.0/float(count)
+            TN=float(num_TN)*100.0/float(count)
+            TP=float(num_TP)*100.0/float(count)
+            num_correct=correct_count
 
-        randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
-        modelacc=int(float(num_correct*10000)/count)/100.0
+            if int(num_TP+num_FN)!=0:
+                TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
+            if int(num_TN+num_FP)!=0:
+                TNR=num_TN/(num_TN+num_FP) # Specificity, 
+            if int(num_TP+num_FP)!=0:
+                PPV=num_TP/(num_TP+num_FP) # Recall
+            if int(num_FN+num_TP)!=0:
+                FNR=num_FN/(num_FN+num_TP) # Miss rate
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
+            if int(num_TP+num_FN+num_FP)!=0:
+                TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
 
-        print("System Type:                        Binary classifier")
-        print("Best-guess accuracy:                {:.2f}%".format(randguess))
-        print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
-        print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
-        print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
-        print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
-        print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
-        print("System behavior")
-        print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
-        print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
-        print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
-        print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
-        if int(num_TP+num_FN)!=0:
-            print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
-        if int(num_TN+num_FP)!=0:
-            print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
-        if int(num_TP+num_FP)!=0:
-            print("Precision:                          {:.2f}".format(PPV))
-        if int(2*num_TP+num_FP+num_FN)!=0:
-            print("F-1 Measure:                        {:.2f}".format(FONE))
-        if int(num_TP+num_FN)!=0:
-            print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
-        if int(num_TP+num_FN+num_FP)!=0:    
-            print("Critical Success Index:             {:.2f}".format(TS))
+            randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
+            modelacc=int(float(num_correct*10000)/count)/100.0
+
+            print("System Type:                        Binary classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+            print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
+            print("System behavior")
+            print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
+            print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
+            print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
+            print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
+            if int(num_TP+num_FN)!=0:
+                print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
+            if int(num_TN+num_FP)!=0:
+                print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
+            if int(num_TP+num_FP)!=0:
+                print("Precision:                          {:.2f}".format(PPV))
+            if int(2*num_TP+num_FP+num_FN)!=0:
+                print("F-1 Measure:                        {:.2f}".format(FONE))
+            if int(num_TP+num_FN)!=0:
+                print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
+            if int(num_TP+num_FN+num_FP)!=0:    
+                print("Critical Success Index:             {:.2f}".format(TS))
+        else:
+            num_correct=correct_count
+            modelacc=int(float(num_correct*10000)/count)/100.0
+            randguess=round(max(numeachclass.values())/sum(numeachclass.values())*100,2)
+            print("System Type:                        "+str(n_classes)+"-way classifier")
+            print("Best-guess accuracy:                {:.2f}%".format(randguess))
+            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+
+
+
+
 
 
