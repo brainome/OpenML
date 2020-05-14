@@ -7,15 +7,15 @@ Id,Name,Fname,Target,Result,Mapping1,Mapping2
 804,hutsof99-logis,hutsof99-logis.csv,0,77.14
 472,lupus,lupus.csv,STATUS,78.16,'alive':1,'dead':0
 714,fruitfly,fruitfly.csv,0,64.8
-461,analcatdata-creditscore,analcatdata_creditscore.csv,0,99.00
-875,analcatdata-chlamydia,analcatdata_chlamydia.csv,0,97.00
+461,analcatdata-creditscore,analcatdata-creditscore.csv,0,99.00
+875,analcatdata-chlamydia,analcatdata-chlamydia.csv,0,97.00
 719,veteran,veteran.csv,0,77.37
 43,haberman,haberman.csv,Survival_status,78,'1':0,'2':1
-862,sleuth-ex2016,sleuth_ex2016.csv,0,77.01
+862,sleuth-ex2016,sleuth-ex2016.csv,0,77.01
 960,postoperative-patient-data,postoperative-patient-data.csv,0,71.11
 450,analcatdata-lawsuit,analcatdata-lawsuit.csv,0,99.24
 726,fri-c2-100-5,fri-c2-100-5.csv,0,90
-724,analcatdata-vineyard,analcatdata_vineyard.csv,0,87.61
+724,analcatdata-vineyard,analcatdata-vineyard.csv,0,87.61
 1167,pc1-req,pc1-req.csv,0,70.94
 796,cpu,cpu.csv,0,100
 992,analcatdata-broadway,analcatdata-broadway.csv,0,100
@@ -25,7 +25,6 @@ Id,Name,Fname,Target,Result,Mapping1,Mapping2
 951,arsenic-male-lung,arsenic-male-lung.csv,0,100
 55,hepatitis,hepatitis.csv,0,87.1
 1059,ar1,ar1.csv,0,93.39
-51,heart-h,heart-h.csv,0,85.03
 963,heart-h,heart-h.csv,0,85.03
 23499,breast-cancer-dropped-missing-attributes-values,phpSNaed2.csv,0,76.53
 868,fri-c4-100-25,fri-c4-100-25.csv,0,84

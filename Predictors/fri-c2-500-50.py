@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 #
-# This code is licensed under GNU GPL v2.0 or higher. Please see LICENSE for details.
+# This code is was produced by an alpha version of Brainome Daimensions(tm) and is 
+# licensed under GNU GPL v2.0 or higher. For details, please see: 
+# https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
 #
 #
-# Output of Brainome Daimensions(tm) Table Compiler v0.91.
-# Compile time: Mar-19-2020 22:12:19
-# Invocation: btc -server brain.brainome.ai Data/fri-c2-500-50.csv -o Models/fri-c2-500-50.py -v -v -v -stopat 92 -port 8100 -f NN -e 10
+# Output of Brainome Daimensions(tm) 0.93 Table Compiler v0.94.
+# Invocation: btc https://www.openml.org/data/get_csv/53454/fri_c2_500_50.arff -o Predictors/fri-c2-500-50_QC.py -target binaryClass -stopat 92 -f QC -e 100 --yes
+# Total compiler execution time: 0:01:16.16. Finished on: Apr-21-2020 15:19:03.
 # This source code requires Python 3.
 #
 """
 System Type:                        Binary classifier
 Best-guess accuracy:                59.00%
-Model accuracy:                     89.80% (449/500 correct)
-Improvement over best guess:        30.80% (of possible 41.0%)
-Model capacity (MEC):               209 bits
-Generalization ratio:               2.14 bits/bit
-Model efficiency:                   0.14%/parameter
+Model accuracy:                     88.80% (444/500 correct)
+Improvement over best guess:        29.80% (of possible 41.0%)
+Model capacity (MEC):               168 bits
+Generalization ratio:               2.64 bits/bit
+Model efficiency:                   0.17%/parameter
 System behavior
-True Negatives:                     36.20% (181/500)
-True Positives:                     53.60% (268/500)
-False Negatives:                    5.40% (27/500)
-False Positives:                    4.80% (24/500)
+True Negatives:                     35.00% (175/500)
+True Positives:                     53.80% (269/500)
+False Negatives:                    5.20% (26/500)
+False Positives:                    6.00% (30/500)
 True Pos. Rate/Sensitivity/Recall:  0.91
-True Neg. Rate/Specificity:         0.88
-Precision:                          0.92
+True Neg. Rate/Specificity:         0.85
+Precision:                          0.90
 F-1 Measure:                        0.91
 False Negative Rate/Miss Rate:      0.09
-Critical Success Index:             0.84
+Critical Success Index:             0.83
 
 """
 
@@ -40,20 +42,21 @@ import csv
 import binascii
 import faulthandler
 
+from bisect import bisect_left
+# Imports -- external
+import numpy as np # For numpy see: http://numpy.org
+from numpy import array
 
 # Magic constants follow
 # I/O buffer for clean. Reduce this constant for low memory devices. 
-IOBUF=100000000
+IOBUF = 100000000
 
 # Ugly workaround for large classifiers
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE="fri-c2-500-50.csv"
+TRAINFILE = "fri_c2_500_50.csv"
 
-
-#Number of output logits
-num_output_logits = 1
 
 #Number of attributes
 num_attr = 50
@@ -61,274 +64,499 @@ n_classes = 2
 
 
 # Preprocessor for CSV files
+def preprocess(inputcsvfile, outputcsvfile, headerless=False, testfile=False, target='', ignorecolumns=[], ignorelabels=[]):
+    il=[]
+    
+    ignorelabels=[]
+    ignorecolumns=[]
+    target="binaryClass"
+
+
+    if (testfile):
+        target=''
+    
+    with open(outputcsvfile, "w+") as outputfile:
+        with open(inputcsvfile) as csvfile:
+            reader = csv.reader(csvfile)
+            if (headerless==False):
+                header=next(reader, None)
+                try:
+                    if (target!=''): 
+                        hc=header.index(target)
+                    else:
+                        hc=len(header)-1
+                        target=header[hc]
+                except:
+                    raise NameError("Target '"+target+"' not found! Header must be same as in file passed to btc.")
+                for i in range(0,len(ignorecolumns)):
+                    try:
+                        col=header.index(ignorecolumns[i])
+                        if (col==hc):
+                            raise ValueError("Attribute '"+ignorecolumns[i]+"' is the target. Header must be same as in file passed to btc.")
+                        il=il+[col]
+                    except ValueError:
+                        raise
+                    except:
+                        raise NameError("Attribute '"+ignorecolumns[i]+"' not found in header. Header must be same as in file passed to btc.")
+                for i in range(0,len(header)):      
+                    if (i==hc):
+                        continue
+                    if (i in il):
+                        continue
+                    print(header[i]+",", end = '', file=outputfile)
+                print(header[hc],file=outputfile)
+
+                for row in csv.DictReader(open(inputcsvfile)):
+                    if (row[target] in ignorelabels):
+                        continue
+                    for name in header:
+                        if (name in ignorecolumns):
+                            continue
+                        if (name==target):
+                            continue
+                        if (',' in row[name]):
+                            print ('"'+row[name]+'"'+",",end = '', file=outputfile)
+                        else:
+                            print (row[name]+",",end = '', file=outputfile)
+                    print (row[target], file=outputfile)
+
+            else:
+                try:
+                    if (target!=""): 
+                        hc=int(target)
+                    else:
+                        hc=-1
+                except:
+                    raise NameError("No header found but attribute name given as target. Header must be same as in file passed to btc.")
+                for i in range(0,len(ignorecolumns)):
+                    try:
+                        col=int(ignorecolumns[i])
+                        if (col==hc):
+                            raise ValueError("Attribute "+str(col)+" is the target. Cannot ignore. Header must be same as in file passed to btc.")
+                        il=il+[col]
+                    except ValueError:
+                        raise
+                    except:
+                        raise ValueError("No header found but attribute name given in ignore column list. Header must be same as in file passed to btc.")
+                for row in reader:
+                    if (hc==-1):
+                        hc=len(row)-1
+                    if (row[hc] in ignorelabels):
+                        continue
+                    for i in range(0,len(row)):
+                        if (i in il):
+                            continue
+                        if (i==hc):
+                            continue
+                        if (',' in row[i]):
+                            print ('"'+row[i]+'"'+",",end = '', file=outputfile)
+                        else:
+                            print(row[i]+",",end = '', file=outputfile)
+                    print (row[hc], file=outputfile)
+
 def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
     
-    clean.classlist=[]
-    clean.testfile=testfile
-    clean.mapping={}
-    
+    clean.classlist = []
+    clean.testfile = testfile
+    clean.mapping = {}
+    clean.mapping={'P': 0, 'N': 1}
 
     def convert(cell):
-        value=str(cell)
+        value = str(cell)
         try:
-            result=int(value)
+            result = int(value)
             return result
         except:
             try:
-                result=float(value)
-                if (rounding!=-1):
-                    result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
+                result = float(value)
+                if (rounding != -1):
+                    result = int(result * math.pow(10, rounding)) / math.pow(10, rounding)
                 return result
             except:
-                result=(binascii.crc32(value.encode('utf8')) % (1<<32))
+                result = (binascii.crc32(value.encode('utf8')) % (1 << 32))
                 return result
+
+    # function to return key for any value 
+    def get_key(val, clean_classmapping):
+        if clean_classmapping == {}:
+            return val
+        for key, value in clean_classmapping.items(): 
+            if val == value:
+                return key
+        if val not in list(clean_classmapping.values):
+            raise ValueError("Label key does not exist")
 
     def convertclassid(cell):
         if (clean.testfile):
             return convert(cell)
-        value=str(cell)
-        if (value==''):
+        value = str(cell)
+        if (value == ''):
             raise ValueError("All cells in the target column must contain a class label.")
 
-        if (not clean.mapping=={}):
-            result=-1
+        if (not clean.mapping == {}):
+            result = -1
             try:
-                result=clean.mapping[cell]
+                result = clean.mapping[cell]
             except:
-                raise ValueError("Class label '"+value+"' encountered in input not defined in user-provided mapping.")
-            if (not result==int(result)):
+                raise ValueError("Class label '" + value + "' encountered in input not defined in user-provided mapping.")
+            if (not result == int(result)):
                 raise ValueError("Class labels must be mapped to integer.")
             if (not str(result) in clean.classlist):
-                clean.classlist=clean.classlist+[str(result)]
+                clean.classlist = clean.classlist + [str(result)]
             return result
         try:
-            result=float(cell)
-            if (rounding!=-1):
-                result=int(result*math.pow(10,rounding))/math.pow(10,rounding)
+            result = float(cell)
+            if (rounding != -1):
+                result = int(result * math.pow(10, rounding)) / math.pow(10, rounding)
             else:
-                result=int(int(result*100)/100)  # round classes to two digits
+                result = int(int(result * 100) / 100)  # round classes to two digits
 
             if (not str(result) in clean.classlist):
-                clean.classlist=clean.classlist+[str(result)]
+                clean.classlist = clean.classlist + [str(result)]
         except:
-            result=(binascii.crc32(value.encode('utf8')) % (1<<32))
+            result = (binascii.crc32(value.encode('utf8')) % (1 << 32))
             if (result in clean.classlist):
-                result=clean.classlist.index(result)
+                result = clean.classlist.index(result)
             else:
-                clean.classlist=clean.classlist+[result]
-                result=clean.classlist.index(result)
-            if (not result==int(result)):
+                clean.classlist = clean.classlist + [result]
+                result = clean.classlist.index(result)
+            if (not result == int(result)):
                 raise ValueError("Class labels must be mappable to integer.")
         finally:
-            if (result<0):
+            if (result < 0):
                 raise ValueError("Integer class labels must be positive and contiguous.")
 
         return result
 
-    rowcount=0
+    rowcount = 0
     with open(filename) as csv_file:
         reader = csv.reader(csv_file)
-        f=open(outfile,"w+")
-        if (headerless==False):
-            next(reader,None)
-        outbuf=[]
+        f = open(outfile, "w+")
+        if (headerless == False):
+            next(reader, None)
+        outbuf = []
         for row in reader:
-            if (row==[]):  # Skip empty rows
+            if (row == []):  # Skip empty rows
                 continue
-            rowcount=rowcount+1
-            rowlen=num_attr
+            rowcount = rowcount + 1
+            rowlen = num_attr
             if (not testfile):
-                rowlen=rowlen+1    
-            if (not len(row)==rowlen):
-                raise ValueError("Column count must match trained predictor. Row "+str(rowcount)+" differs.")
-            i=0
+                rowlen = rowlen + 1    
+            if (not len(row) == rowlen):
+                raise ValueError("Column count must match trained predictor. Row " + str(rowcount) + " differs.")
+            i = 0
             for elem in row:
-                if(i+1<len(row)):
+                if(i + 1 < len(row)):
                     outbuf.append(str(convert(elem)))
                     outbuf.append(',')
                 else:
-                    classid=str(convertclassid(elem))
+                    classid = str(convertclassid(elem))
                     outbuf.append(classid)
-                i=i+1
-            if (len(outbuf)<IOBUF):
+                i = i + 1
+            if (len(outbuf) < IOBUF):
                 outbuf.append(os.linesep)
             else:
                 print(''.join(outbuf), file=f)
-                outbuf=[]
-        print(''.join(outbuf),end="", file=f)
+                outbuf = []
+        print(''.join(outbuf), end="", file=f)
         f.close()
 
-        if (testfile==False and not len(clean.classlist)>=2):
+        if (testfile == False and not len(clean.classlist) >= 2):
             raise ValueError("Number of classes must be at least 2.")
 
+        return get_key, clean.mapping
+
+# Calculate energy
+
+# Imports -- external
+import numpy as np # For numpy see: http://numpy.org
+from numpy import array
+energy_thresholds = array([-17.290236, -16.851114499999998, -16.452776, -16.077692999999996, -13.86959, -13.359430999999999, -13.009659, -12.903310000000001, -12.390892999999998, -11.9597055, -11.822276, -11.732534, -11.045293500000001, -10.886035499999998, -9.6658095, -9.284224, -9.233662, -9.0218825, -8.806436499999998, -8.664486, -8.521415000000001, -8.4717825, -7.613975, -7.530269499999999, -7.241058999999999, -7.208392999999999, -6.727953999999999, -6.673621000000001, -6.595584500000001, -6.557534, -6.5430055, -6.385466999999999, -6.1407255, -6.0459195, -5.883933000000001, -5.739262999999999, -5.682411500000001, -5.258037000000001, -4.9719695, -4.8137345, -4.724812, -4.469763499999999, -4.258509999999999, -4.0151755, -3.802574, -3.7143190000000006, -3.5602315000000004, -3.366936999999999, -2.8650710000000004, -2.8382454999999998, -2.8077705, -2.7997505000000005, -2.717131, -2.687785, -2.6038360000000007, -2.556936500000001, -2.4777424999999997, -2.4183599999999994, -2.3792735, -2.273912000000001, -2.2326075000000003, -2.1527404999999993, -2.0330430000000015, -1.991632000000001, -1.9485830000000006, -1.8805209999999997, -1.816169, -1.7152805, -1.483278499999999, -1.3762620000000003, -1.3181875, -1.3106044999999997, -1.2802500000000003, -1.1607390000000004, -1.1188265000000004, -1.0797000000000008, -0.4119365000000004, -0.3638334999999995, 0.14017650000000015, 0.17017600000000016, 0.2854819999999999, 0.2988060000000001, 0.3311309999999999, 0.3978835000000003, 0.4691354999999995, 0.5392244999999988, 0.5996739999999998, 0.7240360000000003, 0.7636385000000013, 0.8044930000000008, 0.9202229999999991, 0.9783349999999994, 1.0310160000000002, 1.0744164999999994, 1.2039644999999992, 1.2650599999999994, 1.7191824999999992, 1.8143394999999982, 1.872339999999999, 1.9387949999999996, 1.9674185, 2.131265, 2.411487, 2.7330164999999997, 2.789903, 2.809673, 2.8952469999999995, 3.0154994999999998, 3.1360255000000006, 3.241277, 3.2881225, 3.5286705, 3.6292360000000006, 3.70997, 3.8619499999999998, 3.885252, 3.9377709999999997, 4.0387889999999995, 4.2424935, 4.465408999999999, 4.562275, 4.608245500000001, 4.698714000000001, 5.101228000000001, 5.1168315, 5.217123000000001, 5.499205, 5.700611499999999, 5.780628, 5.867037000000001, 5.915038500000001, 6.0426470000000005, 6.1502930000000005, 6.5305435, 6.7616534999999995, 6.857287, 7.146448499999998, 7.2777509999999985, 7.489955500000001, 7.5410715, 7.600057, 7.8908985000000005, 7.9905665, 8.2382795, 8.716187999999999, 8.846588999999998, 8.9987125, 9.3163665, 9.342414, 9.473111, 9.628459, 9.783027, 9.858875, 9.8647715, 9.884882999999999, 10.0999055, 11.7107935, 12.424422, 13.044444499999999, 13.370310499999999, 13.940683500000002, 14.260156000000002, 14.446971000000001, 14.918529000000001, 16.407055, 16.972175999999997, 17.634076, 18.955923])
+def eqenergy(rows):
+    return np.sum(rows, axis=1)
+def classify(rows):
+    energys = eqenergy(rows)
+    start_label = 0
+    def thresh_search(input_energys):
+        numers = np.searchsorted(energy_thresholds, input_energys, side='left')-1
+        indys = np.argwhere(np.logical_and(numers<len(energy_thresholds), numers>=0)).reshape(-1)
+        defaultindys = np.argwhere(np.logical_not(np.logical_and(numers<len(energy_thresholds), numers>=0))).reshape(-1)
+        outputs = np.zeros(input_energys.shape[0])
+        outputs[indys] = (numers[indys] + start_label) % 2
+        outputs[defaultindys]=1
+        return outputs
+    return thresh_search(energys)
+
+numthresholds=168
 
 
-# Helper (save an import)
-def argmax(l):
-    f = lambda i: l[i]
-    return max(range(len(l)), key=f)
-
-# Classifier
-def classify(row):
-    x=row
-    o=[0]*num_output_logits
-    h_0 = max((((-11.067242 * float(x[0]))+ (-10.796282 * float(x[1]))+ (-10.108956 * float(x[2]))+ (3.8093026 * float(x[3]))+ (1.2276869 * float(x[4]))+ (-0.10320607 * float(x[5]))+ (1.2363977 * float(x[6]))+ (4.0305233 * float(x[7]))+ (4.3789434 * float(x[8]))+ (-5.24719 * float(x[9]))+ (-2.9863586 * float(x[10]))+ (-0.29489625 * float(x[11]))+ (-2.9812253 * float(x[12]))+ (-5.031249 * float(x[13]))+ (-0.6920952 * float(x[14]))+ (2.5214968 * float(x[15]))+ (0.43477276 * float(x[16]))+ (-2.8145835 * float(x[17]))+ (-0.8100101 * float(x[18]))+ (4.4942946 * float(x[19]))+ (-0.4969352 * float(x[20]))+ (0.22643857 * float(x[21]))+ (-2.3381398 * float(x[22]))+ (-1.7620031 * float(x[23]))+ (-2.3606136 * float(x[24]))+ (-0.580503 * float(x[25]))+ (-0.94234234 * float(x[26]))+ (-5.21614 * float(x[27]))+ (3.7940247 * float(x[28]))+ (-3.5939724 * float(x[29]))+ (2.9612923 * float(x[30]))+ (1.8173177 * float(x[31]))+ (-1.3672489 * float(x[32]))+ (1.8477049 * float(x[33]))+ (1.1321819 * float(x[34]))+ (2.4768736 * float(x[35]))+ (3.9742534 * float(x[36]))+ (2.0124807 * float(x[37]))+ (-0.6958869 * float(x[38]))+ (2.3983192 * float(x[39]))+ (-0.7985042 * float(x[40]))+ (-3.6158729 * float(x[41]))+ (-3.1023128 * float(x[42]))+ (1.3454262 * float(x[43]))+ (-0.5294517 * float(x[44]))+ (-2.892064 * float(x[45]))+ (8.784397 * float(x[46]))+ (5.826574 * float(x[47]))+ (1.2282118 * float(x[48]))+ (-4.857531 * float(x[49]))) + 12.2620125), 0)
-    h_1 = max((((2.6686358 * float(x[0]))+ (-2.534332 * float(x[1]))+ (0.03121443 * float(x[2]))+ (0.15637831 * float(x[3]))+ (2.7876592 * float(x[4]))+ (-1.0506883 * float(x[5]))+ (-2.0161314 * float(x[6]))+ (-0.40295652 * float(x[7]))+ (1.4797583 * float(x[8]))+ (1.6488419 * float(x[9]))+ (1.516777 * float(x[10]))+ (-5.3233833 * float(x[11]))+ (3.630146 * float(x[12]))+ (6.7467074 * float(x[13]))+ (-2.295288 * float(x[14]))+ (0.9079676 * float(x[15]))+ (-3.566939 * float(x[16]))+ (-1.9614645 * float(x[17]))+ (4.539278 * float(x[18]))+ (-3.1557908 * float(x[19]))+ (0.116483375 * float(x[20]))+ (0.9969969 * float(x[21]))+ (2.664635 * float(x[22]))+ (-1.3401481 * float(x[23]))+ (-1.0300472 * float(x[24]))+ (-0.10034897 * float(x[25]))+ (-0.9619921 * float(x[26]))+ (-1.6106889 * float(x[27]))+ (1.6325114 * float(x[28]))+ (2.6030655 * float(x[29]))+ (-3.5444496 * float(x[30]))+ (1.8766775 * float(x[31]))+ (-3.0400345 * float(x[32]))+ (-2.4443347 * float(x[33]))+ (-1.8095495 * float(x[34]))+ (0.13398346 * float(x[35]))+ (-2.734211 * float(x[36]))+ (-2.5228424 * float(x[37]))+ (-0.56043476 * float(x[38]))+ (0.81389743 * float(x[39]))+ (-1.8078852 * float(x[40]))+ (0.14916742 * float(x[41]))+ (-2.0178237 * float(x[42]))+ (-0.5394818 * float(x[43]))+ (1.0471454 * float(x[44]))+ (1.2105623 * float(x[45]))+ (-4.807819 * float(x[46]))+ (-3.490685 * float(x[47]))+ (2.3141587 * float(x[48]))+ (2.287566 * float(x[49]))) + -1.908694), 0)
-    h_2 = max((((-1.3773441 * float(x[0]))+ (3.182933 * float(x[1]))+ (0.2426704 * float(x[2]))+ (-3.3647077 * float(x[3]))+ (3.7727437 * float(x[4]))+ (1.3807002 * float(x[5]))+ (-2.3852546 * float(x[6]))+ (-0.17351659 * float(x[7]))+ (0.46593004 * float(x[8]))+ (0.055025965 * float(x[9]))+ (-0.60657483 * float(x[10]))+ (-2.4021842 * float(x[11]))+ (1.4151562 * float(x[12]))+ (2.4449975 * float(x[13]))+ (-0.29382315 * float(x[14]))+ (2.0659804 * float(x[15]))+ (-1.300347 * float(x[16]))+ (0.8451779 * float(x[17]))+ (2.8971806 * float(x[18]))+ (-3.2551138 * float(x[19]))+ (-2.7433605 * float(x[20]))+ (1.9609054 * float(x[21]))+ (0.21031487 * float(x[22]))+ (-2.2952394 * float(x[23]))+ (-2.6851473 * float(x[24]))+ (-1.3100609 * float(x[25]))+ (-1.5391563 * float(x[26]))+ (-1.2652596 * float(x[27]))+ (-1.4148276 * float(x[28]))+ (-1.9801996 * float(x[29]))+ (0.538653 * float(x[30]))+ (1.6834596 * float(x[31]))+ (-0.23451522 * float(x[32]))+ (-1.7263361 * float(x[33]))+ (-0.049256857 * float(x[34]))+ (-0.8559466 * float(x[35]))+ (1.0708596 * float(x[36]))+ (-1.1229287 * float(x[37]))+ (0.98366207 * float(x[38]))+ (0.049879085 * float(x[39]))+ (-1.4907193 * float(x[40]))+ (-3.0357752 * float(x[41]))+ (2.7653966 * float(x[42]))+ (-2.94861 * float(x[43]))+ (-1.3996105 * float(x[44]))+ (1.0322565 * float(x[45]))+ (-4.191792 * float(x[46]))+ (-3.1384068 * float(x[47]))+ (2.5677762 * float(x[48]))+ (0.6256018 * float(x[49]))) + -1.305864), 0)
-    h_3 = max((((-3.7161205 * float(x[0]))+ (-2.607068 * float(x[1]))+ (1.9287311 * float(x[2]))+ (-2.3033903 * float(x[3]))+ (-1.1832845 * float(x[4]))+ (0.37298802 * float(x[5]))+ (0.27445456 * float(x[6]))+ (0.5527911 * float(x[7]))+ (0.58421075 * float(x[8]))+ (-0.880784 * float(x[9]))+ (-0.9606599 * float(x[10]))+ (-0.61477464 * float(x[11]))+ (-0.60186285 * float(x[12]))+ (-1.6046778 * float(x[13]))+ (0.028362278 * float(x[14]))+ (-0.055890817 * float(x[15]))+ (-1.1072533 * float(x[16]))+ (-0.98258436 * float(x[17]))+ (-0.30266926 * float(x[18]))+ (0.95494884 * float(x[19]))+ (1.9867265 * float(x[20]))+ (-0.20939608 * float(x[21]))+ (-0.2572592 * float(x[22]))+ (0.23349087 * float(x[23]))+ (0.3917536 * float(x[24]))+ (0.5080143 * float(x[25]))+ (-0.0994785 * float(x[26]))+ (-2.3142114 * float(x[27]))+ (1.8108009 * float(x[28]))+ (1.160146 * float(x[29]))+ (-0.5678782 * float(x[30]))+ (1.3894011 * float(x[31]))+ (-0.4274701 * float(x[32]))+ (-0.8256566 * float(x[33]))+ (-0.43371055 * float(x[34]))+ (0.39923105 * float(x[35]))+ (0.057115056 * float(x[36]))+ (2.331099 * float(x[37]))+ (-1.363965 * float(x[38]))+ (1.6640007 * float(x[39]))+ (-0.35033783 * float(x[40]))+ (-0.30951425 * float(x[41]))+ (-2.8911595 * float(x[42]))+ (1.902472 * float(x[43]))+ (0.4719591 * float(x[44]))+ (1.2035663 * float(x[45]))+ (2.272378 * float(x[46]))+ (2.5980234 * float(x[47]))+ (0.7964984 * float(x[48]))+ (-0.56741434 * float(x[49]))) + -2.8594365), 0)
-    o[0] = (0.9699589 * h_0)+ (1.0138273 * h_1)+ (-1.3953642 * h_2)+ (-4.0533056 * h_3) + -2.2701843
-
-    if num_output_logits==1:
-        return o[0]>=0
-    else:
-        return argmax(o)
 
 # Main method
+model_cap = numthresholds
+
+
+def Validate(file):
+    cleanarr = np.loadtxt(file, delimiter=',', dtype='float64')
+
+
+    if n_classes == 2:
+        #note that classification is a single line of code
+        outputs = classify(cleanarr[:, :-1])
+
+
+        #metrics
+        count, correct_count, num_TP, num_TN, num_FP, num_FN, num_class_1, num_class_0 = 0, 0, 0, 0, 0, 0, 0, 0
+        correct_count = int(np.sum(outputs.reshape(-1) == cleanarr[:, -1].reshape(-1)))
+        count = outputs.shape[0]
+        num_TP = int(np.sum(np.logical_and(outputs.reshape(-1) == 1, cleanarr[:, -1].reshape(-1) == 1)))
+        num_TN = int(np.sum(np.logical_and(outputs.reshape(-1) == 0, cleanarr[:, -1].reshape(-1) == 0)))
+        num_FN = int(np.sum(np.logical_and(outputs.reshape(-1) == 0, cleanarr[:, -1].reshape(-1) == 1)))
+        num_FP = int(np.sum(np.logical_and(outputs.reshape(-1) == 1, cleanarr[:, -1].reshape(-1) == 0)))
+        num_class_0 = int(np.sum(cleanarr[:, -1].reshape(-1) == 0))
+        num_class_1 = int(np.sum(cleanarr[:, -1].reshape(-1) == 1))
+        return count, correct_count, num_TP, num_TN, num_FP, num_FN, num_class_1, num_class_0
+
+
+    else:
+        #validation
+        outputs = classify(cleanarr[:, :-1])
+
+
+        #metrics
+        count, correct_count = 0, 0
+        numeachclass = {}
+        for k, o in enumerate(outputs):
+            if int(o) == int(float(cleanarr[k, -1])):
+                correct_count += 1
+            if int(float(cleanarr[k, -1])) in numeachclass.keys():
+                numeachclass[int(float(cleanarr[k, -1]))] += 1
+            else:
+                numeachclass[int(float(cleanarr[k, -1]))] = 0
+            count += 1
+        return count, correct_count, numeachclass, outputs, cleanarr[:,-1]
+
+
+#Predict on unlabeled data
+def Predict(file, get_key, headerless, preprocessedfile, classmapping):
+    cleanarr = np.loadtxt(file, delimiter=',', dtype='float64')
+    with open(preprocessedfile, 'r') as csvinput:
+        dirtyreader = csv.reader(csvinput)
+
+        #print original header
+        if (not headerless):
+            print(','.join(next(dirtyreader, None) + ["Prediction"]))
+
+        outputs = classify(cleanarr)
+
+        for k, row in enumerate(dirtyreader):
+            print(str(','.join(str(j) for j in ([i for i in row]))) + ',' + str(get_key(int(outputs[k]), classmapping)))
+
+
+
+#Main
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Predictor trained on '+TRAINFILE)
     parser.add_argument('csvfile', type=str, help='CSV file containing test set (unlabeled).')
     parser.add_argument('-validate', action='store_true', help='Validation mode. csvfile must be labeled. Output is classification statistics rather than predictions.')
-    parser.add_argument('-cleanfile',action='store_true',help='Use this flag to save prediction time if the csvfile you are passing has already been preprocessed. Implies headerless.')
+    parser.add_argument('-cleanfile', action='store_true', help='Use this flag to save prediction time if the csvfile you are passing has already been preprocessed. Implies headerless.')
     parser.add_argument('-headerless', help='Do not treat the first line of csvfile as a header.', action='store_true')
     args = parser.parse_args()
     faulthandler.enable()
-    
-    if not args.validate: # Then predict
-        if args.cleanfile:
-            with open(args.csvfile,'r') as cleancsvfile:
-                cleancsvreader = csv.reader(cleancsvfile)
-                for cleanrow in cleancsvreader:
-                    if len(cleanrow)==0:
-                        continue
-                print(str(','.join(str(j) for j in ([i for i in cleanrow])))+','+str(int(classify(cleanrow))))
+
+    #clean if not already clean
+    if not args.cleanfile:
+        tempdir = tempfile.gettempdir()
+        cleanfile = tempdir + os.sep + "clean.csv"
+        preprocessedfile = tempdir + os.sep + "prep.csv"
+        preprocess(args.csvfile,preprocessedfile,args.headerless,(not args.validate))
+        get_key, classmapping = clean(preprocessedfile, cleanfile, -1, args.headerless, (not args.validate))
+    else:
+        cleanfile=args.csvfile
+        preprocessedfile=args.csvfile
+        get_key = lambda x,y: x
+        classmapping = {}
+
+    #Predict or Validate?
+    if not args.validate:
+        Predict(cleanfile, get_key, args.headerless, preprocessedfile, classmapping)
+
+
+    else:
+        
+        if n_classes == 2:
+            count, correct_count, num_TP, num_TN, num_FP, num_FN, num_class_1, num_class_0 = Validate(cleanfile)
         else:
-            tempdir=tempfile.gettempdir()
-            cleanfile=tempdir+os.sep+"clean.csv"
-            clean(args.csvfile,cleanfile, -1, args.headerless, True)
-            with open(cleanfile,'r') as cleancsvfile, open(args.csvfile,'r') as dirtycsvfile:
-                cleancsvreader = csv.reader(cleancsvfile)
-                dirtycsvreader = csv.reader(dirtycsvfile)
-                if (not args.headerless):
-                        print(','.join(next(dirtycsvreader, None)+['Prediction']))
-                for cleanrow,dirtyrow in zip(cleancsvreader,dirtycsvreader):
-                    if len(cleanrow)==0:
-                        continue
-                    print(str(','.join(str(j) for j in ([i for i in dirtyrow])))+','+str(int(classify(cleanrow))))
-            os.remove(cleanfile)
-            
-    else: # Then validate this predictor
-        if n_classes==2:
-            tempdir=tempfile.gettempdir()
-            temp_name = next(tempfile._get_candidate_names())
-            cleanvalfile=tempdir+os.sep+temp_name
-            clean(args.csvfile,cleanvalfile, -1, args.headerless)
-            with open(cleanvalfile,'r') as valcsvfile:
-                count,correct_count,num_TP,num_TN,num_FP,num_FN,num_class_1,num_class_0=0,0,0,0,0,0,0,0
-                valcsvreader = csv.reader(valcsvfile)
-                for valrow in valcsvreader:
-                    if len(valrow)==0:
-                        continue
-                    if int(classify(valrow[:-1]))==int(float(valrow[-1])):
-                        correct_count+=1
-                        if int(float(valrow[-1]))==1:
-                            num_class_1+=1
-                            num_TP+=1
-                        else:
-                            num_class_0+=1
-                            num_TN+=1
-                    else:
-                        if int(float(valrow[-1]))==1:
-                            num_class_1+=1
-                            num_FN+=1
-                        else:
-                            num_class_0+=1
-                            num_FP+=1
-                    count+=1
-        else:
-            tempdir=tempfile.gettempdir()
-            temp_name = next(tempfile._get_candidate_names())
-            cleanvalfile=tempdir+os.sep+temp_name
-            clean(args.csvfile,cleanvalfile, -1, args.headerless)
-            with open(cleanvalfile,'r') as valcsvfile:
-                count,correct_count=0,0
-                valcsvreader = csv.reader(valcsvfile)
-                numeachclass={}
-                for i,valrow in enumerate(valcsvreader):
-                    if len(valrow)==0:
-                        continue
-                    if int(classify(valrow[:-1]))==int(float(valrow[-1])):
-                        correct_count+=1
-                    if int(float(valrow[-1])) in numeachclass.keys():
-                        numeachclass[int(float(valrow[-1]))]+=1
-                    else:
-                        numeachclass[int(float(valrow[-1]))]=0
-                    count+=1
+            count, correct_count, numeachclass, preds, true_labels = Validate(cleanfile)
 
-        model_cap=209
 
-        if n_classes==2:
+        #validation report
+        if n_classes == 2:
+            #Base metrics
+            FN = float(num_FN) * 100.0 / float(count)
+            FP = float(num_FP) * 100.0 / float(count)
+            TN = float(num_TN) * 100.0 / float(count)
+            TP = float(num_TP) * 100.0 / float(count)
+            num_correct = correct_count
 
-            FN=float(num_FN)*100.0/float(count)
-            FP=float(num_FP)*100.0/float(count)
-            TN=float(num_TN)*100.0/float(count)
-            TP=float(num_TP)*100.0/float(count)
-            num_correct=correct_count
-
-            if int(num_TP+num_FN)!=0:
-                TPR=num_TP/(num_TP+num_FN) # Sensitivity, Recall
-            if int(num_TN+num_FP)!=0:
-                TNR=num_TN/(num_TN+num_FP) # Specificity, 
-            if int(num_TP+num_FP)!=0:
-                PPV=num_TP/(num_TP+num_FP) # Recall
-            if int(num_FN+num_TP)!=0:
-                FNR=num_FN/(num_FN+num_TP) # Miss rate
-            if int(2*num_TP+num_FP+num_FN)!=0:
-                FONE=2*num_TP/(2*num_TP+num_FP+num_FN) # F1 Score
-            if int(num_TP+num_FN+num_FP)!=0:
-                TS=num_TP/(num_TP+num_FN+num_FP) # Critical Success Index
-
-            randguess=int(float(10000.0*max(num_class_1,num_class_0))/count)/100.0
-            modelacc=int(float(num_correct*10000)/count)/100.0
-
+            #Calculated Metrics
+            if int(num_TP + num_FN) != 0:
+                TPR = num_TP / (num_TP + num_FN) # Sensitivity, Recall
+            if int(num_TN + num_FP) != 0:
+                TNR = num_TN / (num_TN + num_FP) # Specificity
+            if int(num_TP + num_FP) != 0:
+                PPV = num_TP / (num_TP + num_FP) # Recall
+            if int(num_FN + num_TP) != 0:
+                FNR = num_FN / (num_FN + num_TP) # Miss rate
+            if int(2 * num_TP + num_FP + num_FN) != 0:
+                FONE = 2 * num_TP / (2 * num_TP + num_FP + num_FN) # F1 Score
+            if int(num_TP + num_FN + num_FP) != 0:
+                TS = num_TP / (num_TP + num_FN + num_FP) # Critical Success Index
+            #Best Guess Accuracy
+            randguess = int(float(10000.0 * max(num_class_1, num_class_0)) / count) / 100.0
+            #Model Accuracy
+            modelacc = int(float(num_correct * 10000) / count) / 100.0
+            #Report
             print("System Type:                        Binary classifier")
             print("Best-guess accuracy:                {:.2f}%".format(randguess))
-            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
-            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model accuracy:                     {:.2f}%".format(modelacc) + " (" + str(int(num_correct)) + "/" + str(count) + " correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc - randguess) + " (of possible " + str(round(100 - randguess, 2)) + "%)")
             print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
-            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
-            print("Model efficiency:                   {:.2f}%/parameter".format(int(100*(modelacc-randguess)/model_cap)/100.0))
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct * 100) / model_cap) / 100.0) + " bits/bit")
+            print("Model efficiency:                   {:.2f}%/parameter".format(int(100 * (modelacc - randguess) / model_cap) / 100.0))
             print("System behavior")
-            print("True Negatives:                     {:.2f}%".format(TN)+" ("+str(int(num_TN))+"/"+str(count)+")")
-            print("True Positives:                     {:.2f}%".format(TP)+" ("+str(int(num_TP))+"/"+str(count)+")")
-            print("False Negatives:                    {:.2f}%".format(FN)+" ("+str(int(num_FN))+"/"+str(count)+")")
-            print("False Positives:                    {:.2f}%".format(FP)+" ("+str(int(num_FP))+"/"+str(count)+")")
-            if int(num_TP+num_FN)!=0:
+            print("True Negatives:                     {:.2f}%".format(TN) + " (" + str(int(num_TN)) + "/" + str(count) + ")")
+            print("True Positives:                     {:.2f}%".format(TP) + " (" + str(int(num_TP)) + "/" + str(count) + ")")
+            print("False Negatives:                    {:.2f}%".format(FN) + " (" + str(int(num_FN)) + "/" + str(count) + ")")
+            print("False Positives:                    {:.2f}%".format(FP) + " (" + str(int(num_FP)) + "/" + str(count) + ")")
+            if int(num_TP + num_FN) != 0:
                 print("True Pos. Rate/Sensitivity/Recall:  {:.2f}".format(TPR))
-            if int(num_TN+num_FP)!=0:
+            if int(num_TN + num_FP) != 0:
                 print("True Neg. Rate/Specificity:         {:.2f}".format(TNR))
-            if int(num_TP+num_FP)!=0:
+            if int(num_TP + num_FP) != 0:
                 print("Precision:                          {:.2f}".format(PPV))
-            if int(2*num_TP+num_FP+num_FN)!=0:
+            if int(2 * num_TP + num_FP + num_FN) != 0:
                 print("F-1 Measure:                        {:.2f}".format(FONE))
-            if int(num_TP+num_FN)!=0:
+            if int(num_TP + num_FN) != 0:
                 print("False Negative Rate/Miss Rate:      {:.2f}".format(FNR))
-            if int(num_TP+num_FN+num_FP)!=0:    
+            if int(num_TP + num_FN + num_FP) != 0:
                 print("Critical Success Index:             {:.2f}".format(TS))
+
+        #Multiclass
         else:
-            num_correct=correct_count
-            modelacc=int(float(num_correct*10000)/count)/100.0
-            randguess=round(max(numeachclass.values())/sum(numeachclass.values())*100,2)
-            print("System Type:                        "+str(n_classes)+"-way classifier")
+            num_correct = correct_count
+            modelacc = int(float(num_correct * 10000) / count) / 100.0
+            randguess = round(max(numeachclass.values()) / sum(numeachclass.values()) * 100, 2)
+            print("System Type:                        " + str(n_classes) + "-way classifier")
             print("Best-guess accuracy:                {:.2f}%".format(randguess))
-            print("Model accuracy:                     {:.2f}%".format(modelacc)+" ("+str(int(num_correct))+"/"+str(count)+" correct)")
-            print("Improvement over best guess:        {:.2f}%".format(modelacc-randguess)+" (of possible "+str(round(100-randguess,2))+"%)")
+            print("Model accuracy:                     {:.2f}%".format(modelacc) + " (" + str(int(num_correct)) + "/" + str(count) + " correct)")
+            print("Improvement over best guess:        {:.2f}%".format(modelacc - randguess) + " (of possible " + str(round(100 - randguess, 2)) + "%)")
             print("Model capacity (MEC):               {:.0f} bits".format(model_cap))
-            print("Generalization ratio:               {:.2f}".format(int(float(num_correct*100)/model_cap)/100.0)+" bits/bit")
+            print("Generalization ratio:               {:.2f}".format(int(float(num_correct * 100) / model_cap) / 100.0) + " bits/bit")
 
 
 
 
 
+            def confusion_matrix(y_true, y_pred, labels=None, sample_weight=None, normalize=None):
+                #check for numpy/scipy is imported
+                try:
+                    from scipy.sparse import coo_matrix #required for multiclass metrics
+                    try:
+                        np.array
+                    except:
+                        import numpy as np
+                except:
+                    raise ValueError("Scipy and Numpy Required for Multiclass Metrics")
+                # Compute confusion matrix to evaluate the accuracy of a classification.
+                # By definition a confusion matrix :math:C is such that :math:C_{i, j}
+                # is equal to the number of observations known to be in group :math:i and
+                # predicted to be in group :math:j.
+                # Thus in binary classification, the count of true negatives is
+                # :math:C_{0,0}, false negatives is :math:C_{1,0}, true positives is
+                # :math:C_{1,1} and false positives is :math:C_{0,1}.
+                # Read more in the :ref:User Guide <confusion_matrix>.
+                # Parameters
+                # ----------
+                # y_true : array-like of shape (n_samples,)
+                # Ground truth (correct) target values.
+                # y_pred : array-like of shape (n_samples,)
+                # Estimated targets as returned by a classifier.
+                # labels : array-like of shape (n_classes), default=None
+                # List of labels to index the matrix. This may be used to reorder
+                # or select a subset of labels.
+                # If None is given, those that appear at least once
+                # in y_true or y_pred are used in sorted order.
+                # sample_weight : array-like of shape (n_samples,), default=None
+                # Sample weights.
+                # normalize : {'true', 'pred', 'all'}, default=None
+                # Normalizes confusion matrix over the true (rows), predicted (columns)
+                # conditions or all the population. If None, confusion matrix will not be
+                # normalized.
+                # Returns
+                # -------
+                # C : ndarray of shape (n_classes, n_classes)
+                # Confusion matrix.
+                # References
+                # ----------
+                if labels is None:
+                    labels = np.array(list(set(list(y_true.astype('int')))))
+                else:
+                    labels = np.asarray(labels)
+                    if np.all([l not in y_true for l in labels]):
+                        raise ValueError("At least one label specified must be in y_true")
 
-        os.remove(cleanvalfile)
+
+                if sample_weight is None:
+                    sample_weight = np.ones(y_true.shape[0], dtype=np.int64)
+                else:
+                    sample_weight = np.asarray(sample_weight)
+                if y_true.shape[0]!=y_pred.shape[0]:
+                    raise ValueError("y_true and y_pred must be of the same length")
+
+                if normalize not in ['true', 'pred', 'all', None]:
+                    raise ValueError("normalize must be one of {'true', 'pred', 'all', None}")
+
+
+                n_labels = labels.size
+                label_to_ind = {y: x for x, y in enumerate(labels)}
+                # convert yt, yp into index
+                y_pred = np.array([label_to_ind.get(x, n_labels + 1) for x in y_pred])
+                y_true = np.array([label_to_ind.get(x, n_labels + 1) for x in y_true])
+                # intersect y_pred, y_true with labels, eliminate items not in labels
+                ind = np.logical_and(y_pred < n_labels, y_true < n_labels)
+                y_pred = y_pred[ind]
+                y_true = y_true[ind]
+                # also eliminate weights of eliminated items
+                sample_weight = sample_weight[ind]
+                # Choose the accumulator dtype to always have high precision
+                if sample_weight.dtype.kind in {'i', 'u', 'b'}:
+                    dtype = np.int64
+                else:
+                    dtype = np.float64
+                cm = coo_matrix((sample_weight, (y_true, y_pred)), shape=(n_labels, n_labels), dtype=dtype,).toarray()
+
+
+                with np.errstate(all='ignore'):
+                    if normalize == 'true':
+                        cm = cm / cm.sum(axis=1, keepdims=True)
+                    elif normalize == 'pred':
+                        cm = cm / cm.sum(axis=0, keepdims=True)
+                    elif normalize == 'all':
+                        cm = cm / cm.sum()
+                    cm = np.nan_to_num(cm)
+                return cm
+
+
+            print("Confusion Matrix:")
+            mtrx = confusion_matrix(np.array(true_labels).reshape(-1), np.array(preds).reshape(-1))
+            mtrx = mtrx / np.sum(mtrx) * 100.0
+            print(' ' + np.array2string(mtrx, formatter={'float': (lambda x: '{:.2f}%'.format(round(float(x), 2)))})[1:-1])
+
+
+
+    #remove tempfile if created
+    if not args.cleanfile: 
+        os.remove(cleanfile)
+        os.remove(preprocessedfile)
+
 

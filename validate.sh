@@ -22,8 +22,9 @@ foreach line ( `cat testfiles.csv` )
     # Check if data file is there. If not, download it
     if ( ! -e Data/$Fname ) then
         echo "### Downloading $Fname from openml.org"
-        set csvlink = `wget -qO- https://www.openml.org/d/$Id | grep get_csv | sed 's/.*href="//g;s/">.*//g'`
-        wget -q -O Data/$Fname $csvlink
+        set csvlink = `wget -t0 -qO- https://www.openml.org/d/$Id | grep get_csv | sed 's/.*href="//g;s/">.*//g'`
+        echo $csvlink
+	wget -t 0 -q -O Data/$Fname $csvlink
     endif
 
     if ( ! -e Data/$Fname ) then
@@ -32,15 +33,10 @@ foreach line ( `cat testfiles.csv` )
     endif
     set fname  = `echo $Fname | sed 's/\..*//g' `
     set suffix = `echo $Fname | sed 's/.*\./\./g'`
-    if ( $Target != "0" ) then
-        echo "### Moving target column..."
-        python3 target.py Data/$Fname $Target >Data/temp.csv
-        mv Data/temp.csv Data/$Fname
-    endif
     echo "############################################"
     echo "########## " $Name
     echo "############################################"
-    python3 Predictors/$fname.py Data/$Fname -validate
+    python3 Predictors/$Name.py Data/$Fname -validate
     echo "############################################"
     echo
     endif
