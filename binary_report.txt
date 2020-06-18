@@ -1,0 +1,110 @@
+Dataset                                                            | Brainome Modelsize     | Compile Time                              | Accuracy                                       
+shuttle-landing-control                                            | # Parameters: 6        | Build Time: 7.73 seconds.                 | Our model: 93.33%.      State of The Art: 80.00%.    
+chscase-adopt                                                      | # Parameters: 19       | Build Time: 7.62 seconds.                 | Our model: 100.0%.      State of The Art: 87.18%.    
+rabe-131                                                           | # Parameters: 19       | Build Time: 7.75 seconds.                 | Our model: 100.0%.      State of The Art: 100%.      
+sleep                                                              | # Parameters: 23       | Build Time: 8.25 seconds.                 | Our model: 100.0%.      State of The Art: 77.42%.    
+witmer-census-1980                                                 | # Parameters: 27       | Build Time: 7.5 seconds.                  | Our model: 100.0%.      State of The Art: 78%.       
+hutsof99-logis                                                     | # Parameters: 17       | Build Time: 7.41 seconds.                 | Our model: 81.42%.      State of The Art: 77.14%.    
+lupus                                                              | # Parameters: 17       | Build Time: 8.25 seconds.                 | Our model: 85.05%.      State of The Art: 78.16%.    
+fruitfly                                                           | # Parameters: 28       | Build Time: 7.65 seconds.                 | Our model: 73.6%.       State of The Art: 64.8%.     
+analcatdata-creditscore                                            | # Parameters: 8        | Build Time: 7.75 seconds.                 | Our model: 100.0%.      State of The Art: 99.00%.    
+analcatdata-chlamydia                                              | # Parameters: 24       | Build Time: 8.2 seconds.                  | Our model: 100.0%.      State of The Art: 97.00%.    
+veteran                                                            | # Parameters: 30       | Build Time: 13.78 seconds.                | Our model: 80.29%.      State of The Art: 77.37%.    
+haberman                                                           | # Parameters: 58       | Build Time: 74.1 seconds.                 | Our model: 74.83%.      State of The Art: 78%.       
+sleuth-ex2016                                                      | # Parameters: 21       | Build Time: 8.07 seconds.                 | Our model: 78.16%.      State of The Art: 77.01%.    
+postoperative-patient-data                                         | # Parameters: 38       | Build Time: 7.46 seconds.                 | Our model: 86.66%.      State of The Art: 71.11%.    
+analcatdata-lawsuit                                                | # Parameters: 11       | Build Time: 7.83 seconds.                 | Our model: 100.0%.      State of The Art: 99.24%.    
+fri-c2-100-5                                                       | # Parameters: 36       | Build Time: 45.89 seconds.                | Our model: 94.0%.       State of The Art: 90%.       
+analcatdata-vineyard                                               | # Parameters: 108      | Build Time: 75.35 seconds.                | Our model: 61.96%.      State of The Art: 87.61%.    
+pc1-req                                                            | # Parameters: 31       | Build Time: 1652.22 seconds.              | Our model: 71.56%.      State of The Art: 70.94%.    
+cpu                                                                | # Parameters: 28       | Build Time: 1826.82 seconds.              | Our model: 99.52%.      State of The Art: 100%.      
+analcatdata-broadway                                               | # Parameters: 37       | Build Time: 7.69 seconds.                 | Our model: 100.0%.      State of The Art: 100%.      
+biomed                                                             | # Parameters: 43       | Build Time: 9.35 seconds.                 | Our model: 98.56%.      State of The Art: 94.74%.    
+fri-c0-100-10                                                      | # Parameters: 49       | Build Time: 32.82 seconds.                | Our model: 90.0%.       State of The Art: 89%.       
+arsenic-female-lung                                                | # Parameters: 13       | Build Time: 9.24 seconds.                 | Our model: 99.64%.      State of The Art: 99.11%.    
+arsenic-male-lung                                                  | # Parameters: 1        | Build Time: 7.52 seconds.                 | Our model: 100.0%.      State of The Art: 100%.      
+hepatitis                                                          | # Parameters: 29       | Build Time: 7.55 seconds.                 | Our model: 89.67%.      State of The Art: 87.1%.     
+ar1                                                                | # Parameters: 14       | Build Time: 7.48 seconds.                 | Our model: 99.17%.      State of The Art: 93.39%.    
+heart-h                                                            | # Parameters: 52       | Build Time: 8.79 seconds.                 | Our model: 91.83%.      State of The Art: 85.03%.    
+breast-cancer-dropped-missing-attributes-values                    | # Parameters: 63       | Build Time: 7.61 seconds.                 | Our model: 82.31%.      State of The Art: 76.53%.    
+fri-c4-100-25                                                      | # Parameters: 26       | Build Time: 7.6 seconds.                  | Our model: 87.0%.       State of The Art: 84%.       
+fri-c0-250-10                                                      | # Parameters: 61       | Build Time: 115.42 seconds.               | Our model: 89.6%.       State of The Art: 87.2%.     
+profb                                                              | # Parameters: 158      | Build Time: 11.79 seconds.                | Our model: 77.38%.      State of The Art: 76.34%.    
+fri-c1-250-10                                                      | # Parameters: 49       | Build Time: 320.17 seconds.               | Our model: 96.4%.       State of The Art: 92.4%.     
+fri-c3-500-5                                                       | # Parameters: 36       | Build Time: 215.54 seconds.               | Our model: 95.2%.       State of The Art: 93.4%.     
+KnuggetChase3                                                      | # Parameters: 41       | Build Time: 71.45 seconds.                | Our model: 93.81%.      State of The Art: 0%.        
+dermatology                                                        | # Parameters: 43       | Build Time: 394.71 seconds.               | Our model: 100.0%.      State of The Art: 100%.      
+mofn-3-7-10                                                        | # Parameters: 11       | Build Time: 19.59 seconds.                | Our model: 100.0%.      State of The Art: 100%.      
+dbworld-subjects-stemmed                                           | # Parameters: 96       | Build Time: 112.6 seconds.                | Our model: 98.43%.      State of The Art: 93.75%.    
+cmc                                                                | # Parameters: 23       | Build Time: 2083.23 seconds.              | Our model: 70.26%.      State of The Art: 72.57%.    
+vote                                                               | # Parameters: 46       | Build Time: 212.04 seconds.               | Our model: 97.47%.      State of The Art: 96.78%.    
+MegaWatt1                                                          | # Parameters: 46       | Build Time: 7.58 seconds.                 | Our model: 100.0%.      State of The Art: 90.51%.    
+diabetes                                                           | # Parameters: 158      | Build Time: 7.58 seconds.                 | Our model: 79.03%.      State of The Art: 78.78%.    
+sponge                                                             | # Parameters: 10       | Build Time: 9.97 seconds.                 | Our model: 100.0%.      State of The Art: 96.05%.    
+banknote-authentication                                            | # Parameters: 13       | Build Time: 340.43 seconds.               | Our model: 100.0%.      State of The Art: 100%.      
+kc1-top5                                                           | # Parameters: 11       | Build Time: 7.91 seconds.                 | Our model: 100.0%.      State of The Art: 95.86%.    
+fri-c4-250-25                                                      | # Parameters: 91       | Build Time: 10.2 seconds.                 | Our model: 86.8%.       State of The Art: 86.4%.     
+meta                                                               | # Parameters: 58       | Build Time: 7.82 seconds.                 | Our model: 92.8%.       State of The Art: 92.42%.    
+GAMETES-Epistasis-3-Way-20atts-0.2H-EDM-1-1                        | # Parameters: 210      | Build Time: 225.73 seconds.               | Our model: 65.25%.      State of The Art: 62.82%.    
+GAMETES-Epistasis-2-Way-20atts-0.4H-EDM-1-1                        | # Parameters: 115      | Build Time: 2107.71 seconds.              | Our model: 79.93%.      State of The Art: 80.56%.    
+GAMETES-Heterogeneity-20atts-1600-Het-0.4-0.2-50-EDM-2-001         | # Parameters: 115      | Build Time: 2112.73 seconds.              | Our model: 74.5%.       State of The Art: 0%.        
+eucalyptus                                                         | # Parameters: 169      | Build Time: 7.83 seconds.                 | Our model: 91.03%.      State of The Art: 78.26%.    
+pbcseq                                                             | # Parameters: 471      | Build Time: 11.72 seconds.                | Our model: 85.39%.      State of The Art: 84.37%.    
+climate-model-simulation-crashes                                   | # Parameters: 45       | Build Time: 114.87 seconds.               | Our model: 96.29%.      State of The Art: 96.67%.    
+fri-c2-500-50                                                      | # Parameters: 168      | Build Time: 76.49 seconds.                | Our model: 88.8%.       State of The Art: 92%.       
+page-blocks                                                        | # Parameters: 49       | Build Time: 2416.21 seconds.              | Our model: 95.9%.       State of The Art: 97.84%.    
+fri-c1-1000-25                                                     | # Parameters: 136      | Build Time: 621.61 seconds.               | Our model: 91.2%.       State of The Art: 90.90%.    
+dis                                                                | # Parameters: 63       | Build Time: 2305.66 seconds.              | Our model: 98.46%.      State of The Art: 98.87%.    
+delta-ailerons                                                     | # Parameters: 92       | Build Time: 2653.02 seconds.              | Our model: 94.2%.       State of The Art: 94.54%.    
+hypothyroid                                                        | # Parameters: 94       | Build Time: 2322.37 seconds.              | Our model: 99.07%.      State of The Art: 99.76%.    
+sick                                                               | # Parameters: 252      | Build Time: 103.88 seconds.               | Our model: 96.81%.      State of The Art: 98.75%.    
+ada                                                                | # Parameters: 101      | Build Time: 2320.04 seconds.              | Our model: 85.57%.      State of The Art: 0%.        
+fri-c4-500-100                                                     | # Parameters: 171      | Build Time: 515.94 seconds.               | Our model: 89.2%.       State of The Art: 89.00%.    
+fri-c0-1000-50                                                     | # Parameters: 313      | Build Time: 1922.55 seconds.              | Our model: 88.5%.       State of The Art: 88.6%.     
+fri-c3-1000-50                                                     | # Parameters: 151      | Build Time: 2059.17 seconds.              | Our model: 87.2%.       State of The Art: 91.30%.    
+spectrometer                                                       | # Parameters: 521      | Build Time: 37.0 seconds.                 | Our model: 99.43%.      State of The Art: 97.93%.    
+letter                                                             | # Parameters: 37       | Build Time: 3756.04 seconds.              | Our model: 97.88%.      State of The Art: 99.86%.    
+nursery                                                            | # Parameters: 9        | Build Time: 24.8 seconds.                 | Our model: 100.0%.      State of The Art: 100%.      
+mc1                                                                | # Parameters: 58       | Build Time: 10.07 seconds.                | Our model: 99.7%.       State of The Art: 99.57%.    
+ailerons                                                           | # Parameters: 127      | Build Time: 3398.41 seconds.              | Our model: 88.05%.      State of The Art: 89.03%.    
+mv                                                                 | # Parameters: 25       | Build Time: 5120.7 seconds.               | Our model: 99.93%.      State of The Art: 99.95%.    
+ipums-la-99-small                                                  | # Parameters: 690      | Build Time: 12.23 seconds.                | Our model: 96.78%.      State of The Art: 93.86%.    
+musk                                                               | # Parameters: 343      | Build Time: 2098.51 seconds.              | Our model: 99.98%.      State of The Art: 100%.      
+SpeedDating                                                        | # Parameters: 1155     | Build Time: 149.07 seconds.               | Our model: 87.21%.      State of The Art: 87.1%.     
+adult                                                              | # Parameters: 7344     | Build Time: 17.96 seconds.                | Our model: 90.41%.      State of The Art: 87.53%.    
+AP-Omentum-Prostate                                                | # Parameters: 245      | Build Time: 128.38 seconds.               | Our model: 100.0%.      State of The Art: 99.32%.    
+Speech                                                             | # Parameters: 86       | Build Time: 20.34 seconds.                | Our model: 98.56%.      State of The Art: 95.99%.    
+AP-Endometrium-Uterus                                              | # Parameters: 45       | Build Time: 21.26 seconds.                | Our model: 78.37%.      State of The Art: 75.68%.    
+nomao                                                              | # Parameters: 241      | Build Time: 6043.71 seconds.              | Our model: 94.96%.      State of The Art: 97.52%.    
+Internet-Advertisements                                            | # Parameters: 6241     | Build Time: 164.63 seconds.               | Our model: 98.47%.      State of The Art: 98.05%.    
+AP-Endometrium-Kidney                                              | # Parameters: 32815    | Build Time: 2607.99 seconds.              | Our model: 98.13%.      State of The Art: 99.07%.    
+AP-Endometrium-Breast                                              | # Parameters: 711      | Build Time: 2421.32 seconds.              | Our model: 98.02%.      State of The Art: 98.77%.    
+Bioresponse                                                        | # Parameters: 3557     | Build Time: 532.35 seconds.               | Our model: 83.25%.      State of The Art: 81.60%.    
+christine                                                          | # Parameters: 1258     | Build Time: 48.56 seconds.                | Our model: 76.06%.      State of The Art: 64.44%.    
+SEA-50000                                                          | # Parameters: 126117   | Build Time: 65.98 seconds.                | Our model: 90.34%.      State of The Art: 88.53%.    
+KDDCup09-upselling                                                 | # Parameters: 4046     | Build Time: 2933.18 seconds.              | Our model: 94.66%.      State of The Art: 95.17%.    
+KDDCup09-churn                                                     | # Parameters: 3486     | Build Time: 82.94 seconds.                | Our model: 93.18%.      State of The Art: 92.77%.    
+KDDCup09-appetency                                                 | # Parameters: 896      | Build Time: 82.85 seconds.                | Our model: 98.23%.      State of The Art: 98.22%.    
+MiniBooNE                                                          | # Parameters: 131      | Build Time: 13013.6 seconds.              | Our model: 89.61%.      State of The Art: 98.67%.    
+OVA-Lung                                                           | # Parameters: 174      | Build Time: 3546.55 seconds.              | Our model: 95.72%.      State of The Art: 98.77%.    
+OVA-Endometrium                                                    | # Parameters: 78       | Build Time: 111.92 seconds.               | Our model: 97.73%.      State of The Art: 96.83%.    
+BNG-SPECTF                                                         | # Parameters: 230424   | Build Time: 349.77 seconds.               | Our model: 84.61%.      State of The Art: 74.68%.    
+guillermo                                                          | # Parameters: 4896     | Build Time: 10457.62 seconds.             | Our model: 76.61%.      State of The Art: 91.25%.    
+BNG-kr-vs-kp                                                       | # Parameters: 281      | Build Time: 54409.5 seconds.              | Our model: 95.36%.      State of The Art: 95.9%.     
+##########
+Number of Datasets: 92
+Total Compile Time: 39.28 hours
+Sum of all Model Sizes: 420k parameters
+Sum of all Predictor File Sizes: 39450 kb
+Sum of CSV Data File Sizes: 1495860 kb
+=> Generalization Ratio: 3557.44 bits / bit
+Brainome Daimension's vs Google AutoML Estimated Weissman Score: 2658
+"State of the Art" Average Accuracy: 86.87%
+Brainome's Average Accuracy: 91.35%
+Average Improvement over the State of the Art: 4.49%
+##########
+Better than OpenML State of Art: 66
+Worse by <1%: 14
+Worse by <2.5%: 4
+Worse by >=2.5%: 8
+##########
