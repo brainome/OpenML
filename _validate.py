@@ -1,5 +1,4 @@
 import os
-import pickle
 
 predictors=[("Predictors/"+pred, pred.replace("binary.", "").replace("multi.", "").replace(".py", ".csv")) for pred in [x for x in next(os.walk("./Predictors/"))[2]]]
 
