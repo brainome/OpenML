@@ -7,36 +7,28 @@
 # Use of predictions results at your own risk.
 #
 # Output of Brainome Daimensions(tm) 0.98 Table Compiler v0.98.
-# Invocation: btc -f QC -target binaryClass heart-h.csv -o heart-h.py -nsamples 0 --yes -nsamples 0 -e 100
-# Total compiler execution time: 0:00:10.95. Finished on: Sep-04-2020 10:50:23.
+# Invocation: btc -f QC -target Class heart-h-multi.csv -o heart-h-multi.py -nsamples 0 --yes -nsamples 0 -e 100
+# Total compiler execution time: 0:00:14.22. Finished on: Sep-08-2020 14:45:38.
 # This source code requires Python 3.
 #
 """
 Classifier Type:                     Decision Tree
-System Type:                         Binary classifier
-Best-guess accuracy:                 63.94%
-Overall Model accuracy:              100.00% (294/294 correct)
-Overall Improvement over best guess: 36.06% (of possible 36.06%)
-Model capacity (MEC):                76 bits
-Generalization ratio:                3.86 bits/bit
-Model efficiency:                    0.47%/parameter
-System behavior
-True Negatives:                      63.95% (188/294)
-True Positives:                      36.05% (106/294)
-False Negatives:                     0.00% (0/294)
-False Positives:                     0.00% (0/294)
-True Pos. Rate/Sensitivity/Recall:   1.00
-True Neg. Rate/Specificity:          1.00
-Precision:                           1.00
-F-1 Measure:                         1.00
-False Negative Rate/Miss Rate:       0.00
-Critical Success Index:              1.00
+System Type:                         5-way classifier
+Best-guess accuracy:                 63.95%
+Overall Model accuracy:              86.05% (253/294 correct)
+Overall Improvement over best guess: 22.10% (of possible 36.05%)
+Model capacity (MEC):                85 bits
+Generalization ratio:                2.97 bits/bit
+Model efficiency:                    0.25%/parameter
 Confusion Matrix:
- [63.95% 0.00%]
- [0.00% 36.05%]
+ [62.59% 1.36% 0.00% 0.00% 0.00%]
+ [3.40% 9.18% 0.00% 0.00% 0.00%]
+ [1.36% 0.68% 7.48% 0.00% 0.00%]
+ [1.36% 0.68% 0.34% 2.72% 0.00%]
+ [3.40% 0.68% 0.68% 0.00% 4.08%]
 Overfitting:                         No
 Note: Unable to split dataset. The predictor was trained and evaluated on the same data.
-Note: Labels have been remapped to 'P'=0, 'N'=1.
+Note: Labels have been remapped to '1'=0, '2'=1, '4'=2, '5'=3, '3'=4.
 """
 
 # Imports -- Python3 standard library
@@ -64,19 +56,19 @@ IOBUF = 100000000
 sys.setrecursionlimit(1000000)
 
 # Training file given to compiler
-TRAINFILE = "heart-h.csv"
+TRAINFILE = "heart-h-multi.csv"
 
 
 #Number of attributes
 num_attr = 13
-n_classes = 2
+n_classes = 5
 
 
 # Preprocessor for CSV files
 
 ignorelabels=[]
 ignorecolumns=[]
-target="binaryClass"
+target="Class"
 
 
 def preprocess(inputcsvfile, outputcsvfile, headerless=False, testfile=False, target='', ignorecolumns=[], ignorelabels=[]):
@@ -87,7 +79,7 @@ def preprocess(inputcsvfile, outputcsvfile, headerless=False, testfile=False, ta
 
     ignorelabels=[]
     ignorecolumns=[]
-    target="binaryClass"
+    target="Class"
     if ignorelabels == [] and ignorecolumns == [] and target == "":
         return
     if (testfile):
@@ -208,7 +200,7 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
     clean.classlist = []
     clean.testfile = testfile
     clean.mapping = {}
-    clean.mapping={'P': 0, 'N': 1}
+    clean.mapping={'1': 0, '2': 1, '4': 2, '5': 3, '3': 4}
 
     def convert(cell):
         value = str(cell)
@@ -325,23 +317,24 @@ def clean(filename, outfile, rounding=-1, headerless=False, testfile=False):
 # Imports -- external
 import numpy as np # For numpy see: http://numpy.org
 from numpy import array
-energy_thresholds = array([11820950875.5, 11915247377.0, 12008352279.5, 12069860239.0, 12208596300.5, 12275163187.75, 12289649498.0, 12289649499.5, 12289649652.0, 12400933465.0, 13202085682.0, 13460835180.0, 13590618143.25, 13746556412.25, 13988222640.75, 14011425223.25, 14188287716.25, 14352051324.0, 14374497505.5, 14378387517.25, 14382277484.5, 14382277521.0, 14382277615.0, 14389520677.5, 14410007311.0, 14425210318.5, 14475378237.0, 14489608337.5, 14521558919.0, 14568487362.75, 14568487371.25, 14573895901.5, 14582973552.0, 14582973584.5, 14582973605.5, 14582973613.0, 14582973621.0, 14582973625.0, 14582973627.5, 14582973643.0, 14582973673.0, 14582973686.0, 14582973863.5, 14598176777.5, 14613379730.5, 14620622826.5, 14627865931.0, 14627865938.0, 14716703812.0, 14821855804.0, 14821855856.25, 14830217564.0, 14839861438.0, 14851872104.5, 14857431344.5, 14862458376.0, 14900252544.5, 15018882470.0, 15393808414.5, 15694039115.0, 15701282205.0, 15723728406.5, 16133398661.0, 16267298429.5, 16488483610.5, 16516011447.5, 16624429639.5, 16749353227.0, 16898483658.5, 16961899254.0, 16961899262.75, 16969142509.0, 16991588530.5, 17020878131.25, 17401183968.5, 17783702919.0])
+energy_thresholds = array([276.0, 281.0, 283.5, 323.75, 333.25, 372.25, 376.25, 447.5, 450.5, 464.5, 466.5, 468.5, 485.5, 486.5, 487.5, 498.25, 498.75, 505.25, 505.75, 514.5, 519.5, 532.75, 534.5, 536.75, 537.75, 552.25, 552.75, 553.5, 554.5, 555.5, 556.25, 556.75, 561.5, 562.5, 565.25, 566.25, 567.5, 569.5, 570.5, 575.0, 578.0, 580.0, 581.5, 582.25, 583.5, 584.25, 584.75, 586.5, 588.5, 589.5, 590.25, 591.25, 592.5, 606.5, 609.0, 610.5, 611.5, 618.25, 619.25, 620.25, 620.75, 621.5, 625.0, 629.75, 630.75, 636.0, 643.0, 647.25, 649.75, 650.5, 652.5, 655.5, 695.0, 698.9, 709.0, 714.5, 722.0, 728.0, 737.0, 749.5, 764.5, 779.0, 785.0, 805.0, 863.5])
+labels = array([4.0, 2.0, 0.0, 4.0, 0.0, 1.0, 0.0, 2.0, 0.0, 2.0, 1.0, 0.0, 2.0, 1.0, 0.0, 2.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 2.0, 1.0, 0.0, 2.0, 0.0, 2.0, 0.0, 2.0, 4.0, 0.0, 1.0, 0.0, 1.0, 3.0, 0.0, 1.0, 0.0, 2.0, 0.0, 1.0, 0.0, 4.0, 3.0, 0.0, 4.0, 1.0, 0.0, 4.0, 1.0, 2.0, 0.0, 3.0, 0.0, 1.0, 0.0, 3.0, 0.0, 4.0, 0.0, 2.0, 0.0, 2.0, 0.0, 2.0, 0.0, 1.0, 3.0, 0.0, 1.0, 0.0, 3.0, 0.0, 2.0, 4.0, 0.0, 2.0, 3.0, 0.0, 1.0, 3.0, 4.0, 2.0, 4.0])
 def eqenergy(rows):
     return np.sum(rows, axis=1)
 def classify(rows):
     energys = eqenergy(rows)
-    start_label = 1
+
     def thresh_search(input_energys):
         numers = np.searchsorted(energy_thresholds, input_energys, side='left')-1
         indys = np.argwhere(np.logical_and(numers<len(energy_thresholds), numers>=0)).reshape(-1)
         defaultindys = np.argwhere(np.logical_not(np.logical_and(numers<len(energy_thresholds), numers>=0))).reshape(-1)
         outputs = np.zeros(input_energys.shape[0])
-        outputs[indys] = (numers[indys] + start_label) % 2
-        outputs[defaultindys]=0
+        outputs[indys] = labels[numers[indys]]
+        outputs[defaultindys] = 0.0
         return outputs
     return thresh_search(energys)
 
-numthresholds = 76
+numthresholds = 85
 
 
 
