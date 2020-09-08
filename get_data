@@ -1,0 +1,22 @@
+#! /bin/csh
+
+if ( ! -d Data ) mkdir Data
+
+foreach line ( `cat files.csv` )
+    set test = ( `echo $line | sed  's/,,/,-,/g;s/,/ /g'` )
+    if ( $#test < 8 ) continue # Skip lines with < 8 columns
+    # Id=1, Name=2, Target=3, Result=4, Map=5, Source=6, Type=7, Group=8
+    set Id     = $test[1]
+    set Name   = $test[2]
+    set Source = $test[6]
+    if ( $Id == "Id" ) continue # Skip first line
+
+    if ( ! -e Data/$Name.csv  && $Source == "openml.org" ) then
+        echo "### Downloading $Name from openml.org"
+        set csvlink = `wget -qO- https://www.openml.org/d/$Id | grep get_csv | sed 's/.*href="//g;s/">.*//g'`
+        wget -q -O Data/$Name.csv $csvlink
+    	if ( ! -e Data/$Name.csv ) echo "### ERROR - $Name.csv did not download"
+    endif
+    if ( ! -e Data/$Name.csv ) echo "### WARNING - $Name.csv missing"
+
+end
