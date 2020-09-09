@@ -4,4 +4,7 @@ predictors=[(pred, pred.replace("binary.", "").replace("multi.", "").replace(".p
 
 for pred,data in predictors:
 	print("-"*50)
-	os.system(f"python3 Predictors/{pred} Data/{data} -validate")
+	res=os.system(f"python3 Predictors/{pred} Data/{data} -validate")
+	if res!=0:
+		print("error encountered")
+		break
