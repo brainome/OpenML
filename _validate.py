@@ -1,9 +1,15 @@
 import os
 
-predictors=[(pred, pred.replace("binary.", "").replace("multi.", "").replace(".py", ".csv")) for pred in [x for x in next(os.walk("./Predictors/"))[2]]]
+predictors=[pred for pred in next(os.walk("./Predictors/"))[2]]
 
-for pred,data in predictors:
+for pred in predictors:
 	print("-"*50)
+	if pred[:len("binary.")]=="binary.":
+		data=pred.replace("binary.", "").replace(".py", ".csv")
+	elif pred[:len("multi.")]=="multi.":
+		data=pred.replace("multi.", "").replace(".py", ".csv")
+	else:
+		data=pred.replace(".py", ".csv")
 	res=os.system(f"python3 Predictors/{pred} Data/{data} -validate")
 	if res!=0:
 		print("error encountered")
