@@ -4,14 +4,14 @@ The datasets where chosen to be able to compare against the Capital One/UIUC Aut
 https://arxiv.org/pdf/1908.05557.pdf
 
 Instructions:
-The script validate.sh requires Python3, wget and a c-shell. It will read testfiles.csv and download each dataset directly from OpenML and run the compiled predictor on it for validation.
+The script get-data requires Python3, wget and a c-shell. It will read files.csv and download each dataset directly from OpenML. To validate all the predictor, use the command python3 _validate.py.
 
 Each predictor requires only the Python standard library and some of them require numpy.
 Numpy is available here: https://numpy.org/
 
 The predictors can also be invoked directly using
 
-python3 Predictors/dataset.py Data/dataset.csv -validate
+python3 Predictors/*dataset.py Data/dataset.csv -validate
 
 where dataset is the name of a dataset.
 
