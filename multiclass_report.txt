@@ -84,3 +84,19 @@ volcanoes-e3                                         | # Parameters: 195        
 volkert                                              | # Parameters: 27148            | Build time: 2842.15 seconds            | Our model: 69.27%            | State of the Art: 71.6%           
 wine-quality-white                                   | # Parameters: 2599             | Build time: 11.82 seconds              | Our model: 100.00%           | State of the Art: 87.42%          
 yeast                                                | # Parameters: 180              | Build time: 2927.34 seconds            | Our model: 62.19%            | State of the Art: 61.55%          
+##########
+Number of Datasets: 85
+Total Compile Time: 94.3 hours
+Sum of all Model Sizes: 2079k parameters
+Sum of all Predictor File Sizes: 49267 kb
+Sum of CSV Data File Sizes: 3341365 kb
+=> Generalization Ratio: 7.71 bits / bit
+"State of the Art" Average Accuracy: 75.86%
+Brainome's Average Accuracy: 87.21%
+Average Improvement over the State of the Art: 11.35%
+##########
+Better than OpenML State of Art: 64
+Worse by <1%: 4
+Worse by <2.5%: 8
+Worse by >=2.5%: 13
+##########

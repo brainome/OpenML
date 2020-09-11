@@ -92,3 +92,19 @@ sponge                                                               | # Paramet
 veteran                                                              | # Parameters: 14               | Build time: 11.19 seconds              | Our model: 81.75%            | State of the Art: 77.37%          
 vote                                                                 | # Parameters: 37               | Build time: 693.45 seconds             | Our model: 97.24%            | State of the Art: 96.78%          
 witmer-census-1980                                                   | # Parameters: 27               | Build time: 11.1 seconds               | Our model: 100.00%           | State of the Art: 78.0%           
+##########
+Number of Datasets: 93
+Total Compile Time: 38.56 hours
+Sum of all Model Sizes: 414k parameters
+Sum of all Predictor File Sizes: 10025 kb
+Sum of CSV Data File Sizes: 1636640 kb
+=> Generalization Ratio: 38.23 bits / bit
+"State of the Art" Average Accuracy: 85.93%
+Brainome's Average Accuracy: 94.59%
+Average Improvement over the State of the Art: 8.66%
+##########
+Better than OpenML State of Art: 75
+Worse by <1%: 6
+Worse by <2.5%: 13
+Worse by >=2.5%: 5
+##########

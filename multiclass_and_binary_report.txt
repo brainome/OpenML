@@ -177,3 +177,19 @@ vote                                                                 | # Paramet
 wine-quality-white                                                   | # Parameters: 2599             | Build time: 11.82 seconds              | Our model: 100.00%           | State of the Art: 87.42%          
 witmer-census-1980                                                   | # Parameters: 27               | Build time: 11.1 seconds               | Our model: 100.00%           | State of the Art: 78.0%           
 yeast                                                                | # Parameters: 180              | Build time: 2927.34 seconds            | Our model: 62.19%            | State of the Art: 61.55%          
+##########
+Number of Datasets: 178
+Total Compile Time: 132.86 hours
+Sum of all Model Sizes: 2493k parameters
+Sum of all Predictor File Sizes: 59292 kb
+Sum of CSV Data File Sizes: 4978005 kb
+=> Generalization Ratio: 23.65 bits / bit
+"State of the Art" Average Accuracy: 81.12%
+Brainome's Average Accuracy: 91.06%
+Average Improvement over the State of the Art: 9.94%
+##########
+Better than OpenML State of Art: 139
+Worse by <1%: 10
+Worse by <2.5%: 21
+Worse by >=2.5%: 18
+##########
