@@ -19,4 +19,5 @@ We also invite you to take a look at the source code of the preditors.
 
 binary_report.txt shows our results compared to what was reported on OpenML.org (as of March 24th, 2020). None of the binary classifiers overfit.
 multiclass_report.txt shows our results compared to what was reported on OpenML.org (as of May 15th, 2020).
-hardware.txt shows CPU and GPU configuration used to obtain the result. We used a single desktop machine. 
+
+hardware_binary.txt and hardware_multiclass.txt shows CPU and GPU configuration used to obtain the results for binary and multiclass OpenML problems respectively. We used a single desktop machine in both cases. 
