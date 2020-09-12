@@ -14,4 +14,4 @@ for link,name in lines:
 		print("An error occured.")
 		break
 	if not os.path.exists(f"Data/{name}.csv"):
-		print("### ERROR - $Name.csv did not download")
+		print("### ERROR - {name}.csv did not download")
