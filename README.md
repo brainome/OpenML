@@ -4,7 +4,7 @@ The datasets where chosen to be able to compare against the Capital One/UIUC Aut
 https://arxiv.org/pdf/1908.05557.pdf
 
 Instructions:
-The script get-data requires Python3 and wget. It will download each dataset directly from OpenML. To validate all the predictors, download the data (python3 get-data.py), and then run python3 _validate.py.
+The script get-data requires Python3 and wget. It will download each dataset directly from OpenML. To validate all the predictors, download the data (python3 get-data.py), and then run python3 validate.py.
 
 Each predictor requires only the Python standard library and some of them require numpy.
 Numpy is available here: https://numpy.org/
