@@ -16,8 +16,6 @@ Classifier Type:                     Neural Network
 System Type:                         Binary classifier
 Training/Validation Split:           60:40%
 Best-guess accuracy:                 77.94%
-Training accuracy:                   100.00% (794/794 correct)
-Validation accuracy:                 100.00% (530/530 correct)
 Overall Model accuracy:              100.00% (1324/1324 correct)
 Overall Improvement over best guess: 22.06% (of possible 22.06%)
 Model capacity (MEC):                11 bits
@@ -669,4 +667,5 @@ if __name__ == "__main__":
     if not args.cleanfile:
         os.remove(cleanfile)
         os.remove(preprocessedfile)
+
 

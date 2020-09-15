@@ -16,8 +16,6 @@ Classifier Type:                     Decision Tree
 System Type:                         Binary classifier
 Training/Validation Split:           60:40%
 Best-guess accuracy:                 50.02%
-Training accuracy:                   100.00% (1167/1167 correct)
-Validation accuracy:                 64.78% (504/778 correct)
 Overall Model accuracy:              85.91% (1671/1945 correct)
 Overall Improvement over best guess: 35.89% (of possible 49.98%)
 Model capacity (MEC):                470 bits
@@ -661,5 +659,6 @@ if __name__ == "__main__":
     if not args.cleanfile: 
         os.remove(cleanfile)
         os.remove(preprocessedfile)
+
 
 
