@@ -1,106 +1,102 @@
+Dataset                                              | Brainome Modelsize             | Compile Time                           | Accuracy                     | State of the Art                  
+BNG-anneal-5000-10                                   | # Parameters: 215188           | Build time: 20187.32 seconds           | Our model: 86.18%            | State of the Art: 95.62%          
+BNG-anneal-ORIG-1000-5                               | # Parameters: 320518           | Build time: 18410.61 seconds           | Our model: 99.99%            | State of the Art: 87.65%          
+BNG-anneal-ORIG-5000-1                               | # Parameters: 112278           | Build time: 19948.39 seconds           | Our model: 92.79%            | State of the Art: 93.0%           
+BNG-anneal-ORIG-nominal-1000000                      | # Parameters: 30222            | Build time: 17110.14 seconds           | Our model: 86.82%            | State of the Art: 88.55%          
+BNG-cmc                                              | # Parameters: 34688            | Build time: 485.01 seconds             | Our model: 99.95%            | State of the Art: 57.26%          
+BNG-cmc-nominal-55296                                | # Parameters: 55               | Build time: 1773.48 seconds            | Our model: 49.58%            | State of the Art: 51.4%           
+BNG-letter-10000-5                                   | # Parameters: 475823           | Build time: 13782.93 seconds           | Our model: 51.99%            | State of the Art: 4.08%           
+BNG-letter-nominal-1000000                           | # Parameters: 680              | Build time: 23854.07 seconds           | Our model: 51.77%            | State of the Art: 59.79%          
+BNG-lymph-1000-1                                     | # Parameters: 141225           | Build time: 11835.0 seconds            | Our model: 72.07%            | State of the Art: 70.19%          
+BNG-lymph-1000-10                                    | # Parameters: 152346           | Build time: 12083.92 seconds           | Our model: 65.36%            | State of the Art: 88.84%          
+BNG-primary-tumor                                    | # Parameters: 522              | Build time: 9921.48 seconds            | Our model: 36.19%            | State of the Art: 24.07%          
+BNG-segment                                          | # Parameters: 439              | Build time: 14083.5 seconds            | Our model: 86.58%            | State of the Art: 87.78%          
+BNG-waveform-5000-nominal-1000000                    | # Parameters: 134              | Build time: 17187.58 seconds           | Our model: 36.36%            | State of the Art: 33.78%          
+BNG-zoo-nominal-1000000                              | # Parameters: 332              | Build time: 12171.83 seconds           | Our model: 94.78%            | State of the Art: 93.86%          
+CIFAR-10-small                                       | # Parameters: 17150            | Build time: 14632.91 seconds           | Our model: 97.26%            | State of the Art: 98.0%           
+Census-Income                                        | # Parameters: 14760            | Build time: 5548.78 seconds            | Our model: 95.37%            | State of the Art: 93.79%          
+Diabetes130US                                        | # Parameters: 29162            | Build time: 2058.14 seconds            | Our model: 71.47%            | State of the Art: 53.91%          
+Fashion-MNIST                                        | # Parameters: 415              | Build time: 16628.44 seconds           | Our model: 84.01%            | State of the Art: 94.0%           
+JapaneseVowels                                       | # Parameters: 9737             | Build time: 143.67 seconds             | Our model: 99.98%            | State of the Art: 99.55%          
+KDDCup99                                             | # Parameters: 2062             | Build time: 6862.76 seconds            | Our model: 99.97%            | State of the Art: 99.93%          
+MiceProtein                                          | # Parameters: 296              | Build time: 1432.31 seconds            | Our model: 66.11%            | State of the Art: 99.81%          
+MyIris                                               | # Parameters: 27               | Build time: 1376.41 seconds            | Our model: 99.33%            | State of the Art: 96.68%          
+RandomRBF-10-1E-3                                    | # Parameters: 397451           | Build time: 12338.36 seconds           | Our model: 69.45%            | State of the Art: 85.51%          
+USPS                                                 | # Parameters: 3214             | Build time: 2654.35 seconds            | Our model: 97.54%            | State of the Art: 92.17%          
+abalone                                              | # Parameters: 3259             | Build time: 50.07 seconds              | Our model: 92.88%            | State of the Art: 26.19%          
+allrep                                               | # Parameters: 106              | Build time: 1817.76 seconds            | Our model: 97.85%            | State of the Art: 98.74%          
+analcatdata-bondrate                                 | # Parameters: 34               | Build time: 14.27 seconds              | Our model: 100.00%           | State of the Art: 59.65%          
+anneal                                               | # Parameters: 95               | Build time: 14.67 seconds              | Our model: 100.00%           | State of the Art: 100.0%          
+arrhythmia                                           | # Parameters: 284              | Build time: 45.13 seconds              | Our model: 99.77%            | State of the Art: 76.51%          
+audiology                                            | # Parameters: 129              | Build time: 16.13 seconds              | Our model: 92.47%            | State of the Art: 81.24%          
+autoUniv-au4-2500                                    | # Parameters: 881              | Build time: 83.42 seconds              | Our model: 78.32%            | State of the Art: 73.0%           
+autoUniv-au7-500                                     | # Parameters: 330              | Build time: 11.03 seconds              | Our model: 100.00%           | State of the Art: 53.2%           
+balance-scale                                        | # Parameters: 27               | Build time: 821.47 seconds             | Our model: 91.68%            | State of the Art: 100.0%          
+braziltourism                                        | # Parameters: 138              | Build time: 11.04 seconds              | Our model: 99.02%            | State of the Art: 79.26%          
+bridges1                                             | # Parameters: 77               | Build time: 10.93 seconds              | Our model: 100.00%           | State of the Art: 69.52%          
+bridges2                                             | # Parameters: 72               | Build time: 10.95 seconds              | Our model: 100.00%           | State of the Art: 67.62%          
+cars                                                 | # Parameters: 164              | Build time: 11.01 seconds              | Our model: 100.00%           | State of the Art: 92.88%          
+desharnais                                           | # Parameters: 41               | Build time: 10.91 seconds              | Our model: 100.00%           | State of the Art: 71.11%          
+dilbert                                              | # Parameters: 3743             | Build time: 4378.28 seconds            | Our model: 63.13%            | State of the Art: 33.91%          
+dna                                                  | # Parameters: 1659             | Build time: 869.41 seconds             | Our model: 97.99%            | State of the Art: 96.5%           
+ecoli                                                | # Parameters: 128              | Build time: 2685.17 seconds            | Our model: 92.26%            | State of the Art: 86.31%          
+eucalyptus-multi                                     | # Parameters: 331              | Build time: 19.6 seconds               | Our model: 83.15%            | State of the Art: 78.3%           
+eye-movements                                        | # Parameters: 3509             | Build time: 163.12 seconds             | Our model: 68.30%            | State of the Art: 75.03%          
+fl2000                                               | # Parameters: 38               | Build time: 10.95 seconds              | Our model: 100.00%           | State of the Art: 79.1%           
+gina-prior2                                          | # Parameters: 780              | Build time: 4316.28 seconds            | Our model: 93.85%            | State of the Art: 93.58%          
+heart-h-multi                                        | # Parameters: 85               | Build time: 14.22 seconds              | Our model: 86.05%            | State of the Art: 69.05%          
+helena                                               | # Parameters: 31517            | Build time: 1140.82 seconds            | Our model: 51.79%            | State of the Art: 37.0%           
+hepatitisC                                           | # Parameters: 67               | Build time: 120.54 seconds             | Our model: 100.00%           | State of the Art: 92.58%          
+hypothyroid-multi                                    | # Parameters: 495              | Build time: 65.45 seconds              | Our model: 99.86%            | State of the Art: 99.66%          
+iris                                                 | # Parameters: 27               | Build time: 1268.29 seconds            | Our model: 99.33%            | State of the Art: 97.33%          
+jungle-chess-2pcs-endgame-panther-elephant           | # Parameters: 310              | Build time: 103.79 seconds             | Our model: 99.19%            | State of the Art: 53.04%          
+kropt                                                | # Parameters: 210              | Build time: 6431.02 seconds            | Our model: 36.47%            | State of the Art: 88.47%          
+letter-multi                                         | # Parameters: 510              | Build time: 5696.49 seconds            | Our model: 85.02%            | State of the Art: 96.61%          
+meta-ensembles.arff                                  | # Parameters: 39               | Build time: 11.12 seconds              | Our model: 100.00%           | State of the Art: 68.24%          
+meta-stream-intervals.arff                           | # Parameters: 31398            | Build time: 39.69 seconds              | Our model: 100.00%           | State of the Art: 99.46%          
+micro-mass                                           | # Parameters: 267              | Build time: 14.56 seconds              | Our model: 100.00%           | State of the Art: 96.94%          
+mnist-784                                            | # Parameters: 415              | Build time: 16732.55 seconds           | Our model: 93.08%            | State of the Art: 99.74%          
+one-hundred-plants-texture                           | # Parameters: 58               | Build time: 52.38 seconds              | Our model: 5.31%             | State of the Art: 1.0%            
+optdigits                                            | # Parameters: 685              | Build time: 1640.73 seconds            | Our model: 100.00%           | State of the Art: 98.4%           
+ovarianTumour                                        | # Parameters: 67               | Build time: 120.1 seconds              | Our model: 100.00%           | State of the Art: 92.6%           
+page-blocks-multi                                    | # Parameters: 856              | Build time: 60.09 seconds              | Our model: 99.67%            | State of the Art: 97.62%          
+pokerhand                                            | # Parameters: 154              | Build time: 24855.09 seconds           | Our model: 99.54%            | State of the Art: 99.91%          
+primary-tumor                                        | # Parameters: 108              | Build time: 11.05 seconds              | Our model: 60.17%            | State of the Art: 44.57%          
+prnn-cushings                                        | # Parameters: 14               | Build time: 10.98 seconds              | Our model: 100.00%           | State of the Art: 77.78%          
+robot-failures-lp1                                   | # Parameters: 35               | Build time: 11.0 seconds               | Our model: 100.00%           | State of the Art: 96.59%          
+robot-failures-lp5                                   | # Parameters: 78               | Build time: 16.31 seconds              | Our model: 96.95%            | State of the Art: 70.73%          
+rsctc2010-2                                          | # Parameters: 29               | Build time: 699.63 seconds             | Our model: 76.19%            | State of the Art: 58.1%           
+rsctc2010-6                                          | # Parameters: 50               | Build time: 53.48 seconds              | Our model: 100.00%           | State of the Art: 75.0%           
+seeds                                                | # Parameters: 62               | Build time: 16.37 seconds              | Our model: 99.52%            | State of the Art: 93.81%          
+spectrometer-multi                                   | # Parameters: 506              | Build time: 14.61 seconds              | Our model: 100.00%           | State of the Art: 71.0%           
+splice                                               | # Parameters: 198              | Build time: 1671.48 seconds            | Our model: 88.11%            | State of the Art: 96.18%          
+squash-unstored                                      | # Parameters: 31               | Build time: 11.13 seconds              | Our model: 100.00%           | State of the Art: 86.54%          
+synthetic-control                                    | # Parameters: 346              | Build time: 807.14 seconds             | Our model: 100.00%           | State of the Art: 99.17%          
+tae                                                  | # Parameters: 33               | Build time: 10.94 seconds              | Our model: 65.56%            | State of the Art: 70.86%          
+thyroid-allhypo                                      | # Parameters: 1522             | Build time: 46.56 seconds              | Our model: 97.89%            | State of the Art: 71.18%          
+vertebra-column                                      | # Parameters: 113              | Build time: 11.05 seconds              | Our model: 100.00%           | State of the Art: 86.45%          
+volcanoes-a2                                         | # Parameters: 281              | Build time: 11.27 seconds              | Our model: 100.00%           | State of the Art: 91.19%          
+volcanoes-b5                                         | # Parameters: 729              | Build time: 12.87 seconds              | Our model: 100.00%           | State of the Art: 96.51%          
+volcanoes-b6                                         | # Parameters: 719              | Build time: 12.61 seconds              | Our model: 100.00%           | State of the Art: 96.62%          
+volcanoes-d2                                         | # Parameters: 948              | Build time: 12.42 seconds              | Our model: 100.00%           | State of the Art: 94.54%          
+volcanoes-d4                                         | # Parameters: 920              | Build time: 12.26 seconds              | Our model: 100.00%           | State of the Art: 94.34%          
+volcanoes-e3                                         | # Parameters: 195              | Build time: 11.84 seconds              | Our model: 100.00%           | State of the Art: 91.78%          
+volkert                                              | # Parameters: 27148            | Build time: 2842.15 seconds            | Our model: 69.27%            | State of the Art: 71.6%           
+wine-quality-white                                   | # Parameters: 2599             | Build time: 11.82 seconds              | Our model: 100.00%           | State of the Art: 87.42%          
+yeast                                                | # Parameters: 180              | Build time: 2927.34 seconds            | Our model: 62.19%            | State of the Art: 61.55%          
 ##########
-Report:
-squash-unstored       | # Parameters: 31       | Overfit?: False   | Build Time: 3.03 seconds               | Our model: 100.0%.      State of The Art: 86.54%     
-tae                   | # Parameters: 58       | Overfit?: False   | Build Time: 4.75 seconds               | Our model: 59.6%.       State of The Art: 70.86%     
-heart-h               | # Parameters: 151      | Overfit?: False   | Build Time: 3.95 seconds               | Our model: 83.67%.      State of The Art: 69.05%     
-robot-failures-lp1    | # Parameters: 35       | Overfit?: False   | Build Time: 3.23 seconds               | Our model: 100.0%.      State of The Art: 96.59%     
-volcanoes-b5          | # Parameters: 729      | Overfit?: False   | Build Time: 4.04 seconds               | Our model: 100.0%.      State of The Art: 96.51%     
-allrep                | # Parameters: 106      | Overfit?: False   | Build Time: 6955.85 seconds            | Our model: 96.73%.      State of The Art: 98.74%     
-thyroid-allhypo       | # Parameters: 971      | Overfit?: False   | Build Time: 3.97 seconds               | Our model: 76.53%.      State of The Art: 71.18%     
-yeast                 | # Parameters: 864      | Overfit?: False   | Build Time: 1386.77 seconds            | Our model: 69.94%.      State of The Art: 61.55%     
-optdigits             | # Parameters: 334      | Overfit?: False   | Build Time: 24649.06 seconds           | Our model: 97.31%.      State of The Art: 98.4%      
-eye-movements         | # Parameters: 3509     | Overfit?: False   | Build Time: 82.89 seconds              | Our model: 68.3%.       State of The Art: 75.03%     
-dilbert               | # Parameters: 3757     | Overfit?: False   | Build Time: 152.48 seconds             | Our model: 62.85%.      State of The Art: 33.91%     
-CIFAR-10-small        | # Parameters: 8912     | Overfit?: False   | Build Time: 10805.8 seconds            | Our model: 55.39%.      State of The Art: 98%        
-volcanoes-b6          | # Parameters: 719      | Overfit?: False   | Build Time: 4.38 seconds               | Our model: 100.0%.      State of The Art: 96.62%     
-BNG(cmc-nominal-5529  | # Parameters: 55       | Overfit?: False   | Build Time: 839.72 seconds             | Our model: 49.1%.       State of The Art: 51.4%      
-BNG(cmc)              | # Parameters: 17320    | Overfit?: False   | Build Time: 11.85 seconds              | Our model: 68.61%.      State of The Art: 57.26%     
-mnist-784             | # Parameters: 631      | Overfit?: False   | Build Time: 8365.59 seconds            | Our model: 79.92%.      State of The Art: 99.74%     
-COMET-MC-SAMPLE       | # Parameters: 15778    | Overfit?: False   | Build Time: 2391.13 seconds            | Our model: 98.43%.      State of The Art: 0%         
-BNG(zoo-nominal-1000  | # Parameters: 307      | Overfit?: False   | Build Time: 7717.85 seconds            | Our model: 93.91%.      State of The Art: 93.86%     
-RandomRBF-10-1E-3     | # Parameters: 725      | Overfit?: False   | Build Time: 20641.83 seconds           | Our model: 81.29%.      State of The Art: 85.51%     
-cars                  | # Parameters: 127      | Overfit?: False   | Build Time: 5.72 seconds               | Our model: 91.87%.      State of The Art: 92.88%     
-MyIris                | # Parameters: 27       | Overfit?: False   | Build Time: 204.59 seconds             | Our model: 98.66%.      State of The Art: 96.68%     
-volcanoes-a2          | # Parameters: 281      | Overfit?: False   | Build Time: 3.22 seconds               | Our model: 100.0%.      State of The Art: 91.19%     
-balance-scale         | # Parameters: 27       | Overfit?: False   | Build Time: 607.95 seconds             | Our model: 91.68%.      State of The Art: 100%       
-seeds                 | # Parameters: 51       | Overfit?: False   | Build Time: 4.57 seconds               | Our model: 93.8%.       State of The Art: 93.81%     
-helena                | # Parameters: 31464    | Overfit?: False   | Build Time: 21.06 seconds              | Our model: 51.73%.      State of The Art: 37%        
-Census-Income         | # Parameters: 14760    | Overfit?: False   | Build Time: 3512.39 seconds            | Our model: 95.37%.      State of The Art: 0%         
-eucalyptus            | # Parameters: 331      | Overfit?: False   | Build Time: 3.86 seconds               | Our model: 83.15%.      State of The Art: 78.3%      
-analcatdata-bondrate  | # Parameters: 34       | Overfit?: False   | Build Time: 3.3 seconds                | Our model: 100.0%.      State of The Art: 59.65%     
-BNG(anneal.ORIG-1000  | # Parameters: 193796   | Overfit?: False   | Build Time: 11764.04 seconds           | Our model: 87.31%.      State of The Art: 87.65%     
-dna                   | # Parameters: 1475     | Overfit?: False   | Build Time: 59.31 seconds              | Our model: 96.79%.      State of The Art: 96.5%      
-USPS                  | # Parameters: 4015     | Overfit?: False   | Build Time: 100.02 seconds             | Our model: 96.36%.      State of The Art: 92.17%     
-spectrometer          | # Parameters: 506      | Overfit?: False   | Build Time: 4.48 seconds               | Our model: 100.0%.      State of The Art: 71%        
-autoUniv-au4-2500     | # Parameters: 851      | Overfit?: False   | Build Time: 5.74 seconds               | Our model: 78.16%.      State of The Art: 73%        
-volkert               | # Parameters: 27214    | Overfit?: False   | Build Time: 2294.74 seconds            | Our model: 69.26%.      State of The Art: 71.6%      
-rsctc2010-6           | # Parameters: 50       | Overfit?: False   | Build Time: 44.91 seconds              | Our model: 100.0%.      State of The Art: 75%        
-rsctc2010-2           | # Parameters: 67       | Overfit?: True    | Build Time: 20.76 seconds              | Our model: 74.28%.      State of The Art: 58.1%      
-micro-mass            | # Parameters: 195      | Overfit?: False   | Build Time: 73.91 seconds              | Our model: 79.44%.      State of The Art: 96.94%     
-ovarianTumour         | # Parameters: 67       | Overfit?: False   | Build Time: 119.21 seconds             | Our model: 100.0%.      State of The Art: 92.6%      
-Fashion-MNIST         | # Parameters: 496      | Overfit?: False   | Build Time: 8638.35 seconds            | Our model: 72.83%.      State of The Art: 94%        
-volcanoes-e3          | # Parameters: 195      | Overfit?: False   | Build Time: 3.57 seconds               | Our model: 100.0%.      State of The Art: 91.78%     
-fl2000                | # Parameters: 38       | Overfit?: False   | Build Time: 3.73 seconds               | Our model: 100.0%.      State of The Art: 79.1%      
-synthetic-control     | # Parameters: 346      | Overfit?: False   | Build Time: 146.39 seconds             | Our model: 100.0%.      State of The Art: 99.17%     
-volcanoes-d2          | # Parameters: 471      | Overfit?: False   | Build Time: 4.68 seconds               | Our model: 95.24%.      State of The Art: 94.54%     
-hepatitisC            | # Parameters: 67       | Overfit?: False   | Build Time: 119.8 seconds              | Our model: 100.0%.      State of The Art: 92.58%     
-vertebra-column       | # Parameters: 76       | Overfit?: False   | Build Time: 3.73 seconds               | Our model: 86.77%.      State of The Art: 86.45%     
-desharnais            | # Parameters: 41       | Overfit?: False   | Build Time: 3.03 seconds               | Our model: 100.0%.      State of The Art: 71.11%     
-meta-ensembles.arff   | # Parameters: 39       | Overfit?: False   | Build Time: 3.16 seconds               | Our model: 100.0%.      State of The Art: 68.24%     
-jungle-chess-2pcs-en  | # Parameters: 320      | Overfit?: False   | Build Time: 62.76 seconds              | Our model: 99.12%.      State of The Art: 0%         
-pokerhand             | # Parameters: 110      | Overfit?: False   | Build Time: 46843.48 seconds           | Our model: 57.21%.      State of The Art: 99.91%     
-prnn-cushings         | # Parameters: 14       | Overfit?: False   | Build Time: 3.06 seconds               | Our model: 100.0%.      State of The Art: 77.78%     
-kropt                 | # Parameters: 448      | Overfit?: False   | Build Time: 13251.44 seconds           | Our model: 39.23%.      State of The Art: 88.47%     
-Diabetes130US         | # Parameters: 29162    | Overfit?: False   | Build Time: 1426.02 seconds            | Our model: 71.47%.      State of The Art: 0%         
-BNG(anneal.ORIG-5000  | # Parameters: 111639   | Overfit?: False   | Build Time: 11819.55 seconds           | Our model: 92.79%.      State of The Art: 93%        
-BNG(segment)          | # Parameters: 385      | Overfit?: False   | Build Time: 24076.7 seconds            | Our model: 86.77%.      State of The Art: 87.78%     
-robot-failures-lp5    | # Parameters: 84       | Overfit?: False   | Build Time: 3.57 seconds               | Our model: 96.95%.      State of The Art: 70.73%     
-KDDCup99              | # Parameters: 2175     | Overfit?: False   | Build Time: 144.28 seconds             | Our model: 99.97%.      State of The Art: 99.93%     
-BNG(lymph-1000-10)    | # Parameters: 263364   | Overfit?: False   | Build Time: 6900.16 seconds            | Our model: 62.88%.      State of The Art: 88.84%     
-BNG(anneal-5000-10)   | # Parameters: 214658   | Overfit?: False   | Build Time: 12219.69 seconds           | Our model: 86.16%.      State of The Art: 95.62%     
-braziltourism         | # Parameters: 145      | Overfit?: False   | Build Time: 3.96 seconds               | Our model: 99.02%.      State of The Art: 79.26%     
-BNG(letter-nominal-1  | # Parameters: 2652     | Overfit?: False   | Build Time: 194200.61 seconds          | Our model: 57.34%.      State of The Art: 59.79%     
-BNG(primary-tumor)    | # Parameters: 469487   | Overfit?: True    | Build Time: 7086.95 seconds            | Our model: 25.73%.      State of The Art: 0%         
-JapaneseVowels        | # Parameters: 9738     | Overfit?: False   | Build Time: 5.5 seconds                | Our model: 99.98%.      State of The Art: 99.55%     
-primary-tumor         | # Parameters: 268      | Overfit?: True    | Build Time: 3.19 seconds               | Our model: 51.91%.      State of The Art: 44.57%     
-bridges               | # Parameters: 72       | Overfit?: False   | Build Time: 3.04 seconds               | Our model: 100.0%.      State of The Art: 67.62%     
-MiceProtein           | # Parameters: 424      | Overfit?: False   | Build Time: 2116.23 seconds            | Our model: 63.14%.      State of The Art: 99.81%     
-anneal                | # Parameters: 95       | Overfit?: False   | Build Time: 3.46 seconds               | Our model: 100.0%.      State of The Art: 100.0%     
-arrhythmia            | # Parameters: 285      | Overfit?: False   | Build Time: 4.44 seconds               | Our model: 99.77%.      State of The Art: 76.51%     
-audiology             | # Parameters: 150      | Overfit?: False   | Build Time: 4.36 seconds               | Our model: 88.05%.      State of The Art: 81.24%     
-hypothyroid           | # Parameters: 502      | Overfit?: False   | Build Time: 4.74 seconds               | Our model: 99.86%.      State of The Art: 99.66%     
-ecoli                 | # Parameters: 145      | Overfit?: False   | Build Time: 4.96 seconds               | Our model: 85.41%.      State of The Art: 86.31%     
-meta-stream-interval  | # Parameters: 15580    | Overfit?: False   | Build Time: 788.72 seconds             | Our model: 65.75%.      State of The Art: 99.46%     
-abalone               | # Parameters: 3473     | Overfit?: False   | Build Time: 3.76 seconds               | Our model: 92.86%.      State of The Art: 26.19%     
-wine-quality-white    | # Parameters: 2599     | Overfit?: False   | Build Time: 4.14 seconds               | Our model: 100.0%.      State of The Art: 87.42%     
-BNG(lymph-1000-1)     | # Parameters: 234051   | Overfit?: False   | Build Time: 6825.95 seconds            | Our model: 66.26%.      State of The Art: 70.19%     
-page-blocks           | # Parameters: 875      | Overfit?: False   | Build Time: 5.06 seconds               | Our model: 99.41%.      State of The Art: 97.62%     
-volcanoes-d4          | # Parameters: 487      | Overfit?: False   | Build Time: 3.89 seconds               | Our model: 95.1%.       State of The Art: 94.34%     
-autoUniv-au7-500      | # Parameters: 196      | Overfit?: False   | Build Time: 3.16 seconds               | Our model: 72.6%.       State of The Art: 53.2%      
-iris                  | # Parameters: 22       | Overfit?: False   | Build Time: 4.03 seconds               | Our model: 94.0%.       State of The Art: 97.33%     
-splice                | # Parameters: 974      | Overfit?: False   | Build Time: 61.74 seconds              | Our model: 71.28%.      State of The Art: 96.18%     
-letter                | # Parameters: 9426     | Overfit?: True    | Build Time: 102.81 seconds             | Our model: 6.67%.       State of The Art: 96.61%     
-one-hundred-plants-t  | # Parameters: 1581     | Overfit?: True    | Build Time: 33.57 seconds              | Our model: 4.12%.       State of The Art: 0%         
-BNG(letter-10000-5)   | # Parameters: 478035   | Overfit?: False   | Build Time: 5899.25 seconds            | Our model: 51.99%.      State of The Art: 0%         
-gina-prior2           | # Parameters: 1750     | Overfit?: False   | Build Time: 418.98 seconds             | Our model: 65.45%.      State of The Art: 93.58%     
+Number of Datasets: 85
+Total Compile Time: 94.3 hours
+Sum of all Model Sizes: 2079k parameters
+Sum of all Predictor File Sizes: 49267 kb
+Sum of CSV Data File Sizes: 3341365 kb
+=> Generalization Ratio: 7.71 bits / bit
+"State of the Art" Average Accuracy: 75.86%
+Brainome's Average Accuracy: 87.21%
+Average Improvement over the State of the Art: 11.35%
 ##########
-Number of Datasets: 83
-Total Build Time: 123.93 hours
-65 solved with QC
-47 of these QC Predictors Outperform the State of the Art
-18 solved with NN
-6 of these NN Predictors Outperform the State of the Art
-5 models are overfit
-Sum of all Model Size: 2136 kb
-Sum of all Predictor File Sizes: 48497 kb
-Generalization Ratio: 4.76 bits / bit
-Brainome Daimension's vs Google AutoML Estimated Weissman Score 2584.441150975952
-"State of the Art" Average Accuracy: 75.79%
-Brainome's Average Accuracy: 82.32%
-Brainome's avg. Accuracy Improvement over the State of the Art: 6.53%
-##########
-Better than published State of Art: 53
+Better than OpenML State of Art: 64
 Worse by <1%: 4
-Worse by <2.5%: 7
-Worse by >=2.5%: 19
+Worse by <2.5%: 8
+Worse by >=2.5%: 13
 ##########
